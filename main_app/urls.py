@@ -121,6 +121,7 @@ urlpatterns = [
 
     # Student
     path("student/home/", student_views.student_home, name='student_home'),
+    path("student/filter_dashboard/", student_views.filter_student_dashboard, name="filter_student_dashboard"),
     path("student/view/attendance/", student_views.student_view_attendance,
          name='student_view_attendance'),
     path("student/apply/leave/", student_views.student_apply_leave,
@@ -140,5 +141,9 @@ urlpatterns = [
          name="student_view_notification"),
     path('student/view/result/', student_views.student_view_result,
          name='student_view_result'),
+    path("student/assignments/", student_views.student_assignments,
+         name='student_assignments'),
+    path("student/assignments/upload/<int:assignment_id>/", student_views.upload_assignment_submission,
+         name='upload_assignment_submission'),
 
 ]

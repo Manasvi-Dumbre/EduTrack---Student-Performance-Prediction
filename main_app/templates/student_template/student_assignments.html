@@ -1,0 +1,458 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block page_title %}Assignments{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Assignments</li>
+{% endblock breadcrumb %}
+
+{% block custom_css %}
+<style>
+  :root {
+    --primary-blue: #2563eb;
+    --primary-blue-hover: #1d4ed8;
+    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
+  }
+
+  .assignments-container {
+    padding: 10px 0 40px 0;
+  }
+
+  .assignments-header-wrap {
+    margin-bottom: 24px;
+  }
+
+  .assignments-heading {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  body.dark-mode .assignments-heading {
+    color: #f8fafc;
+  }
+
+  .assignments-subtitle {
+    color: #64748b;
+    font-size: 14.5px;
+    margin-bottom: 0;
+  }
+
+  body.dark-mode .assignments-subtitle {
+    color: #94a3b8;
+  }
+
+  /* Card and Table Styling */
+  .assignments-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+
+  body.dark-mode .assignments-card {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  .assignments-table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .assignments-table thead {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+  }
+
+  .assignments-table thead th {
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: none;
+    white-space: nowrap;
+  }
+
+  .assignments-table tbody tr {
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  body.dark-mode .assignments-table tbody tr {
+    border-bottom-color: #334155;
+  }
+
+  .assignments-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .assignments-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+
+  body.dark-mode .assignments-table tbody tr:hover {
+    background-color: #334155;
+  }
+
+  .assignments-table td {
+    padding: 20px;
+    vertical-align: middle;
+    color: #334155;
+    font-size: 14px;
+  }
+
+  body.dark-mode .assignments-table td {
+    color: #cbd5e1;
+  }
+
+  /* Title & Subtitle in Table */
+  .assignment-title-text {
+    font-weight: 700;
+    font-size: 15px;
+    color: #0f172a;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  body.dark-mode .assignment-title-text {
+    color: #f8fafc;
+  }
+
+  .assignment-desc-text {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.45;
+    max-width: 340px;
+  }
+
+  body.dark-mode .assignment-desc-text {
+    color: #94a3b8;
+  }
+
+  /* Badges */
+  .subject-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 1px solid transparent;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  .status-badge-pending {
+    background-color: #fef3c7;
+    color: #d97706;
+  }
+
+  .status-badge-submitted {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+
+  .status-badge-overdue {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+
+  /* Buttons */
+  .btn-upload-action {
+    background-color: #2563eb;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 20px;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-upload-action:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+  }
+
+  /* Eye / View PDF Button */
+  .btn-view-pdf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .btn-view-pdf:hover {
+    background-color: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+    text-decoration: none;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  body.dark-mode .btn-view-pdf {
+    background-color: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.35);
+    color: #60a5fa;
+  }
+
+  body.dark-mode .btn-view-pdf:hover {
+    background-color: #2563eb;
+    color: #ffffff;
+  }
+
+  .title-cell-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .title-text-block {
+    flex: 1;
+  }
+
+  .file-submitted-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #2563eb;
+    font-weight: 600;
+    font-size: 13.5px;
+    text-decoration: none;
+    padding: 6px 12px;
+    background: #eff6ff;
+    border-radius: 8px;
+    border: 1px solid #bfdbfe;
+    transition: all 0.2s ease;
+  }
+
+  .file-submitted-link:hover {
+    background: #dbeafe;
+    color: #1d4ed8;
+    text-decoration: none;
+  }
+
+  body.dark-mode .file-submitted-link {
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.3);
+    color: #60a5fa;
+  }
+
+  /* Date formatting */
+  .due-date-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #475569;
+  }
+
+  body.dark-mode .due-date-text {
+    color: #cbd5e1;
+  }
+
+  /* Modal styling */
+  .modal-content {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+
+  .modal-header {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  body.dark-mode .modal-content {
+    background: #1e293b;
+    color: #f8fafc;
+  }
+
+  body.dark-mode .modal-header {
+    background: #0f172a;
+    border-bottom-color: #334155;
+  }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+<div class="assignments-container">
+  <!-- Messages -->
+  {% if messages %}
+  <div class="mb-4">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show rounded-3" role="alert">
+      <i class="fas fa-info-circle me-2"></i> {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Assignments Table Card -->
+  <div class="assignments-card">
+    <div class="table-responsive">
+      <table class="table assignments-table align-middle">
+        <thead>
+          <tr>
+            <th style="width: 35%;">Title</th>
+            <th style="width: 15%;">Subject</th>
+            <th style="width: 15%;">Due Date</th>
+            <th style="width: 12%;">Status</th>
+            <th style="width: 13%;">Submission</th>
+            <th style="width: 10%; text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in assignment_items %}
+          <tr>
+            <!-- 1. Title -->
+            <td>
+              <div class="title-cell-wrap">
+                <!-- Eye button to view/download assignment PDF -->
+                <a href="{% static item.pdf_rel %}" target="_blank" class="btn-view-pdf" title="View {{ item.assignment.subject_code }} Assignment PDF">
+                  <i class="far fa-eye" style="font-size: 13px;"></i>
+                </a>
+                <div class="title-text-block">
+                  <div class="assignment-title-text">{{ item.assignment.title }}</div>
+                  {% if item.assignment.description %}
+                  <div class="assignment-desc-text">{{ item.assignment.description }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            </td>
+
+            <!-- 2. Subject -->
+            <td>
+              <span class="subject-badge" style="background-color: {{ item.badge_info.bg }}; color: {{ item.badge_info.color }}; border-color: {{ item.badge_info.border }};">
+                {{ item.assignment.subject_code }}
+              </span>
+            </td>
+
+            <!-- 3. Due Date -->
+            <td>
+              <div class="due-date-text">
+                <i class="far fa-clock text-muted"></i>
+                <span>{{ item.assignment.due_date|date:"d M Y" }}</span>
+              </div>
+            </td>
+
+            <!-- 4. Status -->
+            <td>
+              {% if item.status == 'Submitted' %}
+              <span class="status-badge status-badge-submitted">
+                <i class="fas fa-check-circle"></i> Submitted
+              </span>
+              {% elif item.status == 'Overdue' %}
+              <span class="status-badge status-badge-overdue">
+                <i class="fas fa-exclamation-circle"></i> Overdue
+              </span>
+              {% else %}
+              <span class="status-badge status-badge-pending">
+                <i class="fas fa-clock"></i> Pending
+              </span>
+              {% endif %}
+            </td>
+
+            <!-- 5. Submission -->
+            <td>
+              {% if item.submission %}
+              <a href="{{ item.submission.file.url }}" target="_blank" class="file-submitted-link" title="Click to view file">
+                <i class="fas fa-paperclip"></i>
+                <span class="text-truncate" style="max-width: 120px;">{{ item.submission.filename }}</span>
+              </a>
+              {% else %}
+              <span class="text-muted small">No file uploaded</span>
+              {% endif %}
+            </td>
+
+            <!-- 6. Actions -->
+            <td style="text-align: right;">
+              <button type="button" class="btn-upload-action" data-bs-toggle="modal" data-bs-target="#uploadModal{{ item.assignment.id }}">
+                <i class="fas fa-upload me-1"></i>
+                {% if item.submission %}Reupload{% else %}Upload{% endif %}
+              </button>
+            </td>
+          </tr>
+
+          <!-- Upload Modal for Assignment -->
+          <div class="modal fade" id="uploadModal{{ item.assignment.id }}" tabindex="-1" aria-labelledby="uploadModalLabel{{ item.assignment.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-bold" id="uploadModalLabel{{ item.assignment.id }}">
+                    <i class="fas fa-cloud-upload-alt me-2 text-primary"></i> Upload Submission
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'upload_assignment_submission' item.assignment.id %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="modal-body p-4">
+
+                    {% if item.submission %}
+                    <div class="alert alert-info py-2 px-3 small mb-3">
+                      <i class="fas fa-info-circle me-1"></i> Currently submitted file: <strong>{{ item.submission.filename }}</strong>. Uploading a new file will replace your current submission.
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                      <label for="submission_file_{{ item.assignment.id }}" class="form-label fw-semibold">Select Assignment File</label>
+                      <input type="file" class="form-control" id="submission_file_{{ item.assignment.id }}" name="submission_file" accept=".pdf,.doc,.docx,.ppt,.pptx,.zip" required>
+                      <div class="form-text small mt-2">
+                        <i class="fas fa-paperclip me-1"></i> Allowed formats: <strong>PDF, DOC, DOCX, PPT, PPTX, ZIP</strong> (Max 25 MB).
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer bg-light border-0 px-4 py-3">
+                    <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm px-4 fw-semibold">Submit Assignment</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}

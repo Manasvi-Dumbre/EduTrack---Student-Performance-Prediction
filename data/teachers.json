@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "teacher_id": "TCH-001",
+    "name": "Prof. R.K. Yadav",
+    "email": "staffone@staff.com",
+    "designation": "Associate Professor & Project Coordinator",
+    "department": "CSE (AIML)",
+    "phone": "+91 98331 44556",
+    "avatar": "/static/dist/img/avatar.png",
+    "assigned_subjects": ["SUB-101", "SUB-105"],
+    "assigned_classes": ["TE CSE-AIML A", "BE CSE-AIML A"],
+    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+  },
+  {
+    "id": 2,
+    "teacher_id": "TCH-002",
+    "name": "Dr. Sonali Deshpande",
+    "email": "sonali.deshpande@college.edu",
+    "designation": "Head of Department & Professor",
+    "department": "CSE (AIML)",
+    "phone": "+91 98205 77889",
+    "avatar": "/static/dist/img/avatar3.png",
+    "assigned_subjects": ["SUB-102"],
+    "assigned_classes": ["TE CSE-AIML A"],
+    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+  },
+  {
+    "id": 3,
+    "teacher_id": "TCH-003",
+    "name": "Prof. Selvamurugan Kani",
+    "email": "selvamurugan.k@college.edu",
+    "designation": "Assistant Professor",
+    "department": "CSE (AIML)",
+    "phone": "+91 97690 11223",
+    "avatar": "/static/dist/img/avatar2.png",
+    "assigned_subjects": ["SUB-103"],
+    "assigned_classes": ["TE CSE-AIML A"],
+    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+  },
+  {
+    "id": 4,
+    "teacher_id": "TCH-004",
+    "name": "Prof. Swati Vyas",
+    "email": "swati.vyas@college.edu",
+    "designation": "Assistant Professor",
+    "department": "CSE (AIML)",
+    "phone": "+91 98192 33445",
+    "avatar": "/static/dist/img/avatar3.png",
+    "assigned_subjects": ["SUB-104"],
+    "assigned_classes": ["TE CSE-AIML A"],
+    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+  },
+  {
+    "id": 5,
+    "teacher_id": "TCH-005",
+    "name": "Prof. Bhagyalaxmi V",
+    "email": "bhagyalaxmi.v@college.edu",
+    "designation": "Assistant Professor",
+    "department": "CSE (AIML)",
+    "phone": "+91 98450 99887",
+    "avatar": "/static/dist/img/avatar3.png",
+    "assigned_subjects": ["SUB-106"],
+    "assigned_classes": ["TE CSE-AIML A"],
+    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+  }
+]

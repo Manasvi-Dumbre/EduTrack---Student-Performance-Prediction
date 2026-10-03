@@ -1,0 +1,72 @@
+[
+  {
+    "student_id": "STU-001",
+    "semester": "Semester V",
+    "academic_year": "2025-2026",
+    "total_credits": 20,
+    "earned_credits": 20,
+    "sgpa": 8.85,
+    "cgpa": 8.72,
+    "percentage": 87.4,
+    "total_marks": 524.5,
+    "max_marks": 600,
+    "result_status": "Pass - First Class with Distinction",
+    "published_date": "2026-02-15"
+  },
+  {
+    "student_id": "STU-002",
+    "semester": "Semester V",
+    "academic_year": "2025-2026",
+    "total_credits": 20,
+    "earned_credits": 20,
+    "sgpa": 9.60,
+    "cgpa": 9.45,
+    "percentage": 93.6,
+    "total_marks": 561.6,
+    "max_marks": 600,
+    "result_status": "Pass - First Class with Distinction",
+    "published_date": "2026-02-15"
+  },
+  {
+    "student_id": "STU-003",
+    "semester": "Semester V",
+    "academic_year": "2025-2026",
+    "total_credits": 20,
+    "earned_credits": 20,
+    "sgpa": 7.50,
+    "cgpa": 7.30,
+    "percentage": 74.2,
+    "total_marks": 445.2,
+    "max_marks": 600,
+    "result_status": "Pass - First Class",
+    "published_date": "2026-02-15"
+  },
+  {
+    "student_id": "STU-004",
+    "semester": "Semester V",
+    "academic_year": "2025-2026",
+    "total_credits": 20,
+    "earned_credits": 20,
+    "sgpa": 9.15,
+    "cgpa": 9.05,
+    "percentage": 89.8,
+    "total_marks": 538.8,
+    "max_marks": 600,
+    "result_status": "Pass - First Class with Distinction",
+    "published_date": "2026-02-15"
+  },
+  {
+    "student_id": "STU-005",
+    "semester": "Semester V",
+    "academic_year": "2025-2026",
+    "total_credits": 20,
+    "earned_credits": 16,
+    "sgpa": 6.30,
+    "cgpa": 6.45,
+    "percentage": 62.5,
+    "total_marks": 375.0,
+    "max_marks": 600,
+    "result_status": "ATKT / Needs Improvement",
+    "published_date": "2026-02-15"
+  }
+]

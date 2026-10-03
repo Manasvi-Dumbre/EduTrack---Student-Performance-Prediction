@@ -1,0 +1,218 @@
+[
+  {
+    "id": 1,
+    "email": "asnmajidali@gmail.com",
+    "name": "Majid Ansari",
+    "user_type": "1",
+    "role": "Administrator",
+    "status": "Active"
+  },
+  {
+    "id": 2,
+    "email": "staffone@staff.com",
+    "name": "staff one",
+    "user_type": "2",
+    "role": "Teacher",
+    "status": "Active"
+  },
+  {
+    "id": 3,
+    "email": "kaumudipawar@gmail.com",
+    "name": "Kaumudi Pawar",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-016"
+  },
+  {
+    "id": 4,
+    "email": "studenttwo@student.com",
+    "name": "student two",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-012"
+  },
+  {
+    "id": 5,
+    "email": "studentthree@student.com",
+    "name": "student three",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-003"
+  },
+  {
+    "id": 6,
+    "email": "studentfour@student.com",
+    "name": "student four",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-004"
+  },
+  {
+    "id": 7,
+    "email": "admin@admin.com",
+    "name": "Majid Ansari",
+    "user_type": "1",
+    "role": "Administrator",
+    "status": "Active"
+  },
+  {
+    "id": 8,
+    "email": "ansmajidali@gmail.com",
+    "name": "Admin ERP",
+    "user_type": "1",
+    "role": "Administrator",
+    "status": "Active"
+  },
+  {
+    "id": 9,
+    "email": "manasvidumbre@gmail.com",
+    "name": "Manasvi Dumbre",
+    "user_type": "1",
+    "role": "Administrator",
+    "status": "Active"
+  },
+  {
+    "id": 10,
+    "email": "bhaktidhore44@gmail.com",
+    "name": "Bhakti Dhore",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-013"
+  },
+  {
+    "id": 11,
+    "email": "abhaychaskar@gmail.com",
+    "name": "Abhay Chaskar",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-014"
+  },
+  {
+    "id": 12,
+    "email": "bhaktidhore44@gmailcom",
+    "name": "Bhakti Dhore",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-001"
+  },
+  {
+    "id": 13,
+    "email": "aishwaryadahifale@gmail.com",
+    "name": "Aishwarya Dahifale",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-002"
+  },
+  {
+    "id": 14,
+    "email": "priyanshi@student.com",
+    "name": "Priyanshi Srivastav",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-005"
+  },
+  {
+    "id": 15,
+    "email": "rohan.sharma@student.com",
+    "name": "Rohan Sharma",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-006"
+  },
+  {
+    "id": 16,
+    "email": "ananya.k@student.com",
+    "name": "Ananya Kulkarni",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-007"
+  },
+  {
+    "id": 17,
+    "email": "aditya.v@student.com",
+    "name": "Aditya Verma",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-008"
+  },
+  {
+    "id": 18,
+    "email": "meera.n@student.com",
+    "name": "Meera Nair",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-009"
+  },
+  {
+    "id": 19,
+    "email": "karan.p@student.com",
+    "name": "Karan Patel",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-010"
+  },
+  {
+    "id": 20,
+    "email": "sonali.deshpande@college.edu",
+    "name": "Sonali Deshpande",
+    "user_type": "2",
+    "role": "Teacher",
+    "status": "Active"
+  },
+  {
+    "id": 21,
+    "email": "selvamurugan.k@college.edu",
+    "name": "Selvamurugan Kani",
+    "user_type": "2",
+    "role": "Teacher",
+    "status": "Active"
+  },
+  {
+    "id": 22,
+    "email": "swati.vyas@college.edu",
+    "name": "Swati Vyas",
+    "user_type": "2",
+    "role": "Teacher",
+    "status": "Active"
+  },
+  {
+    "id": 23,
+    "email": "bhagyalaxmi.v@college.edu",
+    "name": "Bhagyalaxmi V",
+    "user_type": "2",
+    "role": "Teacher",
+    "status": "Active"
+  },
+  {
+    "id": 24,
+    "email": "ab@ab.com",
+    "name": "abcd dcba",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-015"
+  },
+  {
+    "id": 25,
+    "email": "studentone@student.com",
+    "name": "student one",
+    "user_type": "3",
+    "role": "Student",
+    "status": "Active",
+    "student_id": "STU-011"
+  }
+]

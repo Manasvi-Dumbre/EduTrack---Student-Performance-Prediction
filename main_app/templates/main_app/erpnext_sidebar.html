@@ -300,97 +300,152 @@
 
     {% else %}
         <!-- Student Navigation -->
-        <h6 class="nav-section-title">Main</h6>
-        
-        <div class="nav-item">
+        <div class="student-menu-list">
             {% url 'student_home' as student_home %}
-            <a href="{{ student_home }}" class="nav-link {% if student_home == request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <span class="nav-text">Dashboard</span>
+            <a href="{{ student_home }}" class="student-nav-item {% if student_home == request.path %}active{% endif %}">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
             </a>
-        </div>
-        
-        <div class="nav-item">
-            {% url 'student_view_profile' as student_view_profile %}
-            <a href="{{ student_view_profile }}" class="nav-link {% if student_view_profile == request.path %}active{% endif %}">
-                <i class="fas fa-user-circle"></i>
-                <span class="nav-text">Profile</span>
+            
+            <a href="#" class="student-nav-item">
+                <i class="fas fa-book-open"></i>
+                <span>Syllabus</span>
             </a>
-        </div>
 
-        <h6 class="nav-section-title">Academic</h6>
-        
-        <div class="nav-item">
+            <a href="#" class="student-nav-item">
+                <i class="far fa-calendar-alt"></i>
+                <span>Timetable</span>
+            </a>
+
+            {% url 'student_assignments' as student_assignments %}
+            <a href="{{ student_assignments }}" class="student-nav-item {% if student_assignments == request.path %}active{% endif %}">
+                <i class="far fa-file-alt"></i>
+                <span>Assignments</span>
+            </a>
+
             {% url 'student_view_attendance' as student_view_attendance %}
-            <a href="{{ student_view_attendance }}" class="nav-link {% if student_view_attendance == request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-calendar-check"></i>
-                <span class="nav-text">View Attendance</span>
+            <a href="{{ student_view_attendance }}" class="student-nav-item {% if student_view_attendance == request.path %}active{% endif %}">
+                <i class="far fa-check-square"></i>
+                <span>Attendance</span>
             </a>
-        </div>
 
-        <div class="nav-item">
             {% url 'student_view_result' as student_view_result %}
-            <a href="{{ student_view_result }}" class="nav-link {% if student_view_result == request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-chart-bar"></i>
-                <span class="nav-text">View Results</span>
+            <a href="{{ student_view_result }}" class="student-nav-item {% if student_view_result == request.path %}active{% endif %}">
+                <i class="fas fa-chart-bar"></i>
+                <span>Results</span>
             </a>
-        </div>
 
-        <h6 class="nav-section-title">Library & Resources</h6>
-        
-        <div class="nav-item">
-            {% url 'view_books' as view_books %}
-            <a href="{{ view_books }}" class="nav-link {% if view_books == request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-book"></i>
-                <span class="nav-text">Library Books</span>
+            <a href="{{ student_view_result }}" class="student-subitem-link">
+                View Result
             </a>
-        </div>
 
-        <h6 class="nav-section-title">Communication</h6>
-        
-        <div class="nav-item">
             {% url 'student_view_notification' as student_view_notification %}
-            <a href="{{ student_view_notification }}" class="nav-link {% if student_view_notification == request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-bell"></i>
-                <span class="nav-text">Notifications</span>
+            <a href="{{ student_view_notification }}" class="student-nav-item {% if student_view_notification == request.path %}active{% endif %}">
+                <i class="fas fa-bullhorn"></i>
+                <span>Announcements</span>
             </a>
-        </div>
 
-        <div class="nav-item">
-            {% url 'student_apply_leave' as student_apply_leave %}
-            <a href="{{ student_apply_leave }}" class="nav-link {% if student_apply_leave == request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-calendar-plus"></i>
-                <span class="nav-text">Apply for Leave</span>
+            {% url 'view_books' as view_books %}
+            <a href="{{ view_books }}" class="student-nav-item {% if view_books == request.path %}active{% endif %}">
+                <i class="fas fa-book-reader"></i>
+                <span>Library</span>
             </a>
-        </div>
 
-        <div class="nav-item">
-            {% url 'student_feedback' as student_feedback %}
-            <a href="{{ student_feedback }}" class="nav-link {% if student_feedback == request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-comment-alt"></i>
-                <span class="nav-text">Feedback</span>
+            <a href="#" class="student-nav-item">
+                <i class="fas fa-bus"></i>
+                <span>Transport</span>
+            </a>
+
+            <a href="#" class="student-nav-item">
+                <i class="fas fa-building"></i>
+                <span>Hostel</span>
+            </a>
+
+            {% url 'student_view_profile' as student_view_profile %}
+            <a href="{{ student_view_profile }}" class="student-nav-item {% if student_view_profile == request.path %}active{% endif %}">
+                <i class="far fa-user-circle"></i>
+                <span>Profile</span>
             </a>
         </div>
     {% endif %}
 </div>
 
+<style>
+/* Student Sidebar Styling - White Background */
+.erpnext-sidebar {
+    background-color: #ffffff !important;
+    border-right: 1px solid #e2e8f0 !important;
+}
+
+.student-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 12px;
+}
+
+.student-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+}
+
+.student-nav-item:hover {
+    color: #0f172a;
+    background-color: #f1f5f9;
+    text-decoration: none;
+}
+
+.student-nav-item.active {
+    background-color: #eff6ff !important;
+    color: #2563eb !important;
+    font-weight: 600;
+    border-left: 3px solid #2563eb;
+}
+
+.student-nav-item i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    color: inherit;
+}
+
+.student-subitem-link {
+    display: block;
+    padding: 2px 16px 6px 50px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.student-subitem-link:hover {
+    color: #2563eb;
+    text-decoration: none;
+}
+</style>
+
 <script>
 function showDefaultAvatar() {
-    // Hide the broken image
     document.getElementById('sidebar-avatar').style.display = 'none';
-    // Show the default FontAwesome icon
     document.getElementById('default-avatar').style.display = 'inline-block';
 }
 
-// Also check if profile_pic is empty or null and show default avatar
 document.addEventListener('DOMContentLoaded', function() {
     const avatar = document.getElementById('sidebar-avatar');
     const defaultAvatar = document.getElementById('default-avatar');
     
-    // Check if src is empty, null, or just whitespace
-    if (!avatar.src || avatar.src.trim() === '' || avatar.src === window.location.href) {
+    if (avatar && (!avatar.src || avatar.src.trim() === '' || avatar.src === window.location.href)) {
         avatar.style.display = 'none';
-        defaultAvatar.style.display = 'inline-block';
+        if (defaultAvatar) defaultAvatar.style.display = 'inline-block';
     }
 });
 </script>

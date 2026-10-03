@@ -1,0 +1,23 @@
+[
+  {
+    "student_id": "STU-001",
+    "monthly_summary": [
+      {"month": "Aug", "total_sessions": 24, "present": 23, "absent": 1, "percentage": 95.8},
+      {"month": "Sep", "total_sessions": 28, "present": 26, "absent": 2, "percentage": 92.9},
+      {"month": "Oct", "total_sessions": 26, "present": 24, "absent": 2, "percentage": 92.3},
+      {"month": "Nov", "total_sessions": 22, "present": 19, "absent": 3, "percentage": 86.4},
+      {"month": "Dec", "total_sessions": 20, "present": 18, "absent": 2, "percentage": 90.0},
+      {"month": "Jan", "total_sessions": 26, "present": 24, "absent": 2, "percentage": 92.3},
+      {"month": "Feb", "total_sessions": 24, "present": 22, "absent": 2, "percentage": 91.7},
+      {"month": "Mar", "total_sessions": 28, "present": 25, "absent": 3, "percentage": 89.3}
+    ],
+    "subject_attendance": [
+      {"subject_code": "SUB-101", "subject_name": "AI & Neural Networks", "total_classes": 48, "attended": 45, "absent": 3, "percentage": 93.8, "status": "Good"},
+      {"subject_code": "SUB-102", "subject_name": "DBMS", "total_classes": 44, "attended": 41, "absent": 3, "percentage": 93.2, "status": "Good"},
+      {"subject_code": "SUB-103", "subject_name": "Computer Networks", "total_classes": 42, "attended": 37, "absent": 5, "percentage": 88.1, "status": "Good"},
+      {"subject_code": "SUB-104", "subject_name": "Data Warehousing", "total_classes": 40, "attended": 38, "absent": 2, "percentage": 95.0, "status": "Excellent"},
+      {"subject_code": "SUB-105", "subject_name": "Machine Learning", "total_classes": 50, "attended": 46, "absent": 4, "percentage": 92.0, "status": "Good"},
+      {"subject_code": "SUB-106", "subject_name": "Business Communication", "total_classes": 32, "attended": 28, "absent": 4, "percentage": 87.5, "status": "Good"}
+    ]
+  }
+]

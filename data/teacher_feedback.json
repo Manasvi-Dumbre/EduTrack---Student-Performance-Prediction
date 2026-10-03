@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "student_id": "STU-001",
+    "teacher_id": "TCH-001",
+    "teacher_name": "Prof. R.K. Yadav",
+    "subject_code": "SUB-101",
+    "subject_name": "Artificial Intelligence & Neural Networks",
+    "feedback_date": "2026-03-10",
+    "academic_strengths": "Exceptional problem-solving abilities, high attention to mathematical derivations, and proactive in laboratory assignments.",
+    "areas_requiring_improvement": "Could participate more actively in open-floor class discussions on advanced topics.",
+    "engagement_score": "High (9.5/10)",
+    "recommendations": "Keep up the consistent momentum. Consider taking on advanced research papers in deep reinforcement learning.",
+    "follow_up_action": "Submit final mini-project documentation by end of term."
+  },
+  {
+    "id": 2,
+    "student_id": "STU-001",
+    "teacher_id": "TCH-002",
+    "teacher_name": "Dr. Sonali Deshpande",
+    "subject_code": "SUB-102",
+    "subject_name": "Database Management & Big Data Systems",
+    "feedback_date": "2026-02-28",
+    "academic_strengths": "Quick in developing normalized relational schemas and writing complex subqueries.",
+    "areas_requiring_improvement": "Review distributed transaction protocols (2-phase commit).",
+    "engagement_score": "High (9.0/10)",
+    "recommendations": "Explore NoSQL document modeling to complement your relational database strengths.",
+    "follow_up_action": "Complete laboratory exercise 8 on query optimizer tuning."
+  },
+  {
+    "id": 3,
+    "student_id": "STU-001",
+    "teacher_id": "TCH-003",
+    "teacher_name": "Prof. Selvamurugan Kani",
+    "subject_code": "SUB-103",
+    "subject_name": "Computer Networks & Cloud Security",
+    "feedback_date": "2026-02-15",
+    "academic_strengths": "Clear grasp of OSI architecture and routing protocols.",
+    "areas_requiring_improvement": "Packet header calculations under IP fragmentation need additional practice.",
+    "engagement_score": "Medium-High (8.5/10)",
+    "recommendations": "Use network packet simulator tools to visualize flow control dynamics.",
+    "follow_up_action": "Review unit test 1 paper for corrections."
+  },
+  {
+    "id": 4,
+    "student_id": "STU-001",
+    "teacher_id": "TCH-004",
+    "teacher_name": "Prof. Swati Vyas",
+    "subject_code": "SUB-104",
+    "subject_name": "Data Warehousing & Data Mining",
+    "feedback_date": "2026-01-30",
+    "academic_strengths": "Demonstrated top-tier performance in association rule mining algorithms.",
+    "areas_requiring_improvement": "None observed currently; performance is consistently high.",
+    "engagement_score": "Excellent (9.8/10)",
+    "recommendations": "Help mentor peers during hands-on lab sessions on multidimensional OLAP cubes.",
+    "follow_up_action": "Prepare demonstration for peer study group."
+  }
+]

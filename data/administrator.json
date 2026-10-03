@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Manasvi Dumbre",
+    "email": "manasvidumbre@gmail.com",
+    "role": "Administrator",
+    "designation": "Principal & Head of Institution",
+    "department": "Administration",
+    "college": "Indira College of Engineering and Management",
+    "phone": "+9960862660",
+    "office": "Room 101, Main Admin Block",
+    "avatar": "/static/dist/img/avatar5.png",
+    "joined_year": "2018"
+  }
+]

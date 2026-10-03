@@ -1,0 +1,29 @@
+[
+  {
+    "student_id": "STU-001",
+    "monthly_trends": [
+      {"month": "Aug", "score": 82.0, "attendance": 95.8, "study_hours": 32, "assignments_submitted": 2},
+      {"month": "Sep", "score": 84.5, "attendance": 92.9, "study_hours": 38, "assignments_submitted": 3},
+      {"month": "Oct", "score": 85.0, "attendance": 92.3, "study_hours": 42, "assignments_submitted": 4},
+      {"month": "Nov", "score": 83.5, "attendance": 86.4, "study_hours": 35, "assignments_submitted": 2},
+      {"month": "Dec", "score": 86.0, "attendance": 90.0, "study_hours": 40, "assignments_submitted": 3},
+      {"month": "Jan", "score": 88.0, "attendance": 92.3, "study_hours": 45, "assignments_submitted": 4},
+      {"month": "Feb", "score": 89.5, "attendance": 91.7, "study_hours": 48, "assignments_submitted": 3},
+      {"month": "Mar", "score": 90.5, "attendance": 89.3, "study_hours": 50, "assignments_submitted": 4}
+    ],
+    "quarterly_progress": [
+      {"quarter": "Q1 (Aug - Oct)", "overall_score": 83.8, "attendance": 93.6, "gpa": 8.4, "status": "Good"},
+      {"quarter": "Q2 (Nov - Dec)", "overall_score": 84.8, "attendance": 88.2, "gpa": 8.5, "status": "Good"},
+      {"quarter": "Q3 (Jan - Mar)", "overall_score": 89.3, "attendance": 91.1, "gpa": 8.9, "status": "Excellent (Improved +4.5%)"},
+      {"quarter": "Q4 (Projected)", "overall_score": 91.0, "attendance": 92.5, "gpa": 9.1, "status": "Predicted High Distinction"}
+    ],
+    "predicted_vs_actual": [
+      {"subject_code": "SUB-101", "subject_name": "AI & NN", "actual_score": 90.5, "predicted_score": 91.0, "variance": 0.5, "confidence": "94%"},
+      {"subject_code": "SUB-102", "subject_name": "DBMS", "actual_score": 87.0, "predicted_score": 88.5, "variance": 1.5, "confidence": "92%"},
+      {"subject_code": "SUB-103", "subject_name": "Computer Networks", "actual_score": 83.0, "predicted_score": 82.0, "variance": -1.0, "confidence": "89%"},
+      {"subject_code": "SUB-104", "subject_name": "Data Warehousing", "actual_score": 93.0, "predicted_score": 94.0, "variance": 1.0, "confidence": "96%"},
+      {"subject_code": "SUB-105", "subject_name": "Machine Learning", "actual_score": 88.5, "predicted_score": 90.0, "variance": 1.5, "confidence": "93%"},
+      {"subject_code": "SUB-106", "subject_name": "Business Comm", "actual_score": 82.5, "predicted_score": 84.0, "variance": 1.5, "confidence": "90%"}
+    ]
+  }
+]

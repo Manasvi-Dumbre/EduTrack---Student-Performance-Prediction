@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "student_id": "STU-001",
+    "type": "Achievement",
+    "icon": "fas fa-trophy text-warning",
+    "title": "Academic Excellence Recognition",
+    "message": "Congratulations! You rank #3 in TE CSE-AIML Division A with a CGPA of 8.72.",
+    "date": "2026-03-28",
+    "is_read": false
+  },
+  {
+    "id": 2,
+    "student_id": "STU-001",
+    "type": "Attendance",
+    "icon": "fas fa-check-circle text-success",
+    "title": "Attendance Compliance",
+    "message": "Your current overall attendance is 91.2%, well above the university 75% requirement.",
+    "date": "2026-03-25",
+    "is_read": false
+  },
+  {
+    "id": 3,
+    "student_id": "STU-001",
+    "type": "Exam",
+    "icon": "fas fa-calendar-alt text-primary",
+    "title": "Semester VI Examination Schedule Published",
+    "message": "The final university examination timetable has been uploaded. Check the Academic Calendar.",
+    "date": "2026-03-20",
+    "is_read": true
+  },
+  {
+    "id": 4,
+    "student_id": "STU-001",
+    "type": "Feedback",
+    "icon": "fas fa-comment-dots text-info",
+    "title": "New Teacher Feedback Available",
+    "message": "Prof. R.K. Yadav has posted feedback for Artificial Intelligence & Neural Networks.",
+    "date": "2026-03-10",
+    "is_read": true
+  }
+]

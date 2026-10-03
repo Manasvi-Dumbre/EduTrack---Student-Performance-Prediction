@@ -200,6 +200,34 @@ class StudentResult(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class Assignment(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    subject_code = models.CharField(max_length=50) # DAA, STQA, BT, OOMD, ML
+    subject_name = models.CharField(max_length=255)
+    due_date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.subject_code} - {self.title}"
+
+
+class AssignmentSubmission(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='submissions')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='submissions')
+    file = models.FileField(upload_to='assignments/')
+    filename = models.CharField(max_length=255)
+    submitted_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=50, default='Submitted')
+
+    class Meta:
+        unique_together = ('assignment', 'student')
+
+    def __str__(self):
+        return f"{self.student} - {self.assignment.title}"
+
+
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

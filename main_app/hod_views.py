@@ -12,9 +12,12 @@ from django.views.generic import UpdateView
 
 from .forms import *
 from .models import *
+from .data_service import (sync_db_and_json, add_student_to_json, add_staff_to_json, 
+                          delete_student_from_json, delete_staff_from_json, load_json)
 
 
 def admin_home(request):
+    sync_db_and_json()
     total_staff = Staff.objects.all().count()
     total_students = Student.objects.all().count()
     subjects = Subject.objects.all()
@@ -109,6 +112,7 @@ def add_staff(request):
                 user.address = address
                 user.staff.course = course
                 user.save()
+                add_staff_to_json(user, course)
                 messages.success(request, "Successfully Added")
                 return redirect(reverse('add_staff'))
 
@@ -145,6 +149,7 @@ def add_student(request):
                 user.student.session = session
                 user.student.course = course
                 user.save()
+                add_student_to_json(user, course, session)
                 messages.success(request, "Successfully Added")
                 return redirect(reverse('add_student'))
             except Exception as e:
@@ -205,6 +210,7 @@ def add_subject(request):
 
 
 def manage_staff(request):
+    sync_db_and_json()
     allStaff = CustomUser.objects.filter(user_type=2)
     context = {
         'allStaff': allStaff,
@@ -214,6 +220,7 @@ def manage_staff(request):
 
 
 def manage_student(request):
+    sync_db_and_json()
     students = CustomUser.objects.filter(user_type=3)
     context = {
         'students': students,
@@ -684,14 +691,18 @@ def send_staff_notification(request):
 
 def delete_staff(request, staff_id):
     staff = get_object_or_404(CustomUser, staff__id=staff_id)
+    email = staff.email
     staff.delete()
+    delete_staff_from_json(email)
     messages.success(request, "Staff deleted successfully!")
     return redirect(reverse('manage_staff'))
 
 
 def delete_student(request, student_id):
     student = get_object_or_404(CustomUser, student__id=student_id)
+    email = student.email
     student.delete()
+    delete_student_from_json(email)
     messages.success(request, "Student deleted successfully!")
     return redirect(reverse('manage_student'))
 

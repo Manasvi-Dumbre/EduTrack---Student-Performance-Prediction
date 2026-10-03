@@ -1,304 +1,958 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
-{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block title %}EduTrack - Student Academic Performance Dashboard{% endblock title %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'dist/css/student-dashboard.css' %}">
+<style>
+  .table-responsive {
+    overflow-x: auto;
+  }
+</style>
+{% endblock custom_css %}
+
 {% block content %}
-<div class="page-container">
-    
-    <!-- Stats Grid -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon bg-blue">
-                <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-number">{{total_attendance}}</div>
-                <div class="stat-label">Total Attendance</div>
-            </div>
+<div class="dashboard-wrapper">
+
+  <!-- =========================================================================
+       SECTION A: Dashboard Header & Filters (No student switcher for students)
+       ========================================================================= -->
+  <div class="welcome-banner">
+    <div class="banner-content">
+      <div class="student-title-wrap">
+        <h2>Welcome back, {{ student.name|default:'Student' }}! 👋</h2>
+        <div class="student-pills">
+          <span class="student-pill"><i class="fas fa-id-card"></i> {{ student.roll_no|default:'Not provided' }}</span>
+          <span class="student-pill"><i class="fas fa-graduation-cap"></i> {{ student.department|default:'Not provided' }}</span>
+          <span class="student-pill"><i class="fas fa-layer-group"></i> {{ student.class_name|default:'Not provided' }}</span>
+          <span class="student-pill"><i class="fas fa-calendar"></i> {{ student.academic_year|default:'Not provided' }}</span>
         </div>
-        
-        <div class="stat-card">
-            <div class="stat-icon bg-green">
-                <i class="fas fa-calendar-check"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-number">{{percent_present}}<span class="stat-unit">%</span></div>
-                <div class="stat-label">Percentage Present</div>
-            </div>
-        </div>
-        
-        <div class="stat-card">
-            <div class="stat-icon bg-red">
-                <i class="fas fa-calendar-minus"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-number">{{percent_absent}}<span class="stat-unit">%</span></div>
-                <div class="stat-label">Percentage Absent</div>
-            </div>
-        </div>
-        
-        <div class="stat-card">
-            <div class="stat-icon bg-purple">
-                <i class="fas fa-book"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-number">{{total_subject}}</div>
-                <div class="stat-label">Total Subjects</div>
-            </div>
-        </div>
+      </div>
+
+      <div class="banner-actions">
+        <a href="{% url 'student_view_result' %}" class="btn-glass">
+          <i class="fas fa-file-download"></i> View Full Grade Sheet
+        </a>
+      </div>
     </div>
-    
-    <!-- Charts Section -->
-    <div class="row mt-4">
-        <div class="col-lg-6">
-            <div class="erpnext-card">
-                <div class="card-header">
-                    <h5 class="card-title">Attendance Overview</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="attendanceData" style="height: 300px; max-width: 100%;"></canvas>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="erpnext-card">
-                <div class="card-header">
-                    <h5 class="card-title">Subject-wise Attendance</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="attendanceStatistics" style="height: 300px; max-width: 100%;"></canvas>
-                </div>
-            </div>
-        </div>
+  </div>
+
+  <!-- Interactive Filter Controls -->
+  <div class="filter-card">
+    <div class="filter-group-title">
+      <i class="fas fa-sliders-h text-primary"></i> Analytics Filters
     </div>
+    <div class="filter-controls-wrap">
+      <!-- Academic Year Filter -->
+      <select class="filter-select" id="filterYear" onchange="applyDashboardFilters()">
+        <option value="2025-2026" selected>Year: 2025-2026</option>
+        <option value="2024-2025">Year: 2024-2025</option>
+        <option value="2023-2024">Year: 2023-2024</option>
+      </select>
+
+      <!-- Quarter Filter -->
+      <select class="filter-select" id="filterQuarter" onchange="applyDashboardFilters()">
+        <option value="all" selected>Quarter: Full Academic Year</option>
+        <option value="Q1">Quarter 1 (Aug - Oct)</option>
+        <option value="Q2">Quarter 2 (Nov - Dec)</option>
+        <option value="Q3">Quarter 3 (Jan - Mar)</option>
+        <option value="Q4">Quarter 4 (Projected)</option>
+      </select>
+
+      <!-- Month Filter -->
+      <select class="filter-select" id="filterMonth" onchange="applyDashboardFilters()">
+        <option value="all" selected>Month: All Months</option>
+        <option value="Aug">August</option>
+        <option value="Sep">September</option>
+        <option value="Oct">October</option>
+        <option value="Nov">November</option>
+        <option value="Dec">December</option>
+        <option value="Jan">January</option>
+        <option value="Feb">February</option>
+        <option value="Mar">March</option>
+      </select>
+
+      <!-- Subject Filter -->
+      <select class="filter-select" id="filterSubject" onchange="applyDashboardFilters()">
+        <option value="all" selected>Subject: All Enrolled Subjects</option>
+        {% for sub in subjects %}
+        <option value="{{ sub.code }}">{{ sub.code }} - {{ sub.short_name }}</option>
+        {% endfor %}
+      </select>
+
+      <button class="btn-filter-reset" onclick="resetDashboardFilters()">
+        <i class="fas fa-undo me-1"></i> Reset
+      </button>
+    </div>
+  </div>
+
+  <!-- AI Prediction Highlights Banner (Clean - No Analysis Button, Only 3 Categories: At Risk / First Class / Distinction) -->
+  <div class="ai-prediction-banner">
+    <div class="d-flex align-items-center gap-3">
+      <div class="ai-icon-pulse">
+        <i class="fas fa-brain"></i>
+      </div>
+      <div>
+        <span class="ai-pill-tag"><i class="fas fa-robot me-1"></i> EduTrack AI Performance Model</span>
+        <h5 class="mb-1 fw-bold text-dark-mode" style="color: var(--saas-text-main);">
+          Predicted Category:
+          {% if student.predicted_category == 'Distinction' %}
+          <span class="text-success">{{ student.predicted_category }}</span>
+          {% elif student.predicted_category == 'First Class' %}
+          <span class="text-primary">{{ student.predicted_category }}</span>
+          {% else %}
+          <span class="text-danger">At Risk</span>
+          {% endif %}
+        </h5>
+        <p class="mb-0 text-muted" style="font-size: 13px;">
+          Projected Final Exam Range: <strong>{{ student.predicted_percentage_range|default:'88% - 93%' }}</strong>
+          (Model Confidence: <strong>94.2%</strong>) | Risk Level:
+          {% if student.predicted_category == 'At Risk' %}
+          <span class="badge bg-danger">At Risk</span>
+          {% elif student.predicted_category == 'First Class' %}
+          <span class="badge bg-primary">First Class Standing</span>
+          {% else %}
+          <span class="badge bg-success">Distinction Standing</span>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SECTION B: Academic Performance Summary Cards (2 Rows - 4 Cards in Each Row)
+       ========================================================================= -->
+  <!-- ROW 1 (4 Cards) -->
+  <div class="row g-3 mb-3">
+    <!-- Card 1: Overall Academic Score -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div class="metric-icon-circle icon-indigo">
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span
+            class="metric-trend-pill {% if student.quarter_improvement >= 0 %}trend-up{% else %}trend-down{% endif %}">
+            <i class="fas {% if student.quarter_improvement >= 0 %}fa-arrow-up{% else %}fa-arrow-down{% endif %}"></i>
+            {% if student.quarter_improvement >= 0 %}+{% endif %}{{ student.quarter_improvement|default:'4.8' }}%
+          </span>
+        </div>
+        <div class="metric-value-wrap">
+          <div class="metric-number-lg">{{ student.overall_score|default:'87.4' }}%</div>
+          <div class="metric-label-sm">Overall Academic Score</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div class="metric-micro-progress bg-primary" style="width: {{ student.overall_score|default:'87.4' }}%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Overall Percentage -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div class="metric-icon-circle icon-purple">
+            <i class="fas fa-percentage"></i>
+          </div>
+          <span class="metric-trend-pill trend-neutral">Term V</span>
+        </div>
+        <div class="metric-value-wrap">
+          <div class="metric-number-lg">{{ student.overall_percentage|default:'87.4' }}%</div>
+          <div class="metric-label-sm">Aggregate Percentage</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div class="metric-micro-progress"
+            style="background-color: var(--saas-purple); width: {{ student.overall_percentage|default:'87.4' }}%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Current GPA / CGPA -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div class="metric-icon-circle icon-emerald">
+            <i class="fas fa-award"></i>
+          </div>
+          <span class="metric-trend-pill trend-up">CGPA {{ student.cgpa|default:'8.72' }}</span>
+        </div>
+        <div class="metric-value-wrap">
+          <div class="metric-number-lg">{{ student.gpa|default:'8.85' }} <span
+              style="font-size: 14px; font-weight: 500; color: var(--saas-text-muted);">/ 10</span></div>
+          <div class="metric-label-sm">Current Semester GPA</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div class="metric-micro-progress bg-success" style="width: 88.5%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Attendance Percentage -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div
+            class="metric-icon-circle {% if student.attendance_percentage < 75 %}icon-rose{% else %}icon-emerald{% endif %}">
+            <i class="fas fa-user-check"></i>
+          </div>
+          <span
+            class="metric-trend-pill {% if student.attendance_percentage < 75 %}trend-down{% else %}trend-up{% endif %}">
+            {% if student.attendance_percentage < 75 %}Below 75%{% else %}75%+ Safe{% endif %} </span>
+        </div>
+        <div class="metric-value-wrap">
+          <div class="metric-number-lg {% if student.attendance_percentage < 75 %}text-danger{% endif %}">{{ student.attendance_percentage|default:'91.2' }}%</div>
+          <div class="metric-label-sm">Attendance Compliance</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div
+            class="metric-micro-progress {% if student.attendance_percentage < 75 %}bg-danger{% else %}bg-success{% endif %}"
+            style="width: {{ student.attendance_percentage|default:'91.2' }}%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2 (4 Cards) -->
+  <div class="row g-3 mb-4">
+    <!-- Card 5: Avg Internal Assessment Marks -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div class="metric-icon-circle icon-amber">
+            <i class="fas fa-pen-nib"></i>
+          </div>
+          <span class="metric-trend-pill trend-neutral">Max 20</span>
+        </div>
+        <div class="metric-value-wrap">
+          <div class="metric-number-lg">{{ student.avg_internal_marks|default:'18.2' }} <span
+              style="font-size: 14px; font-weight: 500; color: var(--saas-text-muted);">/ 20</span></div>
+          <div class="metric-label-sm">Avg Internal Assessment</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div class="metric-micro-progress bg-warning" style="width: 91%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: Assignment Completion Rate -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div class="metric-icon-circle icon-cyan">
+            <i class="fas fa-tasks"></i>
+          </div>
+          <span class="metric-trend-pill trend-up">Completed</span>
+        </div>
+        <div class="metric-value-wrap">
+          <div class="metric-number-lg">{{ student.assignment_completion_rate|default:'96.0' }}%</div>
+          <div class="metric-label-sm">Assignment Completion</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div class="metric-micro-progress bg-info"
+            style="width: {{ student.assignment_completion_rate|default:'96.0' }}%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7: Class Rank -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div class="metric-icon-circle icon-indigo">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <span class="metric-trend-pill trend-up">Rank</span>
+        </div>
+        <div class="metric-value-wrap">
+            <div class="metric-number-lg">#{{ student.class_rank|default:'3' }} <span
+              style="font-size: 14px; font-weight: 500; color: var(--saas-text-muted);">of {{ student.total_class_size|default:'68' }}</span></div>
+          <div class="metric-label-sm">Class Standing</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div class="metric-micro-progress bg-primary" style="width: 95%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 8: Subjects at Risk -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+      <div class="metric-card-modern h-100">
+        <div class="metric-card-header">
+          <div
+            class="metric-icon-circle {% if student.subjects_at_risk_count > 0 %}icon-rose{% else %}icon-emerald{% endif %}">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <span
+            class="metric-trend-pill {% if student.subjects_at_risk_count > 0 %}trend-down{% else %}trend-up{% endif %}">
+            {% if student.subjects_at_risk_count > 0 %}Alert{% else %}All Clear{% endif %}
+          </span>
+        </div>
+        <div class="metric-value-wrap">
+          <div
+            class="metric-number-lg {% if student.subjects_at_risk_count > 0 %}text-danger{% else %}text-success{% endif %}">
+            {{ student.subjects_at_risk_count|default:'0' }}
+          </div>
+          <div class="metric-label-sm">Subjects at Risk</div>
+        </div>
+        <div class="metric-micro-bar">
+          <div
+            class="metric-micro-progress {% if student.subjects_at_risk_count > 0 %}bg-danger{% else %}bg-success{% endif %}"
+            style="width: {% if student.subjects_at_risk_count > 0 %}40%{% else %}100%{% endif %};"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SECTION C: Overall Academic Performance Analytics (Interactive Charts)
+       ========================================================================= -->
+  <div class="row">
+    <!-- Chart 1: Performance Trend & Study Hours (Line Chart) -->
+    <div class="col-lg-8 mb-4">
+      <div class="saas-card h-100">
+        <div class="saas-card-header">
+          <h3 class="saas-card-title">
+            <i class="fas fa-chart-area"></i> Academic Performance Trend & Study Activity
+          </h3>
+          <span class="badge bg-light text-muted border">Monthly Tracking (Aug - Mar)</span>
+        </div>
+        <div class="saas-card-body">
+          <div style="height: 320px;">
+            <canvas id="performanceTrendChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart 2: Performance Distribution (Radar/Polar Chart) -->
+    <div class="col-lg-4 mb-4">
+      <div class="saas-card h-100">
+        <div class="saas-card-header">
+          <h3 class="saas-card-title">
+            <i class="fas fa-compass"></i> Subject Skill Mastery
+          </h3>
+          <span class="badge bg-light text-muted border">6 Core Areas</span>
+        </div>
+        <div class="saas-card-body d-flex align-items-center justify-content-center">
+          <div style="height: 310px; width: 100%;">
+            <canvas id="skillRadarChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Chart 3: Attendance Trend vs 75% Threshold (Line/Bar Chart) -->
+    <div class="col-lg-6 mb-4">
+      <div class="saas-card h-100">
+        <div class="saas-card-header">
+          <h3 class="saas-card-title">
+            <i class="fas fa-user-check"></i> Monthly Attendance & 75% Compliance Line
+          </h3>
+          <span class="badge bg-light text-muted border">University Threshold: 75%</span>
+        </div>
+        <div class="saas-card-body">
+          <div style="height: 280px;">
+            <canvas id="attendanceMonthlyChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart 4: Quarterly Progress (Grouped Bar Chart) -->
+    <div class="col-lg-6 mb-4">
+      <div class="saas-card h-100">
+        <div class="saas-card-header">
+          <h3 class="saas-card-title">
+            <i class="fas fa-layer-group"></i> Quarterly Performance Progression
+          </h3>
+          <span class="badge bg-light text-muted border">Q1, Q2, Q3 & Q4 Projection</span>
+        </div>
+        <div class="saas-card-body">
+          <div style="height: 280px;">
+            <canvas id="quarterlyProgressChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SECTION D: Subject-wise Performance Breakdown (Detailed Table)
+       ========================================================================= -->
+  <div class="saas-card mb-4">
+    <div class="saas-card-header">
+      <h3 class="saas-card-title">
+        <i class="fas fa-book-reader"></i> Comprehensive Subject-wise Performance Breakdown
+      </h3>
+      <span class="text-muted" style="font-size: 13px;">Click on any subject to inspect historical assessment
+        details</span>
+    </div>
+    <div class="saas-card-body p-0">
+      <div class="table-responsive">
+        <table class="subject-table">
+          <thead>
+            <tr>
+              <th>Code & Subject</th>
+              <th>Faculty</th>
+              <th>Attendance</th>
+              <th>Internal (20)</th>
+              <th>Assignments</th>
+              <th>Exam (80)</th>
+              <th>Total %</th>
+              <th>Status</th>
+              <th>Growth</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="subjectTableBody">
+            {% for ass in assessments %}
+            <tr>
+              <td>
+                <div class="fw-bold">{{ ass.subject_name }}</div>
+                <small class="text-muted">{{ ass.subject_code }}</small>
+              </td>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <i class="fas fa-chalkboard-teacher text-primary"></i>
+                  <span style="font-size: 13px;">{{ ass.faculty|default:'—' }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="fw-bold {% if ass.attendance_pct < 75 %}text-danger{% else %}text-success{% endif %}">{{ ass.attendance_pct }}%</span>
+                </div>
+                <div class="progress" style="height: 4px; width: 70px;">
+                  <div class="progress-bar {% if ass.attendance_pct < 75 %}bg-danger{% else %}bg-success{% endif %}"
+                    style="width: {{ ass.attendance_pct }}%;"></div>
+                </div>
+              </td>
+              <td><span class="fw-bold">{{ ass.internal_assessment }}</span> / 20</td>
+              <td><span class="fw-bold">{{ ass.assignments_avg }}%</span></td>
+              <td><span class="fw-bold">{{ ass.semester_exam }}</span> / 80</td>
+              <td>
+                <span class="fw-bold text-primary" style="font-size: 15px;">{{ ass.percentage }}%</span>
+                <small class="d-block text-muted">Grade {{ ass.grade }}</small>
+              </td>
+              <td>
+                {% if ass.status == 'Excellent' %}
+                <span class="badge-status status-excellent"><i class="fas fa-check-circle"></i> Excellent</span>
+                {% elif ass.status == 'Good' %}
+                <span class="badge-status status-good"><i class="fas fa-thumbs-up"></i> Good</span>
+                {% elif ass.status == 'Average' %}
+                <span class="badge-status status-average"><i class="fas fa-info-circle"></i> Average</span>
+                {% else %}
+                <span class="badge-status status-risk"><i class="fas fa-exclamation-triangle"></i> At Risk</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if ass.improvement >= 0 %}
+                <span class="text-success fw-bold"><i class="fas fa-arrow-up"></i> +{{ ass.improvement }}%</span>
+                {% else %}
+                <span class="text-danger fw-bold"><i class="fas fa-arrow-down"></i> {{ ass.improvement }}%</span>
+                {% endif %}
+              </td>
+              <td>
+                <button class="btn btn-outline-primary btn-sm rounded-pill px-3"
+                  onclick="openSubjectModal('{{ ass.subject_code }}', '{{ ass.subject_name }}', '{{ ass.internal_assessment }}', '{{ ass.semester_exam }}', '{{ ass.percentage }}', '{{ ass.teacher_remarks }}', '{{ ass.improvement_areas }}')">
+                  <i class="fas fa-eye"></i> Details
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- =========================================================================
+       SECTION F: Teacher Feedback & Academic Guidance
+       ========================================================================= -->
+  <div class="saas-card mb-4">
+    <div class="saas-card-header">
+      <h3 class="saas-card-title">
+        <i class="fas fa-chalkboard-teacher"></i> Teacher Feedback & Academic Guidance
+      </h3>
+      <span class="badge bg-light text-muted border">{{ feedback|length }} Faculty Response{% if feedback|length != 1 %}s{% endif %}</span>
+    </div>
+    <div class="saas-card-body">
+      <div class="row">
+        {% for fb in feedback %}
+        <div class="col-lg-6 mb-3">
+          <div class="feedback-compact-card">
+            <div class="d-flex align-items-center gap-3">
+              <!-- Teacher Avatar -->
+              <div class="teacher-avatar-circle">
+                <i class="fas fa-user-tie"></i>
+              </div>
+              <!-- Teacher Info -->
+              <div class="flex-grow-1 min-w-0">
+                <div class="fw-bold" style="color: var(--saas-text-main); font-size: 14px; line-height: 1.3;">{{ fb.teacher_name }}</div>
+                <div class="text-muted"
+                  style="font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ fb.subject_name }}</div>
+                <div style="font-size: 11px; color: var(--saas-text-muted); margin-top: 2px;">
+                  <i class="fas fa-tag me-1"></i>{{ fb.subject_code }}
+                </div>
+              </div>
+              <!-- View Feedback Button -->
+              <button class="btn-view-feedback"
+                onclick="openFeedbackDrawer('{{ fb.teacher_name|escapejs }}', '{{ fb.subject_name|escapejs }}', '{{ fb.subject_code|escapejs }}', '{{ fb.feedback_date|escapejs }}', '{{ fb.academic_strengths|escapejs }}', '{{ fb.areas_requiring_improvement|escapejs }}', '{{ fb.recommendations|escapejs }}', '{{ fb.follow_up_action|escapejs }}')">
+                <i class="fas fa-eye me-1"></i> View Feedback
+              </button>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+          <div class="text-center text-muted py-4">
+            <i class="fas fa-comment-slash fa-2x mb-2 d-block opacity-50"></i>
+            No faculty feedback posted yet for this period.
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SECTION H: Personalized Next Steps & Action Plan (Full Width)
+       ========================================================================= -->
+  <div class="saas-card mb-4">
+    <div class="saas-card-header">
+      <h3 class="saas-card-title text-primary">
+        <i class="fas fa-rocket text-primary"></i> Your Next Steps & Action Plan
+      </h3>
+      <span class="badge"
+        style="background: rgba(99,102,241,0.12); color: var(--saas-primary); border: 1px solid rgba(99,102,241,0.25);">Prioritized
+        for You</span>
+    </div>
+    <div class="saas-card-body">
+      <div class="row">
+        {% for step in next_steps %}
+        <div class="col-lg-6 col-xl-3 mb-3">
+          <div class="next-step-card-v2 priority-{{ step.priority|lower }}">
+            <div class="d-flex align-items-start gap-3">
+              <div class="next-step-icon-v2 color-{{ step.color }}">
+                <i class="{{ step.icon }}"></i>
+              </div>
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                  <h6 class="fw-bold mb-0" style="color: var(--saas-text-main); font-size: 13.5px; line-height: 1.3;">{{ step.title }}</h6>
+                </div>
+                <p class="mb-2 text-muted" style="font-size: 12px; line-height: 1.5;">{{ step.description }}</p>
+                <span
+                  class="priority-tag {% if step.priority == 'High' %}priority-high{% else %}priority-medium{% endif %}">
+                  {% if step.priority == 'High' %}<i class="fas fa-exclamation me-1"></i>{% else %}<i
+                    class="fas fa-circle me-1" style="font-size:6px; vertical-align: middle;"></i>{% endif %}
+                  {{ step.priority }} Priority
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- Library Quick Access Card -->
+        <div class="col-lg-6 col-xl-3 mb-3">
+          <div class="next-step-card-v2 library-card">
+            <div class="d-flex align-items-start gap-3">
+              <div class="next-step-icon-v2 color-info">
+                <i class="fas fa-book-open"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold mb-1" style="color: var(--saas-text-main); font-size: 13.5px;">Digital Library</h6>
+                <p class="mb-2 text-muted" style="font-size: 12px; line-height: 1.5;">Browse syllabus-aligned textbooks
+                  and reference materials.</p>
+                <a href="{% url 'view_books' %}" class="btn btn-sm rounded-pill px-3"
+                  style="background: rgba(6,182,212,0.12); color: #0891b2; border: 1px solid rgba(6,182,212,0.3); font-size: 11px; font-weight: 600;">
+                  <i class="fas fa-external-link-alt me-1"></i> Browse Books
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- =========================================================================
+     Subject Detailed Performance Modal
+     ========================================================================= -->
+<div class="modal fade" id="subjectDetailModal" tabindex="-1" aria-labelledby="subjectDetailModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content"
+      style="border-radius: var(--saas-radius); border: 1px solid var(--saas-border); background-color: var(--saas-card-bg);">
+      <div class="modal-header" style="border-bottom: 1px solid var(--saas-border);">
+        <h5 class="modal-title fw-bold" id="subjectDetailModalLabel">
+          <i class="fas fa-book text-primary me-2"></i> <span id="modalSubjectName">Subject Details</span>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="row mb-4">
+          <div class="col-md-4 text-center p-3 rounded-3" style="background-color: var(--saas-bg);">
+            <div class="text-muted small text-uppercase fw-bold">Internal Assessment</div>
+            <div class="fs-4 fw-bold text-primary" id="modalInternalMarks">18.5 / 20</div>
+          </div>
+          <div class="col-md-4 text-center p-3 rounded-3" style="background-color: var(--saas-bg);">
+            <div class="text-muted small text-uppercase fw-bold">Semester Exam</div>
+            <div class="fs-4 fw-bold text-success" id="modalExamMarks">72 / 80</div>
+          </div>
+          <div class="col-md-4 text-center p-3 rounded-3" style="background-color: var(--saas-bg);">
+            <div class="text-muted small text-uppercase fw-bold">Aggregate Score</div>
+            <div class="fs-4 fw-bold text-purple" id="modalTotalPercentage">90.5%</div>
+          </div>
+        </div>
+
+        <h6 class="fw-bold mb-2"><i class="fas fa-comment-alt text-primary me-2"></i> Faculty Remarks</h6>
+        <p class="p-3 rounded-3 text-muted" style="background-color: var(--saas-bg); font-size: 13.5px;"
+          id="modalRemarks">
+          Remarks content here...
+        </p>
+
+        <h6 class="fw-bold mb-2 mt-3"><i class="fas fa-lightbulb text-warning me-2"></i> Recommended Areas for
+          Improvement</h6>
+        <p class="p-3 rounded-3 text-muted" style="background-color: var(--saas-bg); font-size: 13.5px;"
+          id="modalImprovement">
+          Improvement details here...
+        </p>
+      </div>
+      <div class="modal-footer" style="border-top: 1px solid var(--saas-border);">
+        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- =========================================================================
+     Feedback Slide-in Drawer (Right Side)
+     ========================================================================= -->
+<div id="feedbackDrawerOverlay" class="fb-drawer-overlay" onclick="closeFeedbackDrawer()"></div>
+<div id="feedbackDrawer" class="fb-drawer">
+  <div class="fb-drawer-header">
+    <div>
+      <div class="fb-drawer-tag"><i class="fas fa-chalkboard-teacher me-1"></i> Faculty Feedback</div>
+      <h5 class="fb-drawer-title" id="drawerSubjectTitle">Subject Feedback</h5>
+      <div class="fb-drawer-meta" id="drawerMeta"></div>
+    </div>
+    <button class="fb-drawer-close" onclick="closeFeedbackDrawer()" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="fb-drawer-body">
+    <!-- Feedback Summary -->
+    <div class="fb-drawer-block fb-block-feedback">
+      <div class="fb-block-label"><i class="fas fa-comment-dots me-2 text-primary"></i>Academic Feedback</div>
+      <p id="drawerFeedback" class="fb-block-text"></p>
+    </div>
+    <!-- Areas to Improve -->
+    <div class="fb-drawer-block fb-block-improve">
+      <div class="fb-block-label"><i class="fas fa-lightbulb me-2 text-warning"></i>Areas for Improvement</div>
+      <p id="drawerImprove" class="fb-block-text"></p>
+    </div>
+    <!-- Recommendations -->
+    <div class="fb-drawer-block fb-block-recommend">
+      <div class="fb-block-label"><i class="fas fa-compass me-2 text-success"></i>Recommendations</div>
+      <p id="drawerRecommend" class="fb-block-text"></p>
+    </div>
+    <!-- Follow-up Action -->
+    <div class="fb-drawer-block fb-block-action">
+      <div class="fb-block-label"><i class="fas fa-arrow-circle-right me-2" style="color:#6366f1;"></i>Follow-up Action
+      </div>
+      <p id="drawerAction" class="fb-block-text"></p>
+    </div>
+  </div>
 </div>
 {% endblock content %}
 
 {% block custom_js %}
 <script>
-$(document).ready(function(){
-    // Initialize chart instances array
-    window.chartInstances = window.chartInstances || [];
+  // Global chart instance storage
+  let performanceTrendChart = null;
+  let skillRadarChart = null;
+  let attendanceMonthlyChart = null;
+  let quarterlyProgressChart = null;
 
-    // Set initial colors based on current theme
+  // Dynamic datasets injected from data_service
+  const monthlyTrendData = {{ data.monthly_trends|default:"[]"|safe }};
+  const quarterlyProgressData = {{ data.quarterly_progress|default:"[]"|safe }};
+  const radarLabels = {{ data.radar_labels|default:"[]"|safe }};
+  const radarScores = {{ data.radar_scores|default:"[]"|safe }};
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initializeAllCharts();
+  });
+
+  function openSubjectModal(code, name, internal, exam, percentage, remarks, improvement) {
+    document.getElementById('modalSubjectName').innerText = `${name} (${code})`;
+    document.getElementById('modalInternalMarks').innerText = `${internal} / 20`;
+    document.getElementById('modalExamMarks').innerText = `${exam} / 80`;
+    document.getElementById('modalTotalPercentage').innerText = `${percentage}%`;
+    document.getElementById('modalRemarks').innerText = remarks || 'No specific remarks posted.';
+    document.getElementById('modalImprovement').innerText = improvement || 'Continue current study schedule.';
+
+    const modal = new bootstrap.Modal(document.getElementById('subjectDetailModal'));
+    modal.show();
+  }
+
+  function openFeedbackDrawer(teacher, subject, code, date, strengths, improve, recommend, action) {
+    document.getElementById('drawerSubjectTitle').innerText = subject;
+    document.getElementById('drawerMeta').innerHTML =
+      `<span style="font-size:12px; color:var(--saas-text-muted);">
+      <i class="fas fa-user me-1"></i>${teacher}
+      &nbsp;&bull;&nbsp;
+      <i class="fas fa-tag me-1"></i>${code}
+      &nbsp;&bull;&nbsp;
+      <i class="fas fa-calendar me-1"></i>${date}
+    </span>`;
+    document.getElementById('drawerFeedback').innerText = strengths || 'No feedback available.';
+    document.getElementById('drawerImprove').innerText = improve || 'None specified.';
+    document.getElementById('drawerRecommend').innerText = recommend || 'Continue current approach.';
+    document.getElementById('drawerAction').innerText = action || 'No follow-up action specified.';
+
+    document.getElementById('feedbackDrawer').classList.add('open');
+    document.getElementById('feedbackDrawerOverlay').classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFeedbackDrawer() {
+    document.getElementById('feedbackDrawer').classList.remove('open');
+    document.getElementById('feedbackDrawerOverlay').classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  function applyDashboardFilters() {
+    const year = document.getElementById('filterYear').value;
+    const quarter = document.getElementById('filterQuarter').value;
+    const month = document.getElementById('filterMonth').value;
+    const subject = document.getElementById('filterSubject').value;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('academic_year', year);
+    url.searchParams.set('quarter', quarter);
+    url.searchParams.set('month', month);
+    url.searchParams.set('subject', subject);
+
+    // Fetch dynamic data via AJAX
+    fetch(`/student/filter_dashboard/?${url.searchParams.toString()}`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === 'success') {
+          updateDashboardData(response.data);
+        }
+      })
+      .catch(err => console.error('Filter update error:', err));
+  }
+
+  function resetDashboardFilters() {
+    document.getElementById('filterYear').value = '2025-2026';
+    document.getElementById('filterQuarter').value = 'all';
+    document.getElementById('filterMonth').value = 'all';
+    document.getElementById('filterSubject').value = 'all';
+    applyDashboardFilters();
+  }
+
+  function updateDashboardData(data) {
+    if (!data) return;
+    initializeAllCharts(data);
+  }
+
+  function initializeAllCharts(customData) {
     const isDarkMode = document.body.classList.contains('dark-mode');
-    const textColor = isDarkMode ? '#e0e0e0' : '#262626';
+    const textColor = isDarkMode ? '#94a3b8' : '#64748b';
+    const gridColor = isDarkMode ? '#334155' : '#f1f5f9';
 
-    // ERPNext Theme Colors
-    var colors = {
-        primary: '#5e64ff',
-        success: '#28a745',
-        danger: '#dc3545',
-        warning: '#ffc107',
-        info: '#17a2b8',
-        light: '#f8f9fa',
-        dark: '#343a40',
-        purple: '#6f42c1'
-    };
+    const mData = (customData && customData.monthly_trends) ? customData.monthly_trends : monthlyTrendData;
+    const qData = (customData && customData.quarterly_progress) ? customData.quarterly_progress : quarterlyProgressData;
+    const rLabels = (customData && customData.radar_labels) ? customData.radar_labels : radarLabels;
+    const rScores = (customData && customData.radar_scores) ? customData.radar_scores : radarScores;
 
-    //Dataset
-    var subjects = {{data_name|safe}}
-    var data_present = {{data_present}}
-    var data_absent = {{data_absent}}
+    const months = mData.map(d => d.month);
+    const scores = mData.map(d => d.score);
+    const studyHours = mData.map(d => d.study_hours);
+    const attData = mData.map(d => d.attendance);
 
-    //-------------
-    //- DONUT CHART -
-    var attendanceDataCanvas = $('#attendanceData').get(0).getContext('2d')
-    var donutData = {
-      labels: [
-         'Present', 'Absent'
-      ],
-      datasets: [
-        {
-          data: [{{percent_present}}, {{percent_absent}}],
-          backgroundColor : [colors.success, colors.danger],
-          borderColor: [colors.success, colors.danger],
-          borderWidth: 2
-        }
-      ]
-    }
-    var donutOptions = {
-      maintainAspectRatio : false,
-      responsive : true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-              usePointStyle: true,
-              padding: 20,
-              color: textColor,
-              font: {
-                size: 12
-              }
-            }
-          }
-        }
-    }
-    var attendanceData = new Chart(attendanceDataCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions      
-    });
-    window.chartInstances.push(attendanceData);
+    // 1. Performance Trend Line Chart
+    const trendCtx = document.getElementById('performanceTrendChart').getContext('2d');
+    if (performanceTrendChart) performanceTrendChart.destroy();
 
-    //attendanceStatistics
-    //Bar Chart
-    var areaChartData = {
-        labels  : subjects,
+    performanceTrendChart = new Chart(trendCtx, {
+      type: 'line',
+      data: {
+        labels: months,
         datasets: [
-        {
-            label               : 'Present In Class',
-            backgroundColor     : colors.success,
-            borderColor         : colors.success,
-            pointRadius          : false,
-            pointColor          : colors.success,
-            pointStrokeColor    : colors.success,
-            pointHighlightFill  : '#fff',
-            pointHighlightStroke: colors.success,
-            data                : data_present
-          },
-
           {
-            label               : 'Absent In Class',
-            backgroundColor     : colors.danger,
-            borderColor         : colors.danger,
-            pointRadius         : false,
-            pointColor          : colors.danger,
-            pointStrokeColor    : colors.danger,
-            pointHighlightFill  : '#fff',
-            pointHighlightStroke: colors.danger,
-            data                : data_absent
+            label: 'Academic Score %',
+            data: scores,
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            fill: true,
+            tension: 0.4,
+            borderWidth: 3,
+            pointBackgroundColor: '#6366f1',
+            pointRadius: 4,
+            yAxisID: 'y'
           },
+          {
+            label: 'Study Hours / Mo',
+            data: studyHours,
+            borderColor: '#10b981',
+            backgroundColor: 'transparent',
+            borderDash: [5, 5],
+            tension: 0.3,
+            borderWidth: 2,
+            pointBackgroundColor: '#10b981',
+            pointRadius: 3,
+            yAxisID: 'y1'
+          }
         ]
-    }
-    var barChartCanvas = $('#attendanceStatistics').get(0).getContext('2d')
-    var barChartData = jQuery.extend(true, {}, areaChartData)
-    var temp = areaChartData.datasets[0]
-    barChartData.datasets[0] = temp
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
-          }
-        }
       },
-      scales: {
-        y: {
-          ticks: {
-            color: textColor
-          },
-          grid: {
-            color: isDarkMode ? '#404040' : '#f1f3f4'
-          }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { color: textColor, usePointStyle: true, padding: 15 } }
         },
-        x: {
-          ticks: {
-            color: textColor
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: textColor } },
+          y: {
+            min: 40, max: 100,
+            grid: { color: gridColor },
+            ticks: { color: textColor, callback: val => val + '%' }
           },
-          grid: {
-            color: isDarkMode ? '#404040' : '#f1f3f4'
+          y1: {
+            position: 'right', min: 0, max: 60,
+            grid: { drawOnChartArea: false },
+            ticks: { color: textColor, callback: val => val + 'h' }
           }
         }
       }
-    }
-
-    var barChart = new Chart(barChartCanvas, {
-      type: 'bar', 
-      data: barChartData,
-      options: barChartOptions
-    })
-    window.chartInstances.push(barChart);
-})
-</script>
-
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-messaging.js"></script>
-
-<script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-        apiKey: "AIzaSyBarDWWHTfTMSrtc5Lj3Cdw5dEvjAkFwtM",
-        authDomain: "sms-with-django.firebaseapp.com",
-        databaseURL: "https://sms-with-django.firebaseio.com",
-        projectId: "sms-with-django",
-        storageBucket: "sms-with-django.appspot.com",
-        messagingSenderId: "945324593139",
-        appId: "1:945324593139:web:03fa99a8854bbd38420c86",
-        measurementId: "G-2F2RXTL9GT"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig)
-    const messaging = firebase.messaging();
-    function InitializeFireBaseMessaging() {
-        messaging
-            .requestPermission()
-            .then(function () {
-                console.log("Notification Permission");
-                return messaging.getToken();
-            })
-            .then(function (token) {
-                console.log("Token : " + token);
-                sendToServer(token);
-            })
-            .catch(function (reason) {
-                console.log(reason)
-            })
-    }
-    messaging.onMessage(function (payload) {
-        const notificationOption = {
-            body: payload.notification.body,
-            icon: payload.notification.icon,
-
-        }
-        if (Notification.permission == 'granted') {
-            var notification = new Notification(payload.notification.title, notificationOption);
-            notification.onclick = function (event) {
-                event.preventDefault();
-                window.open(payload.notification.click_action, "_blank");
-                notification.close();
-            }
-        }
-        console.log(payload);
     });
-    messaging.onTokenRefresh(function () {
-        messaging.getToken()
-            .then(function (newToken) {
-                console.log("New Token : " + newToken);
-                sendToServer(newToken);
 
-            })
-            .catch(function (reason) {
-                console.log(reason)
-            })
-    })
+    // 2. Skill Radar Chart
+    const radarCtx = document.getElementById('skillRadarChart').getContext('2d');
+    if (skillRadarChart) skillRadarChart.destroy();
 
-    function sendToServer(token){
-      $.ajax({
-        url: "{% url 'student_fcmtoken' %}",
-        type: 'POST',
-        data: {
-            token: token,
+    skillRadarChart = new Chart(radarCtx, {
+      type: 'radar',
+      data: {
+        labels: rLabels.length ? rLabels : ['AI & NN', 'DBMS', 'CN & Cloud', 'Data Mining', 'ML & Stats', 'Ethics & Comm'],
+        datasets: [{
+          label: 'Skill Proficiency %',
+          data: rScores.length ? rScores : [91, 87, 83, 93, 89, 83],
+          backgroundColor: 'rgba(139, 92, 246, 0.25)',
+          borderColor: '#8b5cf6',
+          pointBackgroundColor: '#8b5cf6',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          r: {
+            min: 40, max: 100,
+            ticks: { display: false },
+            grid: { color: gridColor },
+            angleLines: { color: gridColor },
+            pointLabels: { color: textColor, font: { size: 11, weight: '600' } }
+          }
         }
-    }).done(function (response) {
-       
+      }
+    });
 
-       
-    }).fail(function (response) {
-    })
+    // 3. Attendance Monthly Tracking vs 75% Line
+    const attCtx = document.getElementById('attendanceMonthlyChart').getContext('2d');
+    if (attendanceMonthlyChart) attendanceMonthlyChart.destroy();
 
-    }
-    
-    InitializeFireBaseMessaging();
+    attendanceMonthlyChart = new Chart(attCtx, {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            type: 'line',
+            label: '75% Mandatory Cutoff',
+            data: months.map(() => 75),
+            borderColor: '#ef4444',
+            borderWidth: 2,
+            borderDash: [6, 6],
+            fill: false,
+            pointRadius: 0
+          },
+          {
+            label: 'Actual Attendance %',
+            data: attData,
+            backgroundColor: 'rgba(6, 182, 212, 0.85)',
+            borderRadius: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: textColor, usePointStyle: true } }
+        },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: textColor } },
+          y: { min: 40, max: 100, grid: { color: gridColor }, ticks: { color: textColor, callback: v => v + '%' } }
+        }
+      }
+    });
+
+    // 4. Quarterly Progress Chart
+    const qtrCtx = document.getElementById('quarterlyProgressChart').getContext('2d');
+    if (quarterlyProgressChart) quarterlyProgressChart.destroy();
+
+    const qLabels = qData.map(d => d.quarter);
+    const qScores = qData.map(d => d.overall_score);
+    const qAtt = qData.map(d => d.attendance);
+
+    quarterlyProgressChart = new Chart(qtrCtx, {
+      type: 'bar',
+      data: {
+        labels: qLabels,
+        datasets: [
+          {
+            label: 'Overall % Score',
+            data: qScores,
+            backgroundColor: '#8b5cf6',
+            borderRadius: 8
+          },
+          {
+            label: 'Attendance %',
+            data: qAtt,
+            backgroundColor: 'rgba(99, 102, 241, 0.4)',
+            borderRadius: 8
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: textColor, usePointStyle: true } }
+        },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: textColor } },
+          y: { min: 40, max: 100, grid: { color: gridColor }, ticks: { color: textColor, callback: v => v + '%' } }
+        }
+      }
+    });
+  }
 </script>
 {% endblock custom_js %}
