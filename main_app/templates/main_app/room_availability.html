@@ -1,0 +1,1292 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block title %}Room & Resource Availability - College ERP{% endblock title %}
+
+{% block page_title %}Room & Resource Availability{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Room Availability</li>
+{% endblock breadcrumb %}
+
+{% block custom_css %}
+<style>
+  :root {
+    --ra-bg-surface: #ffffff;
+    --ra-border-color: #e2e8f0;
+    --ra-text-main: #0f172a;
+    --ra-text-muted: #64748b;
+    --ra-primary: #2563eb;
+    
+    /* Status Colors */
+    --ra-available-bg: #ecfdf5;
+    --ra-available-text: #047857;
+    --ra-available-border: #a7f3d0;
+    
+    --ra-occupied-bg: #fef2f2;
+    --ra-occupied-text: #b91c1c;
+    --ra-occupied-border: #fecaca;
+    
+    --ra-upcoming-bg: #fffbeb;
+    --ra-upcoming-text: #b45309;
+    --ra-upcoming-border: #fde68a;
+    
+    --ra-maintenance-bg: #f0f9ff;
+    --ra-maintenance-text: #0369a1;
+    --ra-maintenance-border: #bae6fd;
+  }
+
+  .room-availability-container {
+    padding-bottom: 50px;
+    animation: fadeInPage 0.35s ease-in-out;
+  }
+  @keyframes fadeInPage {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Header Bar ────────────────────────────────────────── */
+  .ra-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .ra-header-title h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--ra-text-main);
+    margin: 0 0 4px 0;
+  }
+  .ra-header-title p {
+    font-size: 14px;
+    color: var(--ra-text-muted);
+    margin: 0;
+  }
+  .ra-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .ra-date-picker {
+    background: #ffffff;
+    border: 1px solid var(--ra-border-color);
+    border-radius: 12px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .ra-date-picker input {
+    border: none;
+    outline: none;
+    font-weight: 700;
+    font-size: 14px;
+    color: #1e293b;
+    background: transparent;
+    cursor: pointer;
+  }
+  .btn-request-badge {
+    padding: 9px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    transition: all 0.2s;
+  }
+  .btn-request-badge:hover {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  /* ── Metric Cards ──────────────────────────────────────── */
+  .ra-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .ra-metric-card {
+    background: #ffffff;
+    border: 1px solid var(--ra-border-color);
+    border-radius: 16px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .ra-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  }
+  .ra-icon-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .ra-metric-card.available .ra-icon-circle { background: #d1fae5; color: #059669; }
+  .ra-metric-card.occupied .ra-icon-circle  { background: #fee2e2; color: #dc2626; }
+  .ra-metric-card.upcoming .ra-icon-circle  { background: #fef3c7; color: #d97706; }
+  .ra-metric-card.maintenance .ra-icon-circle { background: #e0f2fe; color: #0284c7; }
+  
+  .ra-metric-info h3 {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+  }
+  .ra-metric-card.available h3   { color: #047857; }
+  .ra-metric-card.occupied h3    { color: #b91c1c; }
+  .ra-metric-card.upcoming h3    { color: #b45309; }
+  .ra-metric-card.maintenance h3 { color: #0369a1; }
+
+  .ra-metric-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ra-text-main);
+  }
+  .ra-metric-subtext {
+    font-size: 11px;
+    color: var(--ra-text-muted);
+  }
+
+  /* ── Layout 2-Columns ───────────────────────────────────── */
+  .ra-main-layout {
+    display: grid;
+    grid-template-columns: 1fr 370px;
+    gap: 24px;
+  }
+  @media (max-width: 1100px) {
+    .ra-main-layout { grid-template-columns: 1fr; }
+  }
+
+  /* ── Left Content Card ──────────────────────────────────── */
+  .ra-content-card {
+    background: #ffffff;
+    border: 1px solid var(--ra-border-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+
+  /* Category Tabs */
+  .ra-category-tabs {
+    display: flex;
+    gap: 24px;
+    padding: 16px 24px 0 24px;
+    border-bottom: 1px solid var(--ra-border-color);
+    overflow-x: auto;
+  }
+  .ra-tab-item {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ra-text-muted);
+    padding-bottom: 12px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .ra-tab-item:hover {
+    color: var(--ra-primary);
+  }
+  .ra-tab-item.active {
+    color: var(--ra-primary);
+    border-bottom-color: var(--ra-primary);
+  }
+
+  /* Filter Toolbar */
+  .ra-filter-toolbar {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--ra-border-color);
+  }
+  .ra-search-box {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+  }
+  .ra-search-box i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 14px;
+  }
+  .ra-search-box input {
+    width: 100%;
+    padding: 9px 14px 9px 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+    background: #ffffff;
+    transition: border 0.2s;
+  }
+  .ra-search-box input:focus {
+    border-color: var(--ra-primary);
+  }
+  .ra-select-filter {
+    padding: 9px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    background: #ffffff;
+    outline: none;
+    cursor: pointer;
+  }
+
+  /* Rooms Table */
+  .ra-table-responsive {
+    overflow-x: auto;
+  }
+  .ra-rooms-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .ra-rooms-table thead tr {
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--ra-border-color);
+  }
+  .ra-rooms-table th {
+    padding: 12px 18px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .ra-rooms-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .ra-rooms-table tbody tr:hover {
+    background: #f8fafc;
+  }
+  .ra-rooms-table tbody tr.active-row {
+    background: #eff6ff !important;
+  }
+  .ra-rooms-table td {
+    padding: 14px 18px;
+    vertical-align: middle;
+  }
+
+  .room-name-cell {
+    font-weight: 700;
+    color: var(--ra-text-main);
+    font-size: 14px;
+  }
+  .room-type-subtitle {
+    font-size: 12px;
+    color: var(--ra-text-muted);
+  }
+
+  /* Badges */
+  .type-pill {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-block;
+  }
+  .type-classroom  { background: #eff6ff; color: #2563eb; }
+  .type-lab        { background: #faf5ff; color: #7c3aed; }
+  .type-hall       { background: #fffbeb; color: #d97706; }
+
+  .status-pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .status-available   { background: var(--ra-available-bg); color: var(--ra-available-text); border: 1px solid var(--ra-available-border); }
+  .status-occupied    { background: var(--ra-occupied-bg); color: var(--ra-occupied-text); border: 1px solid var(--ra-occupied-border); }
+  .status-upcoming    { background: var(--ra-upcoming-bg); color: var(--ra-upcoming-text); border: 1px solid var(--ra-upcoming-border); }
+  .status-maintenance { background: var(--ra-maintenance-bg); color: var(--ra-maintenance-text); border: 1px solid var(--ra-maintenance-border); }
+
+  .timing-cell {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+  }
+  .timing-free-subtext {
+    font-size: 11px;
+    color: #94a3b8;
+  }
+
+  .btn-book-action {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-book-action:hover {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+  }
+
+  /* ── Right Panel / Drawer ───────────────────────────────── */
+  .ra-detail-panel {
+    background: #ffffff;
+    border: 1px solid var(--ra-border-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    padding: 24px;
+    position: sticky;
+    top: 20px;
+  }
+  .ra-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .ra-panel-header h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--ra-text-main);
+  }
+
+  .ra-room-img-container {
+    width: 100%;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    background: #f1f5f9;
+  }
+  .ra-room-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ra-tag-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .ra-tag {
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .ra-section-title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ra-text-muted);
+    margin-bottom: 12px;
+  }
+
+  .ra-activity-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .ra-act-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .ra-act-icon.purple { background: #faf5ff; color: #7c3aed; }
+  .ra-act-icon.blue   { background: #eff6ff; color: #2563eb; }
+
+  .ra-act-info h5 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 2px 0;
+    color: var(--ra-text-main);
+  }
+  .ra-act-info p {
+    font-size: 12px;
+    color: var(--ra-text-muted);
+    margin: 0 0 4px 0;
+  }
+  .ra-act-info small {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  /* Full Day Timeline */
+  .ra-timeline {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 24px;
+  }
+  .ra-timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: #e2e8f0;
+  }
+  .ra-timeline-item {
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .ra-timeline-item:last-child {
+    margin-bottom: 0;
+  }
+  .ra-timeline-dot {
+    position: absolute;
+    left: -20px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px #cbd5e1;
+  }
+  .ra-timeline-dot.occupied { background: #3b82f6; box-shadow: 0 0 0 1px #2563eb; }
+  .ra-timeline-dot.free     { background: #10b981; box-shadow: 0 0 0 1px #059669; }
+
+  .ra-timeline-time {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+  }
+  .ra-timeline-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ra-text-main);
+  }
+  .ra-timeline-sub {
+    font-size: 11px;
+    color: var(--ra-text-muted);
+  }
+
+  /* Footer Details */
+  .ra-panel-footer {
+    border-top: 1px solid var(--ra-border-color);
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .ra-footer-item small {
+    font-size: 11px;
+    color: var(--ra-text-muted);
+    display: block;
+  }
+  .ra-footer-item strong {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ra-text-main);
+  }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+<div class="room-availability-container">
+  
+  <!-- Header Bar -->
+  <div class="ra-header-bar">
+    <div class="ra-header-title">
+      <h2>Room & Resource Availability</h2>
+      <p>Check the availability of classrooms, halls and laboratories based on the college timetable.</p>
+    </div>
+    
+    <div class="ra-header-actions">
+      <!-- Staff My Bookings Button -->
+      {% if user_is_staff %}
+      <button type="button" class="btn-request-badge" data-bs-toggle="modal" data-bs-target="#myBookingsModal">
+        <i class="fas fa-bookmark text-primary"></i>
+        <span>My Bookings</span>
+        <span class="badge bg-primary rounded-pill text-white ms-1">{{ availability.user_bookings|length }}</span>
+      </button>
+      {% endif %}
+
+      <!-- Admin Pending Requests Button -->
+      {% if user_is_admin %}
+      <button type="button" class="btn-request-badge" data-bs-toggle="modal" data-bs-target="#adminBookingsModal" style="background: #fef3c7; color: #92400e; border-color: #fde68a;">
+        <i class="fas fa-clock text-warning"></i>
+        <span>Pending Requests</span>
+        <span class="badge bg-warning rounded-pill text-dark ms-1">{{ availability.pending_bookings|length }}</span>
+      </button>
+      {% endif %}
+
+      <!-- Date Picker Filter -->
+      <div class="ra-date-picker">
+        <i class="far fa-calendar-alt text-primary"></i>
+        <input type="date" id="datePickerInput" value="{{ availability.selected_date }}" onchange="applyFilters()">
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Metric Cards -->
+  <div class="ra-metrics-grid">
+    <div class="ra-metric-card available">
+      <div class="ra-icon-circle">
+        <i class="fas fa-door-open"></i>
+      </div>
+      <div class="ra-metric-info">
+        <h3>{{ availability.summary.available }}</h3>
+        <div class="ra-metric-label">Available</div>
+        <div class="ra-metric-subtext">Rooms, Halls & Labs</div>
+      </div>
+    </div>
+
+    <div class="ra-metric-card occupied">
+      <div class="ra-icon-circle">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="ra-metric-info">
+        <h3>{{ availability.summary.occupied }}</h3>
+        <div class="ra-metric-label">Occupied</div>
+        <div class="ra-metric-subtext">Rooms, Halls & Labs</div>
+      </div>
+    </div>
+
+    <div class="ra-metric-card upcoming">
+      <div class="ra-icon-circle">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="ra-metric-info">
+        <h3>{{ availability.summary.upcoming }}</h3>
+        <div class="ra-metric-label">Upcoming</div>
+        <div class="ra-metric-subtext">Rooms, Halls & Labs</div>
+      </div>
+    </div>
+
+    <div class="ra-metric-card maintenance">
+      <div class="ra-icon-circle">
+        <i class="fas fa-wrench"></i>
+      </div>
+      <div class="ra-metric-info">
+        <h3>{{ availability.summary.maintenance }}</h3>
+        <div class="ra-metric-label">Maintenance</div>
+        <div class="ra-metric-subtext">Rooms, Halls & Labs</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main 2-Column Layout -->
+  <div class="ra-main-layout">
+    
+    <!-- Left Column: Content Table -->
+    <div class="ra-content-card">
+      
+      <!-- Category Tabs -->
+      <div class="ra-category-tabs">
+        <a href="javascript:void(0)" onclick="setCategoryTab('all')" class="ra-tab-item {% if availability.filters.category_tab == 'all' or not availability.filters.category_tab %}active{% endif %}">All</a>
+        <a href="javascript:void(0)" onclick="setCategoryTab('classrooms')" class="ra-tab-item {% if availability.filters.category_tab == 'classrooms' %}active{% endif %}">Classrooms</a>
+        <a href="javascript:void(0)" onclick="setCategoryTab('laboratories')" class="ra-tab-item {% if availability.filters.category_tab == 'laboratories' %}active{% endif %}">Laboratories</a>
+        <a href="javascript:void(0)" onclick="setCategoryTab('halls')" class="ra-tab-item {% if availability.filters.category_tab == 'halls' %}active{% endif %}">Halls</a>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="ra-filter-toolbar">
+        <div class="ra-search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search room (e.g. Room 101, Lab 2)" value="{{ availability.filters.search }}" oninput="applyFiltersDebounced()">
+        </div>
+
+        <select id="buildingFilter" class="ra-select-filter" onchange="applyFilters()">
+          <option value="all" {% if availability.filters.building == 'all' %}selected{% endif %}>All Buildings</option>
+          {% for b in availability.buildings %}
+          <option value="{{ b }}" {% if availability.filters.building == b %}selected{% endif %}>{{ b }}</option>
+          {% endfor %}
+        </select>
+
+        <select id="statusFilter" class="ra-select-filter" onchange="applyFilters()">
+          <option value="all" {% if availability.filters.status == 'all' %}selected{% endif %}>All Status</option>
+          <option value="Available" {% if availability.filters.status == 'Available' %}selected{% endif %}>Available</option>
+          <option value="Occupied" {% if availability.filters.status == 'Occupied' %}selected{% endif %}>Occupied</option>
+          <option value="Upcoming" {% if availability.filters.status == 'Upcoming' %}selected{% endif %}>Upcoming</option>
+          <option value="Maintenance" {% if availability.filters.status == 'Maintenance' %}selected{% endif %}>Maintenance</option>
+        </select>
+
+        <select id="sortFilter" class="ra-select-filter" onchange="applyFilters()">
+          <option value="name" {% if availability.filters.sort_by == 'name' %}selected{% endif %}>Sort by Name</option>
+          <option value="capacity" {% if availability.filters.sort_by == 'capacity' %}selected{% endif %}>Sort by Capacity</option>
+          <option value="status" {% if availability.filters.sort_by == 'status' %}selected{% endif %}>Sort by Status</option>
+          <option value="building" {% if availability.filters.sort_by == 'building' %}selected{% endif %}>Sort by Building</option>
+        </select>
+      </div>
+
+      <!-- Rooms Table -->
+      <div class="ra-table-responsive">
+        <table class="ra-rooms-table">
+          <thead>
+            <tr>
+              <th>Room / Resource</th>
+              <th>Type</th>
+              <th>Building</th>
+              <th>Capacity</th>
+              <th>Status</th>
+              <th>Current / Next Event</th>
+              <th>Timing</th>
+              {% if user_is_staff %}
+              <th class="text-center">Book Slot</th>
+              {% endif %}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for room in availability.rooms %}
+            <tr onclick="selectRoom('{{ room.id }}')" class="{% if availability.selected_room and availability.selected_room.id == room.id %}active-row{% endif %}">
+              <td>
+                <div class="room-name-cell">{{ room.room_number }}</div>
+                <div class="room-type-subtitle">{{ room.type }}</div>
+              </td>
+              <td>
+                {% if room.type == 'Classroom' %}
+                <span class="type-pill type-classroom">Classroom</span>
+                {% elif room.type == 'Laboratory' or room.type == 'Lab' %}
+                <span class="type-pill type-lab">Lab</span>
+                {% else %}
+                <span class="type-pill type-hall">Hall</span>
+                {% endif %}
+              </td>
+              <td class="fw-bold text-secondary">{{ room.building }}</td>
+              <td class="fw-bold text-dark">{{ room.capacity }}</td>
+              <td>
+                {% if room.status == 'Available' %}
+                <span class="status-pill status-available"><i class="fas fa-check-circle"></i> Available</span>
+                {% elif room.status == 'Occupied' %}
+                <span class="status-pill status-occupied"><i class="fas fa-dot-circle"></i> Occupied</span>
+                {% elif room.status == 'Upcoming' %}
+                <span class="status-pill status-upcoming"><i class="fas fa-clock"></i> Upcoming</span>
+                {% else %}
+                <span class="status-pill status-maintenance"><i class="fas fa-wrench"></i> Maintenance</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if room.current_event and room.current_event.title and room.current_event.title != 'Free' %}
+                  <div class="fw-bold text-dark">{{ room.current_event.title }}</div>
+                  <small class="text-muted">{{ room.current_event.faculty }}{% if room.current_event.class %} | {{ room.current_event.class }}{% endif %}</small>
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+              <td>
+                <div class="timing-cell">{{ room.timing_display }}</div>
+              </td>
+              
+              {% if user_is_staff %}
+              <!-- Staff Book Slot Action Column -->
+              <td class="text-center" onclick="event.stopPropagation();">
+                <button type="button" class="btn-book-action" onclick="openBookSlotModal('{{ room.id }}', '{{ room.room_number }}', '{{ room.type }}', '{{ room.building }}', '{{ room.capacity }}')" title="Book this slot">
+                  <i class="fas fa-calendar-plus"></i> <span>Book Slot</span>
+                </button>
+              </td>
+              {% endif %}
+
+              <td class="text-muted text-end pe-3">
+                <i class="fas fa-chevron-right text-muted" style="font-size: 12px;"></i>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="{% if user_is_staff %}9{% else %}8{% endif %}" class="text-center py-5 text-muted">
+                <i class="fas fa-info-circle fa-2x mb-2 d-block"></i>
+                No rooms match the selected filters or search query.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right Column: Detail Information Panel -->
+    <div>
+      {% if availability.selected_room %}
+      <div class="ra-detail-panel">
+        
+        <!-- Room Header & Status -->
+        <div class="ra-panel-header">
+          <h3>{{ availability.selected_room.room_number }}</h3>
+          {% if availability.selected_room.status == 'Available' %}
+          <span class="status-pill status-available">Available</span>
+          {% elif availability.selected_room.status == 'Occupied' %}
+          <span class="status-pill status-occupied">Occupied</span>
+          {% elif availability.selected_room.status == 'Upcoming' %}
+          <span class="status-pill status-upcoming">Upcoming</span>
+          {% else %}
+          <span class="status-pill status-maintenance">Maintenance</span>
+          {% endif %}
+        </div>
+
+        <!-- Room Preview Image -->
+        <div class="ra-room-img-container">
+          <img src="{{ availability.selected_room.image }}" alt="{{ availability.selected_room.room_number }}" onerror="this.src='https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=80'">
+        </div>
+
+        <!-- Metadata Tags -->
+        <div class="ra-tag-group">
+          <span class="ra-tag">{{ availability.selected_room.type }}</span>
+          <span class="ra-tag">{{ availability.selected_room.building }}</span>
+          <span class="ra-tag">Capacity: {{ availability.selected_room.capacity }}</span>
+        </div>
+
+        <!-- Staff Book Button inside detail panel -->
+        {% if user_is_staff %}
+        <div class="mb-3">
+          <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill font-weight-bold py-2 d-flex align-items-center justify-content-center gap-2" onclick="openBookSlotModal('{{ availability.selected_room.id }}', '{{ availability.selected_room.room_number }}', '{{ availability.selected_room.type }}', '{{ availability.selected_room.building }}', '{{ availability.selected_room.capacity }}')">
+            <i class="fas fa-calendar-plus"></i> Request Slot in {{ availability.selected_room.room_number }}
+          </button>
+        </div>
+        {% endif %}
+
+        <!-- Current Activity -->
+        <div class="ra-section-title"><i class="fas fa-play-circle me-1"></i> Current Activity</div>
+        <div class="ra-activity-box">
+          <div class="ra-act-icon purple">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <div class="ra-act-info">
+            {% if availability.selected_room.current_event and availability.selected_room.current_event.title and availability.selected_room.current_event.title != 'Free' %}
+              <h5>{{ availability.selected_room.current_event.title }}</h5>
+              <p>{{ availability.selected_room.current_event.faculty }}{% if availability.selected_room.current_event.class %} | {{ availability.selected_room.current_event.class }}{% endif %}</p>
+              <small>{{ availability.selected_room.timing_display }}</small>
+            {% else %}
+              <h5>No Ongoing Event</h5>
+              <p>Room is currently free for study or lab usage</p>
+              <small class="text-success fw-bold">{{ availability.selected_room.timing_display }}</small>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Next Schedule -->
+        {% if availability.selected_room.next_event %}
+        <div class="ra-section-title"><i class="far fa-clock me-1"></i> Next Schedule</div>
+        <div class="ra-activity-box">
+          <div class="ra-act-icon blue">
+            <i class="far fa-calendar-check"></i>
+          </div>
+          <div class="ra-act-info">
+            <h5>{{ availability.selected_room.next_event.title }}</h5>
+            <p>{{ availability.selected_room.next_event.faculty }}{% if availability.selected_room.next_event.class %} | {{ availability.selected_room.next_event.class }}{% endif %}</p>
+            <small>{{ availability.selected_room.next_event.time }}</small>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Full Day Schedule Timeline -->
+        <div class="ra-section-title"><i class="fas fa-list-ul me-1"></i> Full Day Schedule ({{ availability.day_of_week }})</div>
+        <div class="ra-timeline">
+          {% for slot in availability.selected_room.timeline %}
+          <div class="ra-timeline-item">
+            <div class="ra-timeline-dot {% if slot.is_free %}free{% else %}occupied{% endif %}"></div>
+            <div class="ra-timeline-time">{{ slot.time }}</div>
+            <div class="ra-timeline-title">
+              {% if slot.is_free %}
+                <span class="text-success">Free Slot</span>
+              {% else %}
+                {{ slot.title }}
+              {% endif %}
+            </div>
+            {% if not slot.is_free %}
+            <div class="ra-timeline-sub">{{ slot.faculty }}{% if slot.class %} | {{ slot.class }}{% endif %}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Footer Info -->
+        <div class="ra-panel-footer">
+          <div class="ra-footer-item">
+            <small>Faculty / Staff</small>
+            <strong>{{ availability.selected_room.staff_in_charge }}</strong>
+          </div>
+          <div class="ra-footer-item">
+            <small>Department</small>
+            <strong>{{ availability.selected_room.department }}</strong>
+          </div>
+        </div>
+
+        <!-- Admin Control Button -->
+        {% if user_is_admin %}
+        <div class="mt-4">
+          <button class="btn btn-outline-primary btn-sm w-100 rounded-pill font-weight-bold" data-bs-toggle="modal" data-bs-target="#editRoomModal">
+            <i class="fas fa-cog me-1"></i> Manage Room Status
+          </button>
+        </div>
+        {% endif %}
+
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% if user_is_staff %}
+<!-- STAFF BOOK SLOT MODAL -->
+<div class="modal fade" id="bookSlotModal" tabindex="-1" aria-labelledby="bookSlotModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      <div class="modal-header bg-primary text-white p-4">
+        <div>
+          <h5 class="modal-title font-weight-bold mb-1" id="bookSlotModalLabel">
+            <i class="fas fa-calendar-plus me-2"></i>Book Room Slot
+          </h5>
+          <small class="text-white-50" id="bookModalSubtitle">Submit booking request to HOD for approval</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <form method="POST" action="{% url 'room_availability' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="book_slot">
+        <input type="hidden" name="room_id" id="bookRoomId" value="">
+        
+        <div class="modal-body p-4">
+          
+          <!-- Selected Room Pill -->
+          <div class="alert alert-light border d-flex align-items-center justify-content-between p-3 mb-3 rounded-3">
+            <div>
+              <span class="text-muted small d-block">Selected Resource</span>
+              <strong class="text-primary fs-6" id="bookRoomDisplay">Room</strong>
+            </div>
+            <span class="badge bg-primary rounded-pill px-3 py-2" id="bookTypeDisplay">Classroom</span>
+          </div>
+
+          <!-- Teacher Name Dropdown -->
+          <div class="mb-3">
+            <label class="form-label font-weight-bold text-dark">Teacher / Staff Name <span class="text-danger">*</span></label>
+            <select name="teacher_name" class="form-select rounded-3" required>
+              {% for t in availability.teachers %}
+              <option value="{{ t.name }}" {% if request.user.email == t.email %}selected{% endif %}>{{ t.name }} ({{ t.department }})</option>
+              {% empty %}
+              <option value="{{ request.user.get_full_name|default:'Faculty Member' }}">{{ request.user.get_full_name|default:'Faculty Member' }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Date Picker -->
+          <div class="mb-3">
+            <label class="form-label font-weight-bold text-dark">Booking Date <span class="text-danger">*</span></label>
+            <input type="date" name="date" id="bookDateInput" class="form-control rounded-3" value="{{ availability.selected_date }}" required>
+          </div>
+
+          <!-- Time Slots -->
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label class="form-label font-weight-bold text-dark">Start Time <span class="text-danger">*</span></label>
+              <select name="start_time" class="form-select rounded-3" required>
+                <option value="08:00 AM">08:00 AM</option>
+                <option value="09:00 AM" selected>09:00 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:15 AM">11:15 AM</option>
+                <option value="12:15 PM">12:15 PM</option>
+                <option value="01:15 PM">01:15 PM</option>
+                <option value="02:00 PM">02:00 PM</option>
+                <option value="03:00 PM">03:00 PM</option>
+                <option value="04:00 PM">04:00 PM</option>
+                <option value="05:00 PM">05:00 PM</option>
+              </select>
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label font-weight-bold text-dark">End Time <span class="text-danger">*</span></label>
+              <select name="end_time" class="form-select rounded-3" required>
+                <option value="09:00 AM">09:00 AM</option>
+                <option value="10:00 AM" selected>10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:15 PM">12:15 PM</option>
+                <option value="01:15 PM">01:15 PM</option>
+                <option value="02:00 PM">02:00 PM</option>
+                <option value="03:00 PM">03:00 PM</option>
+                <option value="04:00 PM">04:00 PM</option>
+                <option value="05:00 PM">05:00 PM</option>
+                <option value="06:00 PM">06:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Event / Purpose Type -->
+          <div class="mb-3">
+            <label class="form-label font-weight-bold text-dark">Event / Purpose <span class="text-danger">*</span></label>
+            <select name="event_type" class="form-select rounded-3" required>
+              <option value="Lecture">Lecture</option>
+              <option value="Seminar">Seminar</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Meeting">Meeting</option>
+              <option value="Guest Lecture">Guest Lecture</option>
+              <option value="Practical">Practical</option>
+              <option value="Examination">Examination</option>
+              <option value="Remedial Session">Remedial Session</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Purpose Notes -->
+          <div class="mb-2">
+            <label class="form-label font-weight-bold text-dark">Purpose Details / Topic Notes</label>
+            <textarea name="purpose" rows="2" class="form-control rounded-3" placeholder="e.g. Special Extra Lecture for TE CSE or Project Discussion"></textarea>
+          </div>
+
+        </div>
+        
+        <div class="modal-footer bg-light p-3">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4 font-weight-bold">
+            <i class="fas fa-paper-plane me-1"></i> Send Booking Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- STAFF MY BOOKINGS MODAL                                                   -->
+<!-- ========================================================================= -->
+<div class="modal fade" id="myBookingsModal" tabindex="-1" aria-labelledby="myBookingsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      <div class="modal-header bg-dark text-white p-4">
+        <div>
+          <h5 class="modal-title font-weight-bold mb-1" id="myBookingsModalLabel">
+            <i class="fas fa-bookmark me-2 text-primary"></i>My Room Booking Requests
+          </h5>
+          <small class="text-white-50">Track status of your room reservation requests</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body p-4">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr class="small text-uppercase">
+                <th>Request ID</th>
+                <th>Room</th>
+                <th>Date & Time</th>
+                <th>Event / Purpose</th>
+                <th>Status</th>
+                <th>HOD Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for bk in availability.user_bookings %}
+              <tr>
+                <td><span class="badge bg-light text-dark border">{{ bk.id }}</span></td>
+                <td>
+                  <strong>{{ bk.room_number }}</strong>
+                  <small class="text-muted d-block">{{ bk.room_type }} &bull; {{ bk.building }}</small>
+                </td>
+                <td>
+                  <div>{{ bk.date }}</div>
+                  <small class="text-muted font-monospace">{{ bk.start_time }} - {{ bk.end_time }}</small>
+                </td>
+                <td>
+                  <strong>{{ bk.event_type }}</strong>
+                  {% if bk.purpose %}<small class="text-muted d-block">{{ bk.purpose }}</small>{% endif %}
+                </td>
+                <td>
+                  {% if bk.status == 'Approved' %}
+                  <span class="badge bg-success-soft text-success px-3 py-2 rounded-pill font-weight-bold"><i class="fas fa-check-circle me-1"></i> Approved</span>
+                  {% elif bk.status == 'Rejected' %}
+                  <span class="badge bg-danger-soft text-danger px-3 py-2 rounded-pill font-weight-bold"><i class="fas fa-times-circle me-1"></i> Rejected</span>
+                  {% else %}
+                  <span class="badge bg-warning-soft text-warning px-3 py-2 rounded-pill font-weight-bold"><i class="fas fa-clock me-1"></i> Pending</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <small class="text-muted">{{ bk.hod_remarks|default:'Pending review' }}</small>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  You have not submitted any room booking requests yet.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ========================================================================= -->
+<!-- ADMIN / HOD PENDING REQUESTS MODAL                                        -->
+<!-- ========================================================================= -->
+{% if user_is_admin %}
+<div class="modal fade" id="adminBookingsModal" tabindex="-1" aria-labelledby="adminBookingsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      <div class="modal-header bg-dark text-white p-4">
+        <div>
+          <h5 class="modal-title font-weight-bold mb-1" id="adminBookingsModalLabel">
+            <i class="fas fa-tasks me-2 text-warning"></i>Staff Room Booking Requests (HOD Panel)
+          </h5>
+          <small class="text-white-50">Approve or reject slot reservation requests submitted by faculty members</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body p-4">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr class="small text-uppercase">
+                <th>Request ID</th>
+                <th>Faculty Name</th>
+                <th>Room</th>
+                <th>Date & Time</th>
+                <th>Event / Purpose</th>
+                <th>Status</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for bk in availability.all_bookings %}
+              <tr>
+                <td><span class="badge bg-light text-dark border">{{ bk.id }}</span></td>
+                <td>
+                  <strong>{{ bk.teacher_name }}</strong>
+                  <small class="text-muted d-block">{{ bk.teacher_email }}</small>
+                </td>
+                <td>
+                  <strong>{{ bk.room_number }}</strong>
+                  <small class="text-muted d-block">{{ bk.room_type }} &bull; {{ bk.building }}</small>
+                </td>
+                <td>
+                  <div>{{ bk.date }}</div>
+                  <small class="text-muted font-monospace">{{ bk.start_time }} - {{ bk.end_time }}</small>
+                </td>
+                <td>
+                  <strong>{{ bk.event_type }}</strong>
+                  {% if bk.purpose %}<small class="text-muted d-block">{{ bk.purpose }}</small>{% endif %}
+                </td>
+                <td>
+                  {% if bk.status == 'Approved' %}
+                  <span class="badge bg-success-soft text-success px-3 py-2 rounded-pill font-weight-bold"><i class="fas fa-check-circle me-1"></i> Approved</span>
+                  {% elif bk.status == 'Rejected' %}
+                  <span class="badge bg-danger-soft text-danger px-3 py-2 rounded-pill font-weight-bold"><i class="fas fa-times-circle me-1"></i> Rejected</span>
+                  {% else %}
+                  <span class="badge bg-warning-soft text-warning px-3 py-2 rounded-pill font-weight-bold"><i class="fas fa-clock me-1"></i> Pending</span>
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  {% if bk.status == 'Pending' %}
+                  <div class="d-flex gap-2 justify-content-center">
+                    <form method="POST" action="{% url 'room_availability' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="approve_booking">
+                      <input type="hidden" name="booking_id" value="{{ bk.id }}">
+                      <input type="hidden" name="hod_remarks" value="Approved by HOD">
+                      <button type="submit" class="btn btn-success btn-sm rounded-pill px-3 font-weight-bold shadow-sm">
+                        <i class="fas fa-check me-1"></i> Approve
+                      </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'room_availability' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="reject_booking">
+                      <input type="hidden" name="booking_id" value="{{ bk.id }}">
+                      <input type="hidden" name="hod_remarks" value="Slot unavailable or conflicting schedule">
+                      <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 font-weight-bold">
+                        <i class="fas fa-times me-1"></i> Reject
+                      </button>
+                    </form>
+                  </div>
+                  {% else %}
+                  <small class="text-muted">{{ bk.hod_remarks }}</small>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="7" class="text-center py-4 text-muted">
+                  No booking requests found.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Room Edit Modal -->
+{% if availability.selected_room %}
+<div class="modal fade" id="editRoomModal" tabindex="-1" aria-labelledby="editRoomModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      <div class="modal-header bg-primary text-white p-4">
+        <h5 class="modal-title font-weight-bold" id="editRoomModalLabel">
+          <i class="fas fa-edit me-2"></i>Manage Room: {{ availability.selected_room.room_number }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" action="{% url 'room_availability' %}">
+        {% csrf_token %}
+        <input type="hidden" name="room_id" value="{{ availability.selected_room.id }}">
+        <div class="modal-body p-4">
+          <div class="mb-3">
+            <label class="form-label font-weight-bold text-dark">Availability Status Override</label>
+            <select name="status_override" class="form-select rounded-3">
+              <option value="Auto">Auto (Follow Timetable)</option>
+              <option value="Available">Force Available</option>
+              <option value="Occupied">Force Occupied</option>
+              <option value="Upcoming">Force Upcoming</option>
+              <option value="Maintenance" {% if availability.selected_room.status == 'Maintenance' %}selected{% endif %}>Under Maintenance</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label font-weight-bold text-dark">Maintenance / Event Note</label>
+            <input type="text" name="maintenance_reason" class="form-control rounded-3" value="{{ availability.selected_room.maintenance_reason }}" placeholder="e.g. System Upgrade, Equipment Calibration">
+          </div>
+
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label class="form-label font-weight-bold text-dark">Seating Capacity</label>
+              <input type="number" name="capacity" class="form-control rounded-3" value="{{ availability.selected_room.capacity }}">
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label font-weight-bold text-dark">Building Block</label>
+              <input type="text" name="building" class="form-control rounded-3" value="{{ availability.selected_room.building }}">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light p-3">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+
+<script>
+  let currentCategory = "{{ availability.filters.category_tab|default:'all' }}";
+  let searchTimeout = null;
+
+  function setCategoryTab(category) {
+    currentCategory = category;
+    applyFilters();
+  }
+
+  function applyFiltersDebounced() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      applyFilters();
+    }, 300);
+  }
+
+  function applyFilters() {
+    const date = document.getElementById('datePickerInput').value;
+    const search = document.getElementById('searchInput').value;
+    const building = document.getElementById('buildingFilter').value;
+    const status = document.getElementById('statusFilter').value;
+    const sort = document.getElementById('sortFilter').value;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('date', date);
+    url.searchParams.set('search', search);
+    url.searchParams.set('building', building);
+    url.searchParams.set('status', status);
+    url.searchParams.set('sort', sort);
+    url.searchParams.set('category', currentCategory);
+
+    window.location.href = url.toString();
+  }
+
+  function selectRoom(roomId) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('room_id', roomId);
+    window.location.href = url.toString();
+  }
+
+  {% if user_is_staff %}
+  function openBookSlotModal(roomId, roomNumber, roomType, building, capacity) {
+    document.getElementById('bookRoomId').value = roomId;
+    document.getElementById('bookRoomDisplay').textContent = `${roomNumber} (${building})`;
+    document.getElementById('bookTypeDisplay').textContent = `${roomType} • Capacity: ${capacity}`;
+    
+    const currentDate = document.getElementById('datePickerInput').value;
+    if (currentDate) {
+      document.getElementById('bookDateInput').value = currentDate;
+    }
+    
+    const modalEl = document.getElementById('bookSlotModal');
+    if (modalEl) {
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+  }
+  {% endif %}
+</script>
+{% endblock content %}

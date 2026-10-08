@@ -1,0 +1,806 @@
+[
+  {
+    "id": 1,
+    "room_number": "Room 101",
+    "type": "Classroom",
+    "building": "Block A",
+    "capacity": 60,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=80",
+    "department": "Computer Science & Engineering",
+    "staff_in_charge": "Prof. Malayaj Kumar",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Design & Analysis of Algorithms",
+          "faculty": "Prof. Malayaj Kumar",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Object Oriented Modelling",
+          "faculty": "Prof. Shraddha Suryawanshi",
+          "class": "TE CSE"
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Software Testing & QA",
+          "faculty": "Prof. Anita Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 12:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Blockchain Technology",
+          "faculty": "Prof. Rupali Adhau",
+          "class": "TE CSE"
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "09:00 AM - 11:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Design & Analysis of Algorithms",
+          "faculty": "Prof. Malayaj Kumar",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "11:15 AM - 01:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Friday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Software Testing & QA",
+          "faculty": "Prof. Anita Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "12:15 PM - 02:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Guest Lecture: AI Trends",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "All CSE"
+        },
+        {
+          "time": "11:15 AM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "room_number": "Room 102",
+    "type": "Classroom",
+    "building": "Block A",
+    "capacity": 60,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80",
+    "department": "Computer Science & Engineering",
+    "staff_in_charge": "Prof. S. Patil",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Data Structures",
+          "faculty": "Prof. S. Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Digital Electronics",
+          "faculty": "Prof. R. Sharma",
+          "class": "TE E&TC"
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "02:00 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Tuesday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Data Structures",
+          "faculty": "Prof. S. Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Digital Electronics",
+          "faculty": "Prof. R. Sharma",
+          "class": "TE E&TC"
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "02:00 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Wednesday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Data Structures",
+          "faculty": "Prof. S. Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Digital Electronics",
+          "faculty": "Prof. R. Sharma",
+          "class": "TE E&TC"
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "02:00 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Thursday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Data Structures",
+          "faculty": "Prof. S. Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Digital Electronics",
+          "faculty": "Prof. R. Sharma",
+          "class": "TE E&TC"
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "02:00 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Friday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Data Structures",
+          "faculty": "Prof. S. Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Digital Electronics",
+          "faculty": "Prof. R. Sharma",
+          "class": "TE E&TC"
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "02:00 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Data Structures",
+          "faculty": "Prof. S. Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "title": "Digital Electronics",
+          "faculty": "Prof. R. Sharma",
+          "class": "TE E&TC"
+        },
+        {
+          "time": "11:15 AM - 12:15 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:15 PM - 01:15 PM",
+          "title": "Machine Learning",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE CSE"
+        },
+        {
+          "time": "02:00 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "room_number": "Computer Lab 1",
+    "type": "Laboratory",
+    "building": "Block B",
+    "capacity": 40,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+    "department": "Information Technology",
+    "staff_in_charge": "Prof. A. Deshmukh",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "10:00 AM - 12:00 PM",
+          "title": "Web Development",
+          "faculty": "Prof. A. Deshmukh",
+          "class": "SE IT"
+        },
+        {
+          "time": "12:15 PM - 02:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Python Programming Lab",
+          "faculty": "Prof. Malayaj Kumar",
+          "class": "TE CSE"
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "10:00 AM - 12:00 PM",
+          "title": "Web Development",
+          "faculty": "Prof. A. Deshmukh",
+          "class": "SE IT"
+        },
+        {
+          "time": "12:15 PM - 02:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Python Programming Lab",
+          "faculty": "Prof. Malayaj Kumar",
+          "class": "TE CSE"
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "room_number": "Computer Lab 2",
+    "type": "Laboratory",
+    "building": "Block B",
+    "capacity": 40,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
+    "department": "Computer Science & Engineering",
+    "staff_in_charge": "Prof. Anita Patil",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 12:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:00 PM - 02:00 PM",
+          "title": "Software Testing Lab",
+          "faculty": "Prof. Anita Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 12:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:00 PM - 02:00 PM",
+          "title": "Software Testing Lab",
+          "faculty": "Prof. Anita Patil",
+          "class": "TE CSE"
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "room_number": "Seminar Hall",
+    "type": "Hall",
+    "building": "Ground Floor",
+    "capacity": 150,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80",
+    "department": "CSE (AIML)",
+    "staff_in_charge": "Dr. R. Kulkarni",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 12:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:00 PM - 02:00 PM",
+          "title": "Department Seminar",
+          "faculty": "Dr. R. Kulkarni",
+          "class": "All Branches"
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 12:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "12:00 PM - 02:00 PM",
+          "title": "Department Seminar",
+          "faculty": "Dr. R. Kulkarni",
+          "class": "All Branches"
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "room_number": "Room 201",
+    "type": "Classroom",
+    "building": "Block A",
+    "capacity": 60,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80",
+    "department": "Computer Science & Engineering",
+    "staff_in_charge": "Prof. Shraddha Suryawanshi",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 11:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "11:00 AM - 12:15 PM",
+          "title": "Object Oriented Design",
+          "faculty": "Prof. Shraddha Suryawanshi",
+          "class": "TE CSE"
+        },
+        {
+          "time": "12:15 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 11:00 AM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "11:00 AM - 12:15 PM",
+          "title": "Object Oriented Design",
+          "faculty": "Prof. Shraddha Suryawanshi",
+          "class": "TE CSE"
+        },
+        {
+          "time": "12:15 PM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "room_number": "Computer Lab 3",
+    "type": "Laboratory",
+    "building": "Block C",
+    "capacity": 40,
+    "status_override": "Maintenance",
+    "maintenance_reason": "System Upgrade (IT Dept.)",
+    "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
+    "department": "IT Infrastructure",
+    "staff_in_charge": "IT Dept.",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 05:00 PM",
+          "title": "System Upgrade",
+          "faculty": "IT Dept.",
+          "class": "Maintenance"
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 05:00 PM",
+          "title": "System Upgrade",
+          "faculty": "IT Dept.",
+          "class": "Maintenance"
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "room_number": "Auditorium",
+    "type": "Hall",
+    "building": "Main Building",
+    "capacity": 300,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80",
+    "department": "Administration",
+    "staff_in_charge": "Prof. Malayaj Kumar",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 03:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "03:00 PM - 05:00 PM",
+          "title": "Placement Orientation",
+          "faculty": "Placement Cell",
+          "class": "Final Years"
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 03:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "03:00 PM - 05:00 PM",
+          "title": "Placement Orientation",
+          "faculty": "Placement Cell",
+          "class": "Final Years"
+        }
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "room_number": "AI & Robotics Lab",
+    "type": "Laboratory",
+    "building": "Block B",
+    "capacity": 40,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80",
+    "department": "CSE (AIML)",
+    "staff_in_charge": "Prof. Rajesh Singh",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 11:00 AM",
+          "title": "Machine Learning Lab",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE AIML"
+        },
+        {
+          "time": "11:15 AM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 11:00 AM",
+          "title": "Machine Learning Lab",
+          "faculty": "Prof. Rajesh Singh",
+          "class": "BE AIML"
+        },
+        {
+          "time": "11:15 AM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "room_number": "Room 202",
+    "type": "Classroom",
+    "building": "Block A",
+    "capacity": 60,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80",
+    "department": "Computer Science & Engineering",
+    "staff_in_charge": "Prof. Rupali Adhau",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Blockchain Technology",
+          "faculty": "Prof. Rupali Adhau",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 10:00 AM",
+          "title": "Blockchain Technology",
+          "faculty": "Prof. Rupali Adhau",
+          "class": "TE CSE"
+        },
+        {
+          "time": "10:00 AM - 05:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        }
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "room_number": "Conference Hall",
+    "type": "Hall",
+    "building": "Main Building",
+    "capacity": 100,
+    "status_override": null,
+    "image": "https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=600&q=80",
+    "department": "Management",
+    "staff_in_charge": "Dr. Anita Patil",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 02:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Faculty Board Meeting",
+          "faculty": "Dr. Anita Patil",
+          "class": "HOD & Staff"
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 02:00 PM",
+          "title": "Free",
+          "faculty": "",
+          "class": ""
+        },
+        {
+          "time": "02:00 PM - 04:00 PM",
+          "title": "Faculty Board Meeting",
+          "faculty": "Dr. Anita Patil",
+          "class": "HOD & Staff"
+        }
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "room_number": "IoT & Embedded Systems Lab",
+    "type": "Laboratory",
+    "building": "Block C",
+    "capacity": 40,
+    "status_override": "Maintenance",
+    "maintenance_reason": "Lab Equipment Calibration",
+    "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+    "department": "Electronics & Telecom",
+    "staff_in_charge": "Prof. R. Sharma",
+    "weekly_schedule": {
+      "Monday": [
+        {
+          "time": "09:00 AM - 05:00 PM",
+          "title": "Equipment Calibration",
+          "faculty": "Lab Technician",
+          "class": "Maintenance"
+        }
+      ],
+      "Saturday": [
+        {
+          "time": "09:00 AM - 05:00 PM",
+          "title": "Equipment Calibration",
+          "faculty": "Lab Technician",
+          "class": "Maintenance"
+        }
+      ]
+    }
+  }
+]

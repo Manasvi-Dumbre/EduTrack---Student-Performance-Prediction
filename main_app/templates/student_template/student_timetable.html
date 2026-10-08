@@ -1,0 +1,532 @@
+﻿{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block page_title %}Class Timetable{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Timetable</li>
+{% endblock breadcrumb %}
+
+{% block custom_css %}
+<style>
+  :root {
+    --tt-primary: #2563eb;
+    --tt-primary-light: #eff6ff;
+    --tt-surface: #ffffff;
+    --tt-border: #e2e8f0;
+    --tt-text: #0f172a;
+    --tt-muted: #64748b;
+    --tt-shadow: 0 10px 40px -8px rgba(37,99,235,0.12), 0 4px 16px -4px rgba(0,0,0,0.06);
+    --tt-radius: 16px;
+  }
+
+  .timetable-wrapper { padding: 10px 0 60px 0; animation: fadeSlideIn 0.4s ease; }
+  @keyframes fadeSlideIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── Header Banner ─────────────────────────────── */
+  .tt-header-banner {
+    background: linear-gradient(135deg,#1e40af 0%,#3b82f6 60%,#60a5fa 100%);
+    border-radius: var(--tt-radius); padding: 32px 36px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+    margin-bottom:28px; box-shadow:0 12px 40px rgba(37,99,235,0.25);
+    position:relative; overflow:hidden;
+  }
+  .tt-header-banner::before { content:''; position:absolute; top:-40px; right:-40px; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,0.07); }
+  .tt-header-banner::after  { content:''; position:absolute; bottom:-60px; left:40%; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.05); }
+  .tt-header-left h2 { color:#fff; font-size:26px; font-weight:800; margin:0 0 6px; display:flex; align-items:center; gap:12px; }
+  .tt-header-left h2 i { background:rgba(255,255,255,0.2); border-radius:10px; padding:8px 10px; font-size:20px; }
+  .tt-header-left p { color:rgba(255,255,255,0.8); font-size:14px; margin:0; }
+  .tt-header-actions { display:flex; gap:12px; flex-wrap:wrap; position:relative; z-index:1; }
+  .btn-tt-download {
+    display:inline-flex; align-items:center; gap:8px; padding:11px 22px;
+    background:#fff; color:#1d4ed8; font-weight:700; font-size:14px;
+    border-radius:10px; border:none; text-decoration:none; cursor:pointer;
+    transition:all 0.2s ease; box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  }
+  .btn-tt-download:hover { background:#eff6ff; color:#1d4ed8; transform:translateY(-2px); text-decoration:none; }
+  .btn-tt-outline {
+    display:inline-flex; align-items:center; gap:8px; padding:11px 22px;
+    background:rgba(255,255,255,0.15); color:#fff; font-weight:600; font-size:14px;
+    border-radius:10px; border:1.5px solid rgba(255,255,255,0.4); cursor:pointer; transition:all 0.2s ease;
+  }
+  .btn-tt-outline:hover { background:rgba(255,255,255,0.25); color:#fff; transform:translateY(-2px); }
+
+  /* ── Info Cards ────────────────────────────────── */
+  .tt-info-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:28px; }
+  .tt-info-card { background:var(--tt-surface); border:1px solid var(--tt-border); border-radius:14px; padding:20px 24px; display:flex; align-items:center; gap:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04); transition:transform 0.2s,box-shadow 0.2s; }
+  .tt-info-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(37,99,235,0.1); }
+  .tt-info-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .tt-icon-blue   { background:#eff6ff; color:#2563eb; }
+  .tt-icon-green  { background:#f0fdf4; color:#16a34a; }
+  .tt-icon-amber  { background:#fffbeb; color:#d97706; }
+  .tt-icon-purple { background:#faf5ff; color:#7c3aed; }
+  .info-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--tt-muted); margin-bottom:3px; }
+  .info-value { font-size:16px; font-weight:700; color:var(--tt-text); }
+
+  /* ── Viewer Card ───────────────────────────────── */
+  .tt-viewer-card { background:var(--tt-surface); border:1px solid var(--tt-border); border-radius:var(--tt-radius); box-shadow:var(--tt-shadow); overflow:hidden; margin-bottom:28px; }
+  .tt-viewer-header { padding:20px 28px; border-bottom:1px solid var(--tt-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  .tt-viewer-title { font-size:16px; font-weight:700; color:var(--tt-text); display:flex; align-items:center; gap:10px; margin:0; }
+  .tt-viewer-title i { color:var(--tt-primary); font-size:18px; }
+
+  /* ── Timetable Grid ────────────────────────────── */
+  .tt-grid-panel { padding:24px; overflow-x:auto; }
+  .timetable-grid { width:100%; border-collapse:collapse; font-size:12px; min-width:900px; }
+  .timetable-grid thead tr th {
+    background: linear-gradient(135deg,#1e40af,#2563eb);
+    color:#fff; padding:10px 8px; text-align:center;
+    font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:.04em;
+    border-right: 1px solid rgba(255,255,255,0.15); white-space:nowrap;
+  }
+  .timetable-grid thead tr th:first-child { border-radius:10px 0 0 0; }
+  .timetable-grid thead tr th:last-child  { border-radius:0 10px 0 0; border-right:none; }
+
+  .timetable-grid td.day-cell {
+    font-weight:800; color:#1e40af; background:#eff6ff;
+    font-size:12px; padding:12px 14px; text-align:center;
+    text-transform:uppercase; letter-spacing:.04em;
+    border-right:2px solid #dbeafe; border-bottom:1px solid #e2e8f0;
+    vertical-align:middle; min-width:72px;
+  }
+  .timetable-grid td {
+    padding:10px 8px; text-align:center;
+    border-bottom:1px solid #f1f5f9; border-right:1px solid #f1f5f9;
+    vertical-align:middle; transition:background .15s;
+  }
+  .timetable-grid tr:hover td:not(.break-cell):not(.day-cell) { background:#f8fafc; }
+
+  .sub-name    { font-weight:700; color:#1e40af; font-size:13px; line-height:1.3; }
+  .sub-teacher { font-size:11px; color:#64748b; margin-top:2px; }
+  .sub-room    { font-size:11px; font-weight:600; color:#0891b2; background:#ecfeff; border-radius:4px; padding:1px 5px; display:inline-block; margin-top:3px; }
+
+  td.lab-cell  { background:#faf5ff !important; border-right:1px solid #ede9fe; }
+  .lab-name    { font-weight:700; color:#7c3aed; font-size:11.5px; line-height:1.4; }
+  .lab-teacher { font-size:10.5px; color:#8b5cf6; margin-top:2px; }
+  .lab-rooms   { font-size:10.5px; font-weight:600; color:#6d28d9; margin-top:3px; }
+  .batch-line  { display:block; }
+
+  td.break-cell {
+    background: linear-gradient(135deg,#fffbeb,#fef3c7) !important;
+    color:#d97706; font-weight:700; font-size:11px; font-style:italic;
+    letter-spacing:.03em; writing-mode:vertical-rl; text-orientation:mixed;
+    padding:8px 4px; border-right:2px solid #fde68a;
+  }
+  .sports-cell { background:#f0fdf4 !important; }
+  .sports-name { font-weight:700; color:#16a34a; font-size:12.5px; }
+  .sports-room { font-size:11px; color:#15803d; }
+  .empty-cell  { color:#cbd5e1; font-size:18px; }
+
+  /* ── Legend ──────────────────────────────────────── */
+  .tt-legend { display:flex; flex-wrap:wrap; gap:16px; margin-top:20px; padding:14px 18px; background:#f8fafc; border-radius:10px; }
+  .legend-item { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:#374151; }
+  .legend-dot  { width:14px; height:14px; border-radius:4px; flex-shrink:0; }
+
+  /* ── Teacher Panel ────────────────────────────────── */
+  .tt-teacher-section { margin-top:28px; }
+  .tt-section-title {
+    font-size:15px; font-weight:700; color:var(--tt-text);
+    display:flex; align-items:center; gap:10px; margin-bottom:16px;
+    padding-bottom:10px; border-bottom:2px solid var(--tt-border);
+  }
+  .tt-section-title i { color:var(--tt-primary); }
+  .teacher-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+  .teacher-card {
+    background:#fff; border:1px solid var(--tt-border); border-radius:14px;
+    padding:16px 18px; display:flex; align-items:center; gap:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.04); transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .teacher-card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(37,99,235,0.1); }
+  .teacher-avatar {
+    width:48px; height:48px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; flex-shrink:0; letter-spacing:.02em;
+  }
+  .teacher-name  { font-weight:700; font-size:13.5px; color:var(--tt-text); line-height:1.3; }
+  .teacher-sub   { font-size:12px; color:var(--tt-muted); margin-top:2px; }
+  .teacher-badge {
+    font-size:11px; font-weight:700; background:#f1f5f9; color:#475569;
+    border-radius:4px; padding:2px 7px; display:inline-block; margin-top:5px;
+  }
+
+  /* Avatar colour variants */
+  .av-blue   { background:#eff6ff; color:#2563eb; }
+  .av-purple { background:#faf5ff; color:#7c3aed; }
+  .av-green  { background:#f0fdf4; color:#16a34a; }
+  .av-amber  { background:#fffbeb; color:#d97706; }
+  .av-rose   { background:#fff1f2; color:#e11d48; }
+  .av-cyan   { background:#ecfeff; color:#0891b2; }
+  .av-indigo { background:#eef2ff; color:#4f46e5; }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+
+{# ── Build a lookup dict: initials -> teacher name from the JSON ── #}
+{% for t in teachers %}{% if t.initials == "MK" %}{% with mk_name=t.name mk_desig=t.designation mk_subf=t.timetable_subject_full mk_av=t.avatar_color %}{% endwith %}{% endif %}{% endfor %}
+
+<div class="timetable-wrapper">
+
+  <!-- ── Header Banner ──────────────────────────── -->
+  <div class="tt-header-banner">
+    <div class="tt-header-left">
+      <h2><i class="far fa-calendar-alt"></i> Class Timetable</h2>
+      <p>B.E. Academic Year 2026&ndash;27 &nbsp;&middot;&nbsp; Version 4 &nbsp;&middot;&nbsp; All Divisions (A1 / A2 / A3)</p>
+    </div>
+    <div class="tt-header-actions">
+      <a href="{% static 'image/BE_26-27_Time_Table_Version 4.xlsx' %}" download class="btn-tt-download">
+        <i class="fas fa-download"></i> Download Excel
+      </a>
+      <button class="btn-tt-outline" onclick="window.print()">
+        <i class="fas fa-print"></i> Print
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Info Cards ──────────────────────────────── -->
+  <div class="tt-info-row">
+    <div class="tt-info-card">
+      <div class="tt-info-icon tt-icon-blue"><i class="fas fa-graduation-cap"></i></div>
+      <div><div class="info-label">Programme</div><div class="info-value">B.E. Engineering</div></div>
+    </div>
+    <div class="tt-info-card">
+      <div class="tt-info-icon tt-icon-green"><i class="fas fa-calendar-check"></i></div>
+      <div><div class="info-label">Academic Year</div><div class="info-value">2026 &ndash; 2027</div></div>
+    </div>
+    <div class="tt-info-card">
+      <div class="tt-info-icon tt-icon-amber"><i class="fas fa-clock"></i></div>
+      <div><div class="info-label">Working Hours</div><div class="info-value">9:15 AM &ndash; 4:30 PM</div></div>
+    </div>
+    <div class="tt-info-card">
+      <div class="tt-info-icon tt-icon-purple"><i class="fas fa-layer-group"></i></div>
+      <div><div class="info-label">Divisions</div><div class="info-value">A1 &nbsp;/&nbsp; A2 &nbsp;/&nbsp; A3</div></div>
+    </div>
+  </div>
+
+  <!-- ── Viewer Card ─────────────────────────────── -->
+  <div class="tt-viewer-card">
+    <div class="tt-viewer-header">
+      <h5 class="tt-viewer-title">
+        <i class="fas fa-table"></i> Weekly Schedule
+        <span style="font-size:12px;font-weight:500;color:var(--tt-muted);margin-left:8px;">B.E. CSE (AI&amp;ML) &mdash; 2026&ndash;27</span>
+      </h5>
+    </div>
+
+    <div class="tt-grid-panel" id="timetable-print-area">
+      <table class="timetable-grid">
+        <thead>
+          <tr>
+            <th style="min-width:70px;">Day</th>
+            <th>9:15<br>10:10</th>
+            <th>10:10<br>11:05</th>
+            <th style="background:linear-gradient(135deg,#92400e,#d97706);min-width:40px;">Short<br>Break</th>
+            <th>11:15<br>12:10</th>
+            <th>12:10<br>1:05</th>
+            <th style="background:linear-gradient(135deg,#92400e,#d97706);min-width:40px;">Lunch<br>Break</th>
+            <th colspan="2">2:00 &mdash; 3:50 &nbsp;(Lab / Double Period)</th>
+            <th>3:50<br>4:30</th>
+          </tr>
+        </thead>
+        <tbody>
+
+{% comment %}Build a lookup: initials -> name for use in grid cells{% endcomment %}
+{% for t in teachers %}
+  {% if t.initials == "MK" %}{% with teacher_MK=t.name %}{% endwith %}{% endif %}
+{% endfor %}
+
+          <!-- ── MONDAY ── -->
+          <tr>
+            <td class="day-cell">Monday</td>
+            <td class="sports-cell">
+              <div class="sports-name"><i class="fas fa-running" style="font-size:10px;"></i> SPORTS</div>
+              <div class="sports-room">Ground</div>
+            </td>
+            <td>
+              <div class="sub-name">DAA</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "MK" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td class="break-cell">Short Break</td>
+            <td>
+              <div class="sub-name">STQA</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "AP" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td>
+              <div class="sub-name">ML</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "RS" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td class="break-cell">Lunch Break</td>
+            <td colspan="2" class="lab-cell">
+              <div class="lab-name">
+                <span class="batch-line">LP3 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A1)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A2)</span></span>
+                <span class="batch-line">LP4 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A3)</span></span>
+              </div>
+              <div class="lab-teacher">DJ &nbsp;/&nbsp; Library &nbsp;/&nbsp; AP</div>
+              <div class="lab-rooms">B213 &nbsp;/&nbsp; Library &nbsp;/&nbsp; B211</div>
+            </td>
+            <td>
+              <div class="sub-name">Japanese</div>
+              <div class="sub-teacher">RKS</div>
+              <div class="sub-room">A410</div>
+            </td>
+          </tr>
+
+          <!-- ── TUESDAY ── -->
+          <tr>
+            <td class="day-cell">Tuesday</td>
+            <td>
+              <div class="sub-name">OOMD</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "SS" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td>
+              <div class="sub-name">DAA</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "MK" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td class="break-cell">Short Break</td>
+            <td>
+              <div class="sub-name">STQA</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "AP" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td>
+              <div class="sub-name">ML</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "RS" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td class="break-cell">Lunch Break</td>
+            <td colspan="2" class="lab-cell">
+              <div class="lab-name">
+                <span class="batch-line">LP3 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A2)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A3)</span></span>
+                <span class="batch-line">LP4 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A1)</span></span>
+              </div>
+              <div class="lab-teacher">DJ &nbsp;/&nbsp; Library &nbsp;/&nbsp; AP</div>
+              <div class="lab-rooms">B213 &nbsp;/&nbsp; Library &nbsp;/&nbsp; B211</div>
+            </td>
+            <td class="empty-cell">&mdash;</td>
+          </tr>
+
+          <!-- ── WEDNESDAY ── -->
+          <tr>
+            <td class="day-cell">Wednesday</td>
+            <td>
+              <div class="sub-name">OOMD</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "SS" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td>
+              <div class="sub-name">BT</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "RA" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td class="break-cell">Short Break</td>
+            <td>
+              <div class="sub-name">STQA</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "AP" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td>
+              <div class="sub-name">ML</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "RS" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td class="break-cell">Lunch Break</td>
+            <td colspan="2" class="lab-cell">
+              <div class="lab-name">
+                <span class="batch-line">LP3 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A3)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A1)</span></span>
+                <span class="batch-line">LP4 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A2)</span></span>
+              </div>
+              <div class="lab-teacher">DJ &nbsp;/&nbsp; Library &nbsp;/&nbsp; AP</div>
+              <div class="lab-rooms">B213 &nbsp;/&nbsp; Library &nbsp;/&nbsp; B211</div>
+            </td>
+            <td>
+              <div class="sub-name">Japanese</div>
+              <div class="sub-teacher">RKS</div>
+              <div class="sub-room">A410</div>
+            </td>
+          </tr>
+
+          <!-- ── THURSDAY ── -->
+          <tr>
+            <td class="day-cell">Thursday</td>
+            <td>
+              <div class="sub-name">BT</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "RA" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td>
+              <div class="sub-name">DAA</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "MK" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td class="break-cell">Short Break</td>
+            <td>
+              <div class="sub-name">BT</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "RA" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">A205</div>
+            </td>
+            <td>
+              <div class="sub-name">OOMD</div>
+              <div class="sub-teacher">{% for t in teachers %}{% if t.initials == "SS" %}{{ t.name }}{% endif %}{% endfor %}</div>
+              <div class="sub-room">B207</div>
+            </td>
+            <td class="break-cell">Lunch Break</td>
+            <td colspan="2" class="lab-cell">
+              <div class="lab-name">
+                <span class="batch-line">LP3 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A1)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A2)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A3)</span></span>
+              </div>
+              <div class="lab-teacher">DJ &nbsp;/&nbsp; Library &nbsp;/&nbsp; Library</div>
+              <div class="lab-rooms">B213 &nbsp;/&nbsp; Library &nbsp;/&nbsp; B211</div>
+            </td>
+            <td class="empty-cell">&mdash;</td>
+          </tr>
+
+          <!-- ── FRIDAY ── -->
+          <tr>
+            <td class="day-cell">Friday</td>
+            <td colspan="2" class="sports-cell" style="vertical-align:middle;">
+              <div class="sports-name"><i class="fas fa-project-diagram" style="font-size:10px;"></i> Project</div>
+              <div class="sports-room" style="color:#0f766e;">(A1, A2, A3)</div>
+            </td>
+            <td class="break-cell">Short Break</td>
+            <td class="lab-cell">
+              <div class="lab-name">
+                <span class="batch-line">LP3 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A2)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A1)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A3)</span></span>
+              </div>
+              <div class="lab-teacher">DJ &nbsp;/&nbsp; Library &nbsp;/&nbsp; Library</div>
+              <div class="lab-rooms">B213 &nbsp;/&nbsp; Library &nbsp;/&nbsp; Library</div>
+            </td>
+            <td class="empty-cell">&mdash;</td>
+            <td class="break-cell">Lunch Break</td>
+            <td colspan="2" class="lab-cell">
+              <div class="lab-name">
+                <span class="batch-line">LP3 &nbsp;<span style="color:#a78bfa;font-size:10px;">(A3)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A1)</span></span>
+                <span class="batch-line">Library &nbsp;<span style="color:#a78bfa;font-size:10px;">(A2)</span></span>
+              </div>
+              <div class="lab-teacher">DJ &nbsp;/&nbsp; Library &nbsp;/&nbsp; Library</div>
+              <div class="lab-rooms">B213 &nbsp;/&nbsp; Library &nbsp;/&nbsp; B211</div>
+            </td>
+            <td>
+              <div class="sub-name">Japanese</div>
+              <div class="sub-teacher">RKS</div>
+              <div class="sub-room">A410</div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <!-- ── Legend ──────────────────────────────── -->
+      <div class="tt-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#eff6ff;border:1px solid #bfdbfe;"></span> Theory Subject</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#faf5ff;border:1px solid #ddd6fe;"></span> Lab / Practical (LP3 &amp; LP4)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#fffbeb;border:1px solid #fde68a;"></span> Break / Lunch</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#f0fdf4;border:1px solid #bbf7d0;"></span> Sports / Project</div>
+        <div class="legend-item" style="color:#0891b2;"><i class="fas fa-door-open" style="font-size:12px;"></i>&nbsp; Room No. shown in teal</div>
+        <div class="legend-item" style="color:#a78bfa;"><i class="fas fa-users" style="font-size:12px;"></i>&nbsp; (A1/A2/A3) = Division batch</div>
+      </div>
+
+      <!-- ── Subject Abbreviation Key ──────────────── -->
+      <div style="margin-top:14px;background:#f8fafc;border-radius:10px;padding:14px 18px;">
+        <div style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Subject Abbreviations</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px 28px;font-size:13px;color:#374151;">
+          <span><strong style="color:#1e40af;">ML</strong> &mdash; Machine Learning</span>
+          <span><strong style="color:#1e40af;">DAA</strong> &mdash; Design &amp; Analysis of Algorithms</span>
+          <span><strong style="color:#1e40af;">OOMD</strong> &mdash; Object Oriented Modelling &amp; Design</span>
+          <span><strong style="color:#1e40af;">BT</strong> &mdash; Blockchain Technology</span>
+          <span><strong style="color:#1e40af;">STQA</strong> &mdash; Software Testing &amp; Quality Assurance</span>
+          <span><strong style="color:#7c3aed;">LP3</strong> &mdash; Lab Practice 3 (Room B213)</span>
+          <span><strong style="color:#7c3aed;">LP4</strong> &mdash; Lab Practice 4 (Room B211)</span>
+        </div>
+      </div>
+    </div><!-- /.tt-grid-panel -->
+  </div><!-- /.tt-viewer-card -->
+
+  <!-- ── Subject Faculty Directory (dynamic from teachers.json) ── -->
+  <div class="tt-teacher-section">
+    <div class="tt-section-title">
+      <i class="fas fa-chalkboard-teacher"></i>
+      Subject Faculty &amp; Staff Directory
+      <span style="font-size:12px;font-weight:400;color:var(--tt-muted);margin-left:6px;">Live from department records</span>
+    </div>
+
+    <div class="teacher-grid">
+
+      {% for teacher in teachers %}
+      <div class="teacher-card">
+        <div class="teacher-avatar {{ teacher.avatar_color|default:'av-blue' }}">
+          {{ teacher.initials }}
+        </div>
+        <div style="min-width:0;">
+          <div class="teacher-name">{{ teacher.name }}</div>
+          <div class="teacher-sub">
+            <i class="fas fa-book" style="font-size:10px;color:#94a3b8;"></i>
+            {{ teacher.timetable_subject_full }} ({{ teacher.timetable_subject }})
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap;">
+            <span class="teacher-badge">{{ teacher.initials }}</span>
+            <span style="font-size:11px;color:#0891b2;font-weight:600;background:#ecfeff;padding:1px 6px;border-radius:4px;">
+              {{ teacher.timetable_room }}
+            </span>
+            <span style="font-size:11px;color:#64748b;">{{ teacher.designation }}</span>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:24px;">
+        <i class="fas fa-user-slash fa-2x mb-2 d-block"></i>
+        No teacher data available.
+      </div>
+      {% endfor %}
+
+      <!-- Lab Instructor (static – not in main teachers.json) -->
+      <div class="teacher-card">
+        <div class="teacher-avatar av-cyan">DJ</div>
+        <div>
+          <div class="teacher-name">Prof. Deepak Joshi</div>
+          <div class="teacher-sub"><i class="fas fa-flask" style="font-size:10px;color:#94a3b8;"></i> Lab Practice &mdash; LP3 &amp; LP4</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap;">
+            <span class="teacher-badge">DJ</span>
+            <span style="font-size:11px;color:#0891b2;font-weight:600;background:#ecfeff;padding:1px 6px;border-radius:4px;">B213 / B211</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Japanese (static) -->
+      <div class="teacher-card">
+        <div class="teacher-avatar av-green">RKS</div>
+        <div>
+          <div class="teacher-name">Prof. R. K. Sharma</div>
+          <div class="teacher-sub"><i class="fas fa-language" style="font-size:10px;color:#94a3b8;"></i> Japanese Language</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap;">
+            <span class="teacher-badge">RKS</span>
+            <span style="font-size:11px;color:#0891b2;font-weight:600;background:#ecfeff;padding:1px 6px;border-radius:4px;">A410</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.teacher-grid -->
+  </div><!-- /.tt-teacher-section -->
+
+</div><!-- /.timetable-wrapper -->
+{% endblock content %}
+
+{% block custom_js %}
+<style>
+  @media print {
+    .tt-header-actions, .tt-info-row { display:none!important; }
+    .tt-viewer-card { box-shadow:none!important; border:none!important; }
+    .tt-teacher-section { page-break-before: always; }
+  }
+</style>
+{% endblock custom_js %}

@@ -131,7 +131,7 @@ def sync_db_and_json():
                     "predicted_category": "First Class",
                     "predicted_percentage_range": "80% - 85%",
                     "risk_level": "Low Risk",
-                    "assigned_subjects": ["SUB-101", "SUB-102", "SUB-103", "SUB-104", "SUB-105", "SUB-106"]
+                    "assigned_subjects": ["ML", "DAA", "OOMD", "BT", "STQA"]
                 }
                 updated_students_json.append(new_entry)
                 existing_student_emails.add(email)
@@ -171,7 +171,7 @@ def sync_db_and_json():
                     "department": "CSE (AIML)",
                     "phone": "+91 98000 11122",
                     "avatar": avatar_path,
-                    "assigned_subjects": ["SUB-101"],
+                    "assigned_subjects": ["ML"],
                     "assigned_classes": ["TE CSE-AIML A"],
                     "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005"]
                 }
@@ -257,7 +257,7 @@ def add_student_to_json(user, course=None, session=None):
         "predicted_category": "First Class",
         "predicted_percentage_range": "78% - 83%",
         "risk_level": "Low Risk",
-        "assigned_subjects": ["SUB-101", "SUB-102", "SUB-103", "SUB-104", "SUB-105", "SUB-106"]
+        "assigned_subjects": ["ML", "DAA", "OOMD", "BT", "STQA"]
     }
     students.append(new_student)
     save_json('students.json', students)
@@ -296,7 +296,7 @@ def add_staff_to_json(user, course=None):
         "department": course.name if course else "CSE (AIML)",
         "phone": "+91 98000 11122",
         "avatar": avatar_path,
-        "assigned_subjects": ["SUB-101"],
+        "assigned_subjects": ["ML"],
         "assigned_classes": ["TE CSE-AIML A"],
         "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005"]
     }
@@ -358,13 +358,14 @@ def get_student_dashboard_data(identifier, filters=None):
     
     # Subject variance modifiers for realism
     subject_modifiers = {
-        "SUB-101": 1.03,
-        "SUB-102": 0.98,
-        "SUB-103": 0.94,
-        "SUB-104": 1.05,
-        "SUB-105": 1.01,
-        "SUB-106": 0.95
+        "ML": 1.03,
+        "DAA": 0.98,
+        "OOMD": 1.05,
+        "BT": 0.94,
+        "STQA": 1.01
     }
+    
+    sub_teacher_map = {s.get('code'): s.get('teacher_name') for s in all_subjects if s.get('code') and s.get('teacher_name')}
     
     # Dynamically scale assessments to match the specific logged-in student
     student_assessments = []
@@ -381,11 +382,13 @@ def get_student_dashboard_data(identifier, filters=None):
         grade = "O" if calc_pct >= 90 else ("A+" if calc_pct >= 85 else ("A" if calc_pct >= 75 else ("B+" if calc_pct >= 65 else ("B" if calc_pct >= 55 else "C"))))
         
         improvement = round(student.get('quarter_improvement', 2.0) * (0.8 + 0.4 * mod), 1)
+        teacher_name = base_ass.get('teacher_name') or sub_teacher_map.get(code, "Faculty")
         
         ass_entry = {
             "student_id": student_id,
             "subject_code": code,
             "subject_name": base_ass.get('subject_name'),
+            "teacher_name": teacher_name,
             "unit_test_1": round(calc_internal * 0.95, 1),
             "unit_test_2": calc_internal,
             "mid_term": round(calc_exam * 0.35, 1),

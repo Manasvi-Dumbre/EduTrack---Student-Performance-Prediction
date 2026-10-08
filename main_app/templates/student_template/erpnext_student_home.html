@@ -419,7 +419,7 @@
               <td>
                 <div class="d-flex align-items-center gap-2">
                   <i class="fas fa-chalkboard-teacher text-primary"></i>
-                  <span style="font-size: 13px;">{{ ass.faculty|default:'—' }}</span>
+                  <span style="font-size: 13px; font-weight: 500;">{{ ass.teacher_name|default:"Faculty" }}</span>
                 </div>
               </td>
               <td>
@@ -848,10 +848,10 @@
     skillRadarChart = new Chart(radarCtx, {
       type: 'radar',
       data: {
-        labels: rLabels.length ? rLabels : ['AI & NN', 'DBMS', 'CN & Cloud', 'Data Mining', 'ML & Stats', 'Ethics & Comm'],
+        labels: rLabels.length ? rLabels : ['ML', 'DAA', 'OOMD', 'BT', 'STQA'],
         datasets: [{
           label: 'Skill Proficiency %',
-          data: rScores.length ? rScores : [91, 87, 83, 93, 89, 83],
+          data: rScores.length ? rScores : [91, 87, 93, 83, 89],
           backgroundColor: 'rgba(139, 92, 246, 0.25)',
           borderColor: '#8b5cf6',
           pointBackgroundColor: '#8b5cf6',

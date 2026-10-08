@@ -18,12 +18,11 @@
       {"quarter": "Q4 (Projected)", "overall_score": 91.0, "attendance": 92.5, "gpa": 9.1, "status": "Predicted High Distinction"}
     ],
     "predicted_vs_actual": [
-      {"subject_code": "SUB-101", "subject_name": "AI & NN", "actual_score": 90.5, "predicted_score": 91.0, "variance": 0.5, "confidence": "94%"},
-      {"subject_code": "SUB-102", "subject_name": "DBMS", "actual_score": 87.0, "predicted_score": 88.5, "variance": 1.5, "confidence": "92%"},
-      {"subject_code": "SUB-103", "subject_name": "Computer Networks", "actual_score": 83.0, "predicted_score": 82.0, "variance": -1.0, "confidence": "89%"},
-      {"subject_code": "SUB-104", "subject_name": "Data Warehousing", "actual_score": 93.0, "predicted_score": 94.0, "variance": 1.0, "confidence": "96%"},
-      {"subject_code": "SUB-105", "subject_name": "Machine Learning", "actual_score": 88.5, "predicted_score": 90.0, "variance": 1.5, "confidence": "93%"},
-      {"subject_code": "SUB-106", "subject_name": "Business Comm", "actual_score": 82.5, "predicted_score": 84.0, "variance": 1.5, "confidence": "90%"}
+      {"subject_code": "ML", "subject_name": "ML", "actual_score": 90.5, "predicted_score": 91.0, "variance": 0.5, "confidence": "94%"},
+      {"subject_code": "DAA", "subject_name": "DAA", "actual_score": 87.0, "predicted_score": 88.5, "variance": 1.5, "confidence": "92%"},
+      {"subject_code": "OOMD", "subject_name": "OOMD", "actual_score": 93.0, "predicted_score": 94.0, "variance": 1.0, "confidence": "96%"},
+      {"subject_code": "BT", "subject_name": "BT", "actual_score": 83.0, "predicted_score": 82.0, "variance": -1.0, "confidence": "89%"},
+      {"subject_code": "STQA", "subject_name": "STQA", "actual_score": 82.5, "predicted_score": 84.0, "variance": 1.5, "confidence": "90%"}
     ]
   }
 ]

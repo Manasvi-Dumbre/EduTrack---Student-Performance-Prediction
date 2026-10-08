@@ -134,6 +134,151 @@ messaging.setBackgroundMessageHandler(function (payload) {
     }
     return self.registration.showNotification(payload.notification.title, notificationOption);
 });
-    """
+"""
     return HttpResponse(data, content_type='application/javascript')
+
+
+def room_availability(request):
+    """Render the Classrooms & Labs/Halls Availability page with staff booking and HOD approval."""
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+
+    from main_app.room_service import (
+        get_room_availability_data,
+        update_room_status,
+        create_booking_request,
+        approve_booking_request,
+        reject_booking_request,
+        check_booking_conflict
+    )
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        # 1. Staff Slot Booking Request
+        if action == 'book_slot' and str(request.user.user_type) == '2':
+            room_id = request.POST.get('room_id')
+            teacher_name = request.POST.get('teacher_name')
+            date_val = request.POST.get('date')
+            start_time = request.POST.get('start_time')
+            end_time = request.POST.get('end_time')
+            event_type = request.POST.get('event_type')
+            purpose = request.POST.get('purpose', '')
+
+            success, res = create_booking_request(
+                room_id=room_id,
+                teacher_name=teacher_name,
+                teacher_email=request.user.email,
+                date_str=date_val,
+                start_time=start_time,
+                end_time=end_time,
+                event_type=event_type,
+                purpose=purpose
+            )
+            if success:
+                messages.success(request, "Slot booking request submitted successfully! A notification has been sent to the HOD for approval.")
+            else:
+                messages.error(request, f"Booking Conflict / Error: {res}")
+            
+            return redirect(f"/room_availability/?date={date_val}")
+
+        # 2. HOD / Admin Approval
+        elif action == 'approve_booking' and str(request.user.user_type) == '1':
+            booking_id = request.POST.get('booking_id')
+            remarks = request.POST.get('hod_remarks', 'Approved by HOD')
+            success, res = approve_booking_request(booking_id, hod_user=request.user, remarks=remarks)
+            if success:
+                messages.success(request, f"Booking request {booking_id} approved successfully! Room is now reserved and marked on the timetable.")
+            else:
+                messages.error(request, f"Approval Error: {res}")
+            return redirect('room_availability')
+
+        # 3. HOD / Admin Rejection
+        elif action == 'reject_booking' and str(request.user.user_type) == '1':
+            booking_id = request.POST.get('booking_id')
+            remarks = request.POST.get('hod_remarks', 'Rejected by HOD')
+            success, res = reject_booking_request(booking_id, hod_user=request.user, remarks=remarks)
+            if success:
+                messages.info(request, f"Booking request {booking_id} has been rejected.")
+            else:
+                messages.error(request, f"Rejection Error: {res}")
+            return redirect('room_availability')
+
+        # 4. Admin room status update
+        elif str(request.user.user_type) == '1':
+            room_id = request.POST.get('room_id')
+            status_override = request.POST.get('status_override')
+            maintenance_reason = request.POST.get('maintenance_reason', '')
+            capacity = request.POST.get('capacity')
+            building = request.POST.get('building')
+
+            updated = update_room_status(
+                room_id=room_id,
+                status_override=status_override,
+                maintenance_reason=maintenance_reason,
+                capacity=capacity,
+                building=building
+            )
+            if updated:
+                messages.success(request, "Room status updated successfully!")
+            else:
+                messages.error(request, "Failed to update room status.")
+            return redirect('room_availability')
+
+    date_str = request.GET.get('date', '')
+    search_query = request.GET.get('search', '').strip()
+    building_filter = request.GET.get('building', 'all')
+    status_filter = request.GET.get('status', 'all')
+    sort_by = request.GET.get('sort', 'name')
+    category_tab = request.GET.get('category', 'all')
+    selected_room_id = request.GET.get('room_id')
+
+    availability_data = get_room_availability_data(
+        date_str=date_str,
+        search_query=search_query,
+        building_filter=building_filter,
+        status_filter=status_filter,
+        sort_by=sort_by,
+        category_tab=category_tab,
+        selected_room_id=selected_room_id,
+        user_email=request.user.email
+    )
+
+    context = {
+        'page_title': 'Room & Resource Availability',
+        'page_subtitle': 'Check the availability of classrooms, halls and laboratories based on the college timetable.',
+        'availability': availability_data,
+        'user_is_admin': str(request.user.user_type) == '1',
+        'user_is_staff': str(request.user.user_type) == '2',
+        'user_is_student': str(request.user.user_type) == '3',
+    }
+    return render(request, 'main_app/room_availability.html', context)
+
+
+def syllabus_view(request):
+    """Render the SPPU 2019 Course Fourth Year Syllabus page for Semester VII & VIII."""
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+
+    semester = request.GET.get('semester', 'VII')
+    search_query = request.GET.get('search', '').strip()
+    category_filter = request.GET.get('category', 'all')
+
+    from main_app.syllabus_service import get_syllabus_view_data
+    syllabus_data = get_syllabus_view_data(
+        semester=semester,
+        search_query=search_query,
+        category_filter=category_filter
+    )
+
+    context = {
+        'page_title': 'Course Syllabus',
+        'page_subtitle': 'Fourth Year Computer Engineering (SPPU 2019 Course) - Semester VII & VIII',
+        'syllabus': syllabus_data,
+        'user_is_admin': str(request.user.user_type) == '1',
+        'user_is_staff': str(request.user.user_type) == '2',
+    }
+    return render(request, 'main_app/syllabus.html', context)
+
+
 

@@ -1,0 +1,2007 @@
+{
+  "VII": [
+    {
+      "course_code": "410241",
+      "name": "Design and Analysis of Algorithms",
+      "type": "Core",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Algorithms & problem solving; correctness; problem-solving strategies",
+          "topics": [
+            "Algorithms & problem solving",
+            "correctness",
+            "problem-solving strategies"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Complexity analysis; asymptotic notation; P, NP, NP-complete/NP-hard",
+          "topics": [
+            "Complexity analysis",
+            "asymptotic notation",
+            "P, NP, NP-complete/NP-hard"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Greedy algorithms; dynamic programming; knapsack; scheduling; matrix-chain",
+          "topics": [
+            "Greedy algorithms",
+            "dynamic programming",
+            "knapsack",
+            "scheduling",
+            "matrix-chain"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Backtracking; 8-queens; graph coloring; branch-and-bound; TSP",
+          "topics": [
+            "Backtracking",
+            "8-queens",
+            "graph coloring",
+            "branch-and-bound",
+            "TSP"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Amortized analysis; time-space trade-off; randomized & approximate algorithms",
+          "topics": [
+            "Amortized analysis",
+            "time-space trade-off",
+            "randomized & approximate algorithms"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Multithreaded & distributed algorithms; parallel loops; distributed BFS/MST; string matching",
+          "topics": [
+            "Multithreaded & distributed algorithms",
+            "parallel loops",
+            "distributed BFS/MST",
+            "string matching"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410242",
+      "name": "Machine Learning",
+      "type": "Core",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "ML basics; supervised, unsupervised, semi-supervised & reinforcement learning",
+          "topics": [
+            "ML basics",
+            "supervised, unsupervised, semi-supervised & reinforcement learning"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Feature engineering; normalization; scaling; missing values; PCA; feature selection",
+          "topics": [
+            "Feature engineering",
+            "normalization",
+            "scaling",
+            "missing values",
+            "PCA",
+            "feature selection"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Regression; bias/variance; under/overfitting; Lasso; Ridge; gradient descent; MAE/RMSE/R\u00b2",
+          "topics": [
+            "Regression",
+            "bias/variance",
+            "under/overfitting",
+            "Lasso",
+            "Ridge",
+            "gradient descent",
+            "MAE/RMSE/R\u00b2"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Classification; KNN; SVM; Random Forest; AdaBoost; multiclass classification; evaluation metrics",
+          "topics": [
+            "Classification",
+            "KNN",
+            "SVM",
+            "Random Forest",
+            "AdaBoost",
+            "multiclass classification",
+            "evaluation metrics"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Clustering; K-Means; K-medoids; hierarchical & density-based clustering; outlier analysis",
+          "topics": [
+            "Clustering",
+            "K-Means",
+            "K-medoids",
+            "hierarchical & density-based clustering",
+            "outlier analysis"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Neural networks; perceptron; MLP; backpropagation; RNN & CNN introduction",
+          "topics": [
+            "Neural networks",
+            "perceptron",
+            "MLP",
+            "backpropagation",
+            "RNN & CNN introduction"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410243",
+      "name": "Blockchain Technology",
+      "type": "Core",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Cryptography; symmetric/asymmetric keys; ECC; SHA-256; DSA; Merkle trees",
+          "topics": [
+            "Cryptography",
+            "symmetric/asymmetric keys",
+            "ECC",
+            "SHA-256",
+            "DSA",
+            "Merkle trees"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Blockchain history; centralized vs decentralized systems; blockchain layers",
+          "topics": [
+            "Blockchain history",
+            "centralized vs decentralized systems",
+            "blockchain layers"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Blockchain platforms; Bitcoin; Ethereum; Hyperledger; consensus; PoW/PoS and other methods",
+          "topics": [
+            "Blockchain platforms",
+            "Bitcoin",
+            "Ethereum",
+            "Hyperledger",
+            "consensus",
+            "PoW/PoS and other methods"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Bitcoin & cryptocurrency; tokens; crypto wallets",
+          "topics": [
+            "Bitcoin & cryptocurrency",
+            "tokens",
+            "crypto wallets"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Ethereum; EVM; smart contracts; Solidity; decentralized storage/messaging",
+          "topics": [
+            "Ethereum",
+            "EVM",
+            "smart contracts",
+            "Solidity",
+            "decentralized storage/messaging"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Blockchain applications in banking, government, healthcare, IoT, energy and other domains",
+          "topics": [
+            "Blockchain applications in banking, government, healthcare, IoT, energy and other domains"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410244",
+      "name": "Elective III",
+      "type": "Elective",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Choose one elective from the options below",
+          "topics": [
+            "Choose one elective from the options below"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410245",
+      "name": "Elective IV",
+      "type": "Elective",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Choose one elective from the options below",
+          "topics": [
+            "Choose one elective from the options below"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410244A",
+      "name": "Pervasive Computing",
+      "type": "Elective III",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Pervasive computing concepts, characteristics, devices, interfaces and protocols",
+          "topics": [
+            "Pervasive computing concepts, characteristics, devices, interfaces and protocols"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Smart devices, smart environments, wearables, connectivity and voice-enabled computing",
+          "topics": [
+            "Smart devices, smart environments, wearables, connectivity and voice-enabled computing"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Context-aware systems; mobility, spatial & temporal awareness; middleware",
+          "topics": [
+            "Context-aware systems",
+            "mobility, spatial & temporal awareness",
+            "middleware"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Intelligent systems, architectures, interaction design and intelligent applications",
+          "topics": [
+            "Intelligent systems, architectures, interaction design and intelligent applications"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "HCI; interaction design; wearable computing; architecture and applications",
+          "topics": [
+            "HCI",
+            "interaction design",
+            "wearable computing",
+            "architecture and applications"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Security, privacy, trust, authentication, access control and ethics",
+          "topics": [
+            "Security, privacy, trust, authentication, access control and ethics"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410244B",
+      "name": "Multimedia Techniques",
+      "type": "Elective III",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Multimedia concepts, components, history, tools and authoring",
+          "topics": [
+            "Multimedia concepts, components, history, tools and authoring"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Graphics/data representation; image types; color and multimedia file formats",
+          "topics": [
+            "Graphics/data representation",
+            "image types",
+            "color and multimedia file formats"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Video and audio representation; sampling; digital audio/video concepts",
+          "topics": [
+            "Video and audio representation",
+            "sampling",
+            "digital audio/video concepts"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Compression; lossless/lossy methods; JPEG/JPEG2000; MPEG; audio compression",
+          "topics": [
+            "Compression",
+            "lossless/lossy methods",
+            "JPEG/JPEG2000",
+            "MPEG",
+            "audio compression"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "AR, VR, MR; immersive technologies; tracking, navigation and interaction",
+          "topics": [
+            "AR, VR, MR",
+            "immersive technologies",
+            "tracking, navigation and interaction"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Multimedia IoT architecture and applications",
+          "topics": [
+            "Multimedia IoT architecture and applications"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410244C",
+      "name": "Cyber Security and Digital Forensics",
+      "type": "Elective III",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Cyber crime, information security, threats, cyber security and risk analysis",
+          "topics": [
+            "Cyber crime, information security, threats, cyber security and risk analysis"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Cyber attacks, malware, social engineering, web/network attacks and defenses",
+          "topics": [
+            "Cyber attacks, malware, social engineering, web/network attacks and defenses"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Digital forensics concepts; digital evidence; forensic process and tools",
+          "topics": [
+            "Digital forensics concepts",
+            "digital evidence",
+            "forensic process and tools"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Evidence collection; acquisition; preservation and chain of custody",
+          "topics": [
+            "Evidence collection",
+            "acquisition",
+            "preservation and chain of custody"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Crime-scene analysis; validation and processing of forensic data",
+          "topics": [
+            "Crime-scene analysis",
+            "validation and processing of forensic data"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Legal evidence, investigation methods and forensic reporting",
+          "topics": [
+            "Legal evidence, investigation methods and forensic reporting"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410244D",
+      "name": "Object Oriented Modeling and Design",
+      "type": "Elective III",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Object-oriented modeling concepts; UML basics; use-case and class modeling",
+          "topics": [
+            "Object-oriented modeling concepts",
+            "UML basics",
+            "use-case and class modeling"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Advanced class modeling and state modeling",
+          "topics": [
+            "Advanced class modeling and state modeling"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Advanced state modeling; interaction modeling",
+          "topics": [
+            "Advanced state modeling",
+            "interaction modeling"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "System analysis and design; application/system design",
+          "topics": [
+            "System analysis and design",
+            "application/system design"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Class design; implementation modeling; legacy systems",
+          "topics": [
+            "Class design",
+            "implementation modeling",
+            "legacy systems"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Design patterns and their application",
+          "topics": [
+            "Design patterns and their application"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410244E",
+      "name": "Digital Signal Processing",
+      "type": "Elective III",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Signals and systems; discrete-time signals and system concepts",
+          "topics": [
+            "Signals and systems",
+            "discrete-time signals and system concepts"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Frequency-domain representation of signals",
+          "topics": [
+            "Frequency-domain representation of signals"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "FFT and Z-transform",
+          "topics": [
+            "FFT and Z-transform"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Discrete-time LTI system analysis",
+          "topics": [
+            "Discrete-time LTI system analysis"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Digital filter design",
+          "topics": [
+            "Digital filter design"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Filter structures and DSP processors",
+          "topics": [
+            "Filter structures and DSP processors"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410245A",
+      "name": "Information Retrieval",
+      "type": "Elective IV",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Information retrieval basics; tokens; indexing concepts",
+          "topics": [
+            "Information retrieval basics",
+            "tokens",
+            "indexing concepts"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Static inverted indexes and query processing",
+          "topics": [
+            "Static inverted indexes and query processing"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Index compression and dynamic inverted indexes",
+          "topics": [
+            "Index compression and dynamic inverted indexes"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Probabilistic retrieval and language modeling",
+          "topics": [
+            "Probabilistic retrieval and language modeling"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Effectiveness and efficiency measures",
+          "topics": [
+            "Effectiveness and efficiency measures"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Parallel information retrieval and web search",
+          "topics": [
+            "Parallel information retrieval and web search"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410245B",
+      "name": "GPU Programming and Architecture",
+      "type": "Elective IV",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "GPU architecture and fundamentals",
+          "topics": [
+            "GPU architecture and fundamentals"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "CUDA programming",
+          "topics": [
+            "CUDA programming"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "GPU programming issues and optimization concepts",
+          "topics": [
+            "GPU programming issues and optimization concepts"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "OpenCL basics",
+          "topics": [
+            "OpenCL basics"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Algorithms on GPU",
+          "topics": [
+            "Algorithms on GPU"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "OpenCL application design",
+          "topics": [
+            "OpenCL application design"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410245C",
+      "name": "Mobile Computing",
+      "type": "Elective IV",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Mobile computing concepts, architecture and wireless technologies",
+          "topics": [
+            "Mobile computing concepts, architecture and wireless technologies"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Mobile wireless protocols",
+          "topics": [
+            "Mobile wireless protocols"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "GSM architecture and services",
+          "topics": [
+            "GSM architecture and services"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "GSM networking, signaling and mobility",
+          "topics": [
+            "GSM networking, signaling and mobility"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Mobile network and transport layers",
+          "topics": [
+            "Mobile network and transport layers"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "3G and 4G technologies",
+          "topics": [
+            "3G and 4G technologies"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410245D",
+      "name": "Software Testing and Quality Assurance",
+      "type": "Elective IV",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Software testing fundamentals and testing process",
+          "topics": [
+            "Software testing fundamentals and testing process"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Test planning and quality management",
+          "topics": [
+            "Test planning and quality management"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Test case design techniques",
+          "topics": [
+            "Test case design techniques"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Software quality assurance and quality control",
+          "topics": [
+            "Software quality assurance and quality control"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Automation and performance testing tools",
+          "topics": [
+            "Automation and performance testing tools"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Testing frameworks",
+          "topics": [
+            "Testing frameworks"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410245E",
+      "name": "Compilers",
+      "type": "Elective IV",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Compiler concepts, structure and language processing",
+          "topics": [
+            "Compiler concepts, structure and language processing"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Parsing techniques",
+          "topics": [
+            "Parsing techniques"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Syntax-directed translation schemes",
+          "topics": [
+            "Syntax-directed translation schemes"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Run-time storage management",
+          "topics": [
+            "Run-time storage management"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Code generation",
+          "topics": [
+            "Code generation"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Code optimization",
+          "topics": [
+            "Code optimization"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410246",
+      "name": "Laboratory Practice III",
+      "type": "Lab",
+      "credits": 2,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Practical assignments based on Design & Analysis of Algorithms, Machine Learning and Blockchain Technology",
+          "topics": [
+            "Practical assignments based on Design & Analysis of Algorithms, Machine Learning and Blockchain Technology"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Algorithms implementation",
+          "topics": [
+            "Algorithms implementation"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "ML implementation and experimentation",
+          "topics": [
+            "ML implementation and experimentation"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Blockchain practicals",
+          "topics": [
+            "Blockchain practicals"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Case studies / mini-project work",
+          "topics": [
+            "Case studies / mini-project work"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410247",
+      "name": "Laboratory Practice IV",
+      "type": "Lab",
+      "credits": 1,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Practical assignments based on Elective III and Elective IV subjects",
+          "topics": [
+            "Practical assignments based on Elective III and Elective IV subjects"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Elective practicals",
+          "topics": [
+            "Elective practicals"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Elective practicals",
+          "topics": [
+            "Elective practicals"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410248",
+      "name": "Project Stage I",
+      "type": "Project",
+      "credits": 2,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Project selection, problem definition and objectives",
+          "topics": [
+            "Project selection, problem definition and objectives"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Literature survey and requirement analysis",
+          "topics": [
+            "Literature survey and requirement analysis"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "System design / UML and methodology",
+          "topics": [
+            "System design / UML and methodology"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Technology and tool selection",
+          "topics": [
+            "Technology and tool selection"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Initial implementation / experimentation",
+          "topics": [
+            "Initial implementation / experimentation"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Project review, documentation and presentation",
+          "topics": [
+            "Project review, documentation and presentation"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410249",
+      "name": "Audit Course 7",
+      "type": "Audit",
+      "credits": 0,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Choose one: MOOC \u2013 Learn New Skills; Entrepreneurship Development; Botnet of Things; 3D Printing; Industrial Safety & Environment Consciousness",
+          "topics": [
+            "Choose one: MOOC \u2013 Learn New Skills",
+            "Entrepreneurship Development",
+            "Botnet of Things",
+            "3D Printing",
+            "Industrial Safety & Environment Consciousness"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    }
+  ],
+  "VIII": [
+    {
+      "course_code": "410250",
+      "name": "High Performance Computing",
+      "type": "Core",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Parallel computing concepts and architectures",
+          "topics": [
+            "Parallel computing concepts and architectures"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Parallel algorithm design",
+          "topics": [
+            "Parallel algorithm design"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Parallel communication",
+          "topics": [
+            "Parallel communication"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Analytical modeling of parallel programs",
+          "topics": [
+            "Analytical modeling of parallel programs"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "CUDA architecture",
+          "topics": [
+            "CUDA architecture"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "High-performance computing applications",
+          "topics": [
+            "High-performance computing applications"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410251",
+      "name": "Deep Learning",
+      "type": "Core",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Deep learning foundations; learning representations; architectures; TensorFlow/Keras/PyTorch",
+          "topics": [
+            "Deep learning foundations",
+            "learning representations",
+            "architectures",
+            "TensorFlow/Keras/PyTorch"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Deep neural networks; perceptron; backpropagation; activation/loss functions; optimization",
+          "topics": [
+            "Deep neural networks",
+            "perceptron",
+            "backpropagation",
+            "activation/loss functions",
+            "optimization"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "CNN architecture; convolution; ReLU; pooling; fully connected layers",
+          "topics": [
+            "CNN architecture",
+            "convolution",
+            "ReLU",
+            "pooling",
+            "fully connected layers"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "RNNs and recursive networks; sequence-to-sequence; LSTM and long-term dependencies",
+          "topics": [
+            "RNNs and recursive networks",
+            "sequence-to-sequence",
+            "LSTM and long-term dependencies"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Deep generative models",
+          "topics": [
+            "Deep generative models"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Reinforcement learning",
+          "topics": [
+            "Reinforcement learning"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410252",
+      "name": "Elective V",
+      "type": "Elective",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Choose one elective from the options below",
+          "topics": [
+            "Choose one elective from the options below"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410253",
+      "name": "Elective VI",
+      "type": "Elective",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Choose one elective from the options below",
+          "topics": [
+            "Choose one elective from the options below"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410252A",
+      "name": "Natural Language Processing",
+      "type": "Elective V",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "NLP basics, text processing and linguistic concepts",
+          "topics": [
+            "NLP basics, text processing and linguistic concepts"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Language syntax and semantics",
+          "topics": [
+            "Language syntax and semantics"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Language modeling; word embeddings; TF-IDF; Word2Vec/Doc2Vec; contextual representations; topic modeling",
+          "topics": [
+            "Language modeling",
+            "word embeddings",
+            "TF-IDF",
+            "Word2Vec/Doc2Vec",
+            "contextual representations",
+            "topic modeling"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Information retrieval using NLP; NER; entity/relation extraction; coreference",
+          "topics": [
+            "Information retrieval using NLP",
+            "NER",
+            "entity/relation extraction",
+            "coreference"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "NLP tools and techniques; NLTK; spaCy; TextBlob; Gensim; WordNet; WSD",
+          "topics": [
+            "NLP tools and techniques",
+            "NLTK",
+            "spaCy",
+            "TextBlob",
+            "Gensim",
+            "WordNet",
+            "WSD"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Machine translation; sentiment analysis; QA; dialogue systems; NLG",
+          "topics": [
+            "Machine translation",
+            "sentiment analysis",
+            "QA",
+            "dialogue systems",
+            "NLG"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410252B",
+      "name": "Image Processing",
+      "type": "Elective V",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Digital image processing fundamentals and image representation",
+          "topics": [
+            "Digital image processing fundamentals and image representation"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Image enhancement in spatial/frequency domains",
+          "topics": [
+            "Image enhancement in spatial/frequency domains"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Image segmentation and analysis",
+          "topics": [
+            "Image segmentation and analysis"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Image compression and object recognition",
+          "topics": [
+            "Image compression and object recognition"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Image restoration and reconstruction",
+          "topics": [
+            "Image restoration and reconstruction"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Medical and satellite image processing",
+          "topics": [
+            "Medical and satellite image processing"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410252C",
+      "name": "Software Defined Networks",
+      "type": "Elective V",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "SDN fundamentals; traditional vs software-defined networking",
+          "topics": [
+            "SDN fundamentals",
+            "traditional vs software-defined networking"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "OpenFlow and SDN controllers",
+          "topics": [
+            "OpenFlow and SDN controllers"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Data-center networking and SDN use cases",
+          "topics": [
+            "Data-center networking and SDN use cases"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "SDN programming",
+          "topics": [
+            "SDN programming"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Network Functions Virtualization (NFV)",
+          "topics": [
+            "Network Functions Virtualization (NFV)"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "SDN use cases and applications",
+          "topics": [
+            "SDN use cases and applications"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410252D",
+      "name": "Advanced Digital Signal Processing",
+      "type": "Elective V",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "DFT and applications",
+          "topics": [
+            "DFT and applications"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Adaptive FIR/IIR filter design; LMS and adaptive filtering",
+          "topics": [
+            "Adaptive FIR/IIR filter design",
+            "LMS and adaptive filtering"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Multirate DSP; decimation/interpolation; sampling-rate conversion; linear prediction",
+          "topics": [
+            "Multirate DSP",
+            "decimation/interpolation",
+            "sampling-rate conversion",
+            "linear prediction"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Spectral estimation",
+          "topics": [
+            "Spectral estimation"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Speech processing",
+          "topics": [
+            "Speech processing"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Image processing",
+          "topics": [
+            "Image processing"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410252E",
+      "name": "Open Elective I",
+      "type": "Elective V",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Institution-approved interdisciplinary/open elective; content depends on the selected course",
+          "topics": [
+            "Institution-approved interdisciplinary/open elective",
+            "content depends on the selected course"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410253A",
+      "name": "Pattern Recognition",
+      "type": "Elective VI",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Pattern recognition fundamentals and classification concepts",
+          "topics": [
+            "Pattern recognition fundamentals and classification concepts"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Error estimation and decision theory; parametric/non-parametric techniques",
+          "topics": [
+            "Error estimation and decision theory",
+            "parametric/non-parametric techniques"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Structural pattern recognition; decision trees; random forests; grammars",
+          "topics": [
+            "Structural pattern recognition",
+            "decision trees",
+            "random forests",
+            "grammars"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Clustering",
+          "topics": [
+            "Clustering"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Template matching and unsupervised learning",
+          "topics": [
+            "Template matching and unsupervised learning"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Fuzzy logic and pattern recognition",
+          "topics": [
+            "Fuzzy logic and pattern recognition"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410253B",
+      "name": "Soft Computing",
+      "type": "Elective VI",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Soft computing concepts and approaches",
+          "topics": [
+            "Soft computing concepts and approaches"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Artificial neural networks; perceptron; multilayer networks; backpropagation",
+          "topics": [
+            "Artificial neural networks",
+            "perceptron",
+            "multilayer networks",
+            "backpropagation"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Evolutionary computing; genetic programming; particle swarm optimization",
+          "topics": [
+            "Evolutionary computing",
+            "genetic programming",
+            "particle swarm optimization"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Fuzzy logic",
+          "topics": [
+            "Fuzzy logic"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Genetic algorithms",
+          "topics": [
+            "Genetic algorithms"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Hybrid systems and applications of soft computing",
+          "topics": [
+            "Hybrid systems and applications of soft computing"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410253C",
+      "name": "Business Intelligence",
+      "type": "Elective VI",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Decision support systems and BI fundamentals",
+          "topics": [
+            "Decision support systems and BI fundamentals"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Data warehouse and BI architecture; OLAP/OLTP; dimensional models; star/snowflake schemas",
+          "topics": [
+            "Data warehouse and BI architecture",
+            "OLAP/OLTP",
+            "dimensional models",
+            "star/snowflake schemas"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Report authoring; report types; grouping, sorting, filtering and visualization",
+          "topics": [
+            "Report authoring",
+            "report types",
+            "grouping, sorting, filtering and visualization"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Data preparation",
+          "topics": [
+            "Data preparation"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Impact of machine learning in business",
+          "topics": [
+            "Impact of machine learning in business"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "BI applications in ERP, HR, finance, banking, sales, logistics and marketing",
+          "topics": [
+            "BI applications in ERP, HR, finance, banking, sales, logistics and marketing"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410253D",
+      "name": "Quantum Computing",
+      "type": "Elective VI",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Quantum computing fundamentals",
+          "topics": [
+            "Quantum computing fundamentals"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Mathematical foundations of quantum computing",
+          "topics": [
+            "Mathematical foundations of quantum computing"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Quantum circuits, qubits, gates, measurements and quantum algorithms",
+          "topics": [
+            "Quantum circuits, qubits, gates, measurements and quantum algorithms"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Quantum simulation algorithms; Fourier transform",
+          "topics": [
+            "Quantum simulation algorithms",
+            "Fourier transform"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Quantum Fourier Transform and applications",
+          "topics": [
+            "Quantum Fourier Transform and applications"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Quantum machine learning",
+          "topics": [
+            "Quantum machine learning"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410253E",
+      "name": "Open Elective II",
+      "type": "Elective VI",
+      "credits": 3,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Institution-approved interdisciplinary/open elective; content depends on the selected course",
+          "topics": [
+            "Institution-approved interdisciplinary/open elective",
+            "content depends on the selected course"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410254",
+      "name": "Laboratory Practice V",
+      "type": "Lab",
+      "credits": 1,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Practical assignments based on High Performance Computing and Deep Learning",
+          "topics": [
+            "Practical assignments based on High Performance Computing and Deep Learning"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "HPC practicals",
+          "topics": [
+            "HPC practicals"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Deep learning practicals",
+          "topics": [
+            "Deep learning practicals"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410255",
+      "name": "Laboratory Practice VI",
+      "type": "Lab",
+      "credits": 1,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Practical assignments based on Elective V and Elective VI subjects",
+          "topics": [
+            "Practical assignments based on Elective V and Elective VI subjects"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Elective practicals",
+          "topics": [
+            "Elective practicals"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Elective practicals",
+          "topics": [
+            "Elective practicals"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410256",
+      "name": "Project Stage II",
+      "type": "Project",
+      "credits": 6,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Complete remaining project implementation",
+          "topics": [
+            "Complete remaining project implementation"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "Testing and validation",
+          "topics": [
+            "Testing and validation"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "Results and performance analysis",
+          "topics": [
+            "Results and performance analysis"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "Comparative analysis",
+          "topics": [
+            "Comparative analysis"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "Documentation and report preparation",
+          "topics": [
+            "Documentation and report preparation"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "Final presentation / demonstration",
+          "topics": [
+            "Final presentation / demonstration"
+          ]
+        }
+      ]
+    },
+    {
+      "course_code": "410257",
+      "name": "Audit Course 8",
+      "type": "Audit",
+      "credits": 0,
+      "units": [
+        {
+          "unit_no": "Unit I",
+          "title": "Choose one: Usability Engineering; Conversational Interfaces; Social Media and Analytics; MOOC \u2013 Learn New Skills; Emotional Intelligence",
+          "topics": [
+            "Choose one: Usability Engineering",
+            "Conversational Interfaces",
+            "Social Media and Analytics",
+            "MOOC \u2013 Learn New Skills",
+            "Emotional Intelligence"
+          ]
+        },
+        {
+          "unit_no": "Unit II",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit III",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit IV",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit V",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        },
+        {
+          "unit_no": "Unit VI",
+          "title": "\u2014",
+          "topics": [
+            "\u2014"
+          ]
+        }
+      ]
+    }
+  ]
+}

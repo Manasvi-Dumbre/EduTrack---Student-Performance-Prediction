@@ -2,66 +2,190 @@
   {
     "id": 1,
     "teacher_id": "TCH-001",
-    "name": "Prof. R.K. Yadav",
+    "name": "Prof. Malayaj Kumar",
+    "initials": "MK",
     "email": "staffone@staff.com",
     "designation": "Associate Professor & Project Coordinator",
     "department": "CSE (AIML)",
     "phone": "+91 98331 44556",
     "avatar": "/static/dist/img/avatar.png",
-    "assigned_subjects": ["SUB-101", "SUB-105"],
-    "assigned_classes": ["TE CSE-AIML A", "BE CSE-AIML A"],
-    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+    "assigned_subjects": [
+      "DAA"
+    ],
+    "timetable_subject": "DAA",
+    "timetable_subject_full": "Design & Analysis of Algorithms",
+    "timetable_room": "A205",
+    "avatar_color": "av-indigo",
+    "assigned_classes": [
+      "TE CSE-AIML A",
+      "BE CSE-AIML A"
+    ],
+    "supervised_students": [
+      "STU-001",
+      "STU-002",
+      "STU-003",
+      "STU-004",
+      "STU-005",
+      "STU-006",
+      "STU-007",
+      "STU-008",
+      "STU-009",
+      "STU-010"
+    ]
   },
   {
     "id": 2,
     "teacher_id": "TCH-002",
-    "name": "Dr. Sonali Deshpande",
+    "name": "Prof. Anita Patil",
+    "initials": "AP",
     "email": "sonali.deshpande@college.edu",
     "designation": "Head of Department & Professor",
     "department": "CSE (AIML)",
     "phone": "+91 98205 77889",
     "avatar": "/static/dist/img/avatar3.png",
-    "assigned_subjects": ["SUB-102"],
-    "assigned_classes": ["TE CSE-AIML A"],
-    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+    "assigned_subjects": [
+      "STQA"
+    ],
+    "timetable_subject": "STQA",
+    "timetable_subject_full": "Software Testing & Quality Assurance",
+    "timetable_room": "A205",
+    "avatar_color": "av-rose",
+    "assigned_classes": [
+      "TE CSE-AIML A"
+    ],
+    "supervised_students": [
+      "STU-001",
+      "STU-002",
+      "STU-003",
+      "STU-004",
+      "STU-005",
+      "STU-006",
+      "STU-007",
+      "STU-008",
+      "STU-009",
+      "STU-010"
+    ]
   },
   {
     "id": 3,
     "teacher_id": "TCH-003",
-    "name": "Prof. Selvamurugan Kani",
+    "name": "Prof. Rupali Adhau",
+    "initials": "RA",
     "email": "selvamurugan.k@college.edu",
     "designation": "Assistant Professor",
     "department": "CSE (AIML)",
     "phone": "+91 97690 11223",
     "avatar": "/static/dist/img/avatar2.png",
-    "assigned_subjects": ["SUB-103"],
-    "assigned_classes": ["TE CSE-AIML A"],
-    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+    "assigned_subjects": [
+      "BT"
+    ],
+    "timetable_subject": "BT",
+    "timetable_subject_full": "Blockchain Technology",
+    "timetable_room": "A205",
+    "avatar_color": "av-amber",
+    "assigned_classes": [
+      "TE CSE-AIML A"
+    ],
+    "supervised_students": [
+      "STU-001",
+      "STU-002",
+      "STU-003",
+      "STU-004",
+      "STU-005",
+      "STU-006",
+      "STU-007",
+      "STU-008",
+      "STU-009",
+      "STU-010"
+    ]
   },
   {
     "id": 4,
     "teacher_id": "TCH-004",
-    "name": "Prof. Swati Vyas",
+    "name": "Prof. Shraddha Suryawanshi",
+    "initials": "SS",
     "email": "swati.vyas@college.edu",
     "designation": "Assistant Professor",
     "department": "CSE (AIML)",
     "phone": "+91 98192 33445",
     "avatar": "/static/dist/img/avatar3.png",
-    "assigned_subjects": ["SUB-104"],
-    "assigned_classes": ["TE CSE-AIML A"],
-    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+    "assigned_subjects": [
+      "OOMD"
+    ],
+    "timetable_subject": "OOMD",
+    "timetable_subject_full": "Object Oriented Modelling & Design",
+    "timetable_room": "A205",
+    "avatar_color": "av-purple",
+    "assigned_classes": [
+      "TE CSE-AIML A"
+    ],
+    "supervised_students": [
+      "STU-001",
+      "STU-002",
+      "STU-003",
+      "STU-004",
+      "STU-005",
+      "STU-006",
+      "STU-007",
+      "STU-008",
+      "STU-009",
+      "STU-010"
+    ]
   },
   {
     "id": 5,
     "teacher_id": "TCH-005",
-    "name": "Prof. Bhagyalaxmi V",
+    "name": "Prof. Rajesh Singh",
+    "initials": "RS",
     "email": "bhagyalaxmi.v@college.edu",
     "designation": "Assistant Professor",
     "department": "CSE (AIML)",
     "phone": "+91 98450 99887",
     "avatar": "/static/dist/img/avatar3.png",
-    "assigned_subjects": ["SUB-106"],
-    "assigned_classes": ["TE CSE-AIML A"],
-    "supervised_students": ["STU-001", "STU-002", "STU-003", "STU-004", "STU-005", "STU-006", "STU-007", "STU-008", "STU-009", "STU-010"]
+    "assigned_subjects": [
+      "ML"
+    ],
+    "timetable_subject": "ML",
+    "timetable_subject_full": "Machine Learning",
+    "timetable_room": "A205",
+    "avatar_color": "av-blue",
+    "assigned_classes": [
+      "TE CSE-AIML A"
+    ],
+    "supervised_students": [
+      "STU-001",
+      "STU-002",
+      "STU-003",
+      "STU-004",
+      "STU-005",
+      "STU-006",
+      "STU-007",
+      "STU-008",
+      "STU-009",
+      "STU-010"
+    ]
+  },
+  {
+    "id": 6,
+    "teacher_id": "TCH-006",
+    "name": "Prof. Rupali Adhau",
+    "email": "rupali123@gmail.com",
+    "designation": "Assistant Professor",
+    "department": "Computer Science & Engineering 3",
+    "phone": "+91 98000 11122",
+    "avatar": "/media/media/Screenshot%25202026-08-31%2520165829.png",
+    "assigned_subjects": [
+      "ML"
+    ],
+    "assigned_classes": [
+      "TE CSE-AIML A"
+    ],
+    "supervised_students": [
+      "STU-001",
+      "STU-002",
+      "STU-003",
+      "STU-004",
+      "STU-005"
+    ]
   }
 ]

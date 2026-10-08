@@ -1,0 +1,640 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block title %}Course Syllabus - Fourth Year Computer Engineering (SPPU 2019 Course){% endblock title %}
+
+{% block page_title %}Course Syllabus{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Syllabus</li>
+{% endblock breadcrumb %}
+
+{% block custom_css %}
+<style>
+  :root {
+    --syl-primary: #2563eb;
+    --syl-primary-dark: #1e40af;
+    --syl-primary-light: #eff6ff;
+    --syl-surface: #ffffff;
+    --syl-border: #e2e8f0;
+    --syl-text-main: #0f172a;
+    --syl-text-muted: #64748b;
+    --syl-radius: 16px;
+  }
+
+  .syl-container {
+    padding-bottom: 60px;
+    animation: fadeInSyllabus 0.35s ease-in-out;
+  }
+  @keyframes fadeInSyllabus {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Header Banner ────────────────────────────────────────── */
+  .syl-header-banner {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%);
+    border-radius: var(--syl-radius);
+    padding: 30px 36px;
+    color: #ffffff;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .syl-header-banner::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .syl-banner-text h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .syl-banner-text p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+  }
+  .syl-badge-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .syl-banner-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  /* ── Semester Switcher Nav ───────────────────────────────── */
+  .syl-sem-tabs {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid var(--syl-border);
+    border-radius: 14px;
+    padding: 6px;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  .syl-sem-btn {
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--syl-text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .syl-sem-btn:hover {
+    color: var(--syl-primary);
+    background: #f8fafc;
+  }
+  .syl-sem-btn.active {
+    background: var(--syl-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
+
+  /* ── Stats Row ───────────────────────────────────────────── */
+  .syl-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .syl-stat-card {
+    background: var(--syl-surface);
+    border: 1px solid var(--syl-border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .syl-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  }
+  .syl-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .stat-blue   { background: #eff6ff; color: #2563eb; }
+  .stat-purple { background: #faf5ff; color: #7c3aed; }
+  .stat-green  { background: #f0fdf4; color: #16a34a; }
+  .stat-amber  { background: #fffbeb; color: #d97706; }
+  
+  .syl-stat-info h4 {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--syl-text-main);
+  }
+  .syl-stat-info span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--syl-text-muted);
+  }
+
+  /* ── Search & Filter Controls ────────────────────────────── */
+  .syl-controls-card {
+    background: var(--syl-surface);
+    border: 1px solid var(--syl-border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .syl-search-box {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+  }
+  .syl-search-box i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 14px;
+  }
+  .syl-search-box input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .syl-search-box input:focus {
+    border-color: var(--syl-primary);
+  }
+  .syl-filter-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .syl-pill-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 1px solid var(--syl-border);
+    background: #f8fafc;
+    color: var(--syl-text-muted);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .syl-pill-btn:hover {
+    color: var(--syl-primary);
+    border-color: #bfdbfe;
+    background: #eff6ff;
+  }
+  .syl-pill-btn.active {
+    background: var(--syl-primary);
+    color: #ffffff;
+    border-color: var(--syl-primary);
+  }
+  .syl-toggle-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .syl-toggle-btn:hover {
+    background: #f1f5f9;
+  }
+
+  /* ── Subject Cards ───────────────────────────────────────── */
+  .syl-subject-card {
+    background: var(--syl-surface);
+    border: 1px solid var(--syl-border);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .syl-subject-card:hover {
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+    border-color: #cbd5e1;
+  }
+  .syl-card-header {
+    padding: 20px 24px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .syl-card-title-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .syl-course-code {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--syl-primary);
+    background: var(--syl-primary-light);
+    border: 1px solid #bfdbfe;
+    padding: 5px 12px;
+    border-radius: 8px;
+    letter-spacing: 0.03em;
+  }
+  .syl-subject-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--syl-text-main);
+    margin: 0;
+  }
+  .syl-meta-badges {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Type Badges */
+  .type-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .type-core     { background: #eff6ff; color: #1d4ed8; }
+  .type-elective { background: #faf5ff; color: #7e22ce; }
+  .type-lab      { background: #ecfdf5; color: #047857; }
+  .type-project  { background: #fff7ed; color: #c2410c; }
+  .type-audit    { background: #f1f5f9; color: #475569; }
+
+  .credits-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 8px;
+  }
+  .syl-collapse-icon {
+    font-size: 14px;
+    color: #94a3b8;
+    transition: transform 0.25s ease;
+  }
+  .syl-subject-card.open .syl-collapse-icon {
+    transform: rotate(180deg);
+  }
+
+  /* ── Units Grid (Card Body) ──────────────────────────────── */
+  .syl-card-body {
+    padding: 0 24px 24px 24px;
+    border-top: 1px solid #f1f5f9;
+    display: block;
+    background: #fcfdfe;
+  }
+  .syl-subject-card:not(.open) .syl-card-body {
+    display: none;
+  }
+
+  .syl-units-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .syl-unit-card {
+    background: #ffffff;
+    border: 1px solid var(--syl-border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .syl-unit-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .syl-unit-pill {
+    font-size: 11px;
+    font-weight: 800;
+    color: #1e40af;
+    background: #dbeafe;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+  .syl-unit-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.4;
+  }
+  .syl-topics-list {
+    margin: 4px 0 0 0;
+    padding-left: 18px;
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .syl-topics-list li {
+    margin-bottom: 3px;
+  }
+
+  /* Special Banner for Project / Lab / Audit */
+  .syl-special-desc {
+    background: #ffffff;
+    border: 1px solid var(--syl-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .syl-special-desc h6 {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--syl-primary);
+    margin-bottom: 8px;
+  }
+  .syl-special-desc p {
+    font-size: 13px;
+    color: #475569;
+    margin: 0;
+    line-height: 1.6;
+  }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+<div class="syl-container">
+
+  <!-- Header Banner -->
+  <div class="syl-header-banner">
+    <div class="syl-banner-text">
+      <h2>
+        <i class="fas fa-graduation-cap"></i> Fourth Year Computer Engineering Syllabus
+      </h2>
+      <p>{{ syllabus.pattern }} &bull; {{ syllabus.semester_title }}</p>
+      <div class="syl-badge-group">
+        <span class="syl-banner-badge"><i class="fas fa-university me-1"></i> SPPU Pune</span>
+        <span class="syl-banner-badge"><i class="fas fa-award me-1"></i> 2019 Course Pattern</span>
+        <span class="syl-banner-badge"><i class="fas fa-calendar-check me-1"></i> Academic Year 2026-2027</span>
+      </div>
+    </div>
+
+    <!-- Semester Switcher -->
+    <div class="syl-sem-tabs">
+      <a href="?semester=VII" class="syl-sem-btn {% if syllabus.semester == 'VII' %}active{% endif %}">
+        <i class="fas fa-book-open"></i> Semester VII
+      </a>
+      <a href="?semester=VIII" class="syl-sem-btn {% if syllabus.semester == 'VIII' %}active{% endif %}">
+        <i class="fas fa-book"></i> Semester VIII
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="syl-stats-grid">
+    <div class="syl-stat-card">
+      <div class="syl-stat-icon stat-blue">
+        <i class="fas fa-layer-group"></i>
+      </div>
+      <div class="syl-stat-info">
+        <h4>{{ syllabus.stats.total_subjects }}</h4>
+        <span>Listed Subjects</span>
+      </div>
+    </div>
+
+    <div class="syl-stat-card">
+      <div class="syl-stat-icon stat-purple">
+        <i class="fas fa-certificate"></i>
+      </div>
+      <div class="syl-stat-info">
+        <h4>{{ syllabus.stats.total_credits }}</h4>
+        <span>Semester Credits</span>
+      </div>
+    </div>
+
+    <div class="syl-stat-card">
+      <div class="syl-stat-icon stat-green">
+        <i class="fas fa-book-reader"></i>
+      </div>
+      <div class="syl-stat-info">
+        <h4>{{ syllabus.stats.core_count }}</h4>
+        <span>Core Theory Courses</span>
+      </div>
+    </div>
+
+    <div class="syl-stat-card">
+      <div class="syl-stat-icon stat-amber">
+        <i class="fas fa-sliders-h"></i>
+      </div>
+      <div class="syl-stat-info">
+        <h4>{{ syllabus.stats.elective_count }}</h4>
+        <span>Elective Tracks</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search and Category Filters -->
+  <div class="syl-controls-card">
+    <div class="syl-search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="sylSearchInput" placeholder="Search by course code, subject name, or unit topic..." value="{{ syllabus.filters.search }}" oninput="applySyllabusFilterDebounced()">
+    </div>
+
+    <div class="syl-filter-pills">
+      <a href="javascript:void(0)" onclick="setSyllabusCategory('all')" class="syl-pill-btn {% if syllabus.filters.category == 'all' or not syllabus.filters.category %}active{% endif %}">All Courses</a>
+      <a href="javascript:void(0)" onclick="setSyllabusCategory('core')" class="syl-pill-btn {% if syllabus.filters.category == 'core' %}active{% endif %}">Core Theory</a>
+      <a href="javascript:void(0)" onclick="setSyllabusCategory('elective')" class="syl-pill-btn {% if syllabus.filters.category == 'elective' %}active{% endif %}">Electives</a>
+      <a href="javascript:void(0)" onclick="setSyllabusCategory('lab')" class="syl-pill-btn {% if syllabus.filters.category == 'lab' %}active{% endif %}">Laboratories</a>
+      <a href="javascript:void(0)" onclick="setSyllabusCategory('project')" class="syl-pill-btn {% if syllabus.filters.category == 'project' %}active{% endif %}">Project Work</a>
+      <a href="javascript:void(0)" onclick="setSyllabusCategory('audit')" class="syl-pill-btn {% if syllabus.filters.category == 'audit' %}active{% endif %}">Audit Courses</a>
+    </div>
+
+    <button type="button" class="syl-toggle-btn" onclick="toggleAllCards()">
+      <i class="fas fa-expand-alt" id="expandToggleIcon"></i> <span id="expandToggleText">Expand All</span>
+    </button>
+  </div>
+
+  <!-- Subjects Accordion / Cards List -->
+  <div id="syllabusCardsList">
+    {% for subject in syllabus.subjects %}
+    <div class="syl-subject-card {% if forloop.first %}open{% endif %}" id="card-{{ subject.course_code }}">
+      <div class="syl-card-header" onclick="toggleCard('card-{{ subject.course_code }}')">
+        <div class="syl-card-title-box">
+          <span class="syl-course-code">{{ subject.course_code }}</span>
+          <h3 class="syl-subject-name">{{ subject.name }}</h3>
+          {% if subject.category == 'Core' %}
+            <span class="type-badge type-core">Core Theory</span>
+          {% elif subject.category == 'Elective' %}
+            <span class="type-badge type-elective">{{ subject.type }}</span>
+          {% elif subject.category == 'Laboratory' %}
+            <span class="type-badge type-lab">Practical / Lab</span>
+          {% elif subject.category == 'Project' %}
+            <span class="type-badge type-project">Project Work</span>
+          {% else %}
+            <span class="type-badge type-audit">Audit Course</span>
+          {% endif %}
+        </div>
+
+        <div class="syl-meta-badges">
+          <span class="credits-badge">
+            <i class="fas fa-star text-warning me-1"></i>
+            {% if subject.credits > 0 %}{{ subject.credits }} Credit{{ subject.credits|pluralize }}{% else %}Non-Credit{% endif %}
+          </span>
+          <i class="fas fa-chevron-down syl-collapse-icon"></i>
+        </div>
+      </div>
+
+      <div class="syl-card-body">
+        {% if subject.units %}
+        <div class="syl-units-grid">
+          {% for unit in subject.units %}
+          <div class="syl-unit-card">
+            <div class="syl-unit-header">
+              <span class="syl-unit-pill">{{ unit.unit_no }}</span>
+              <div class="syl-unit-title">{{ unit.title }}</div>
+            </div>
+            {% if unit.topics and unit.topics|length > 1 %}
+            <ul class="syl-topics-list">
+              {% for topic in unit.topics %}
+              <li>{{ topic }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="syl-special-desc">
+          <h6><i class="fas fa-info-circle me-1"></i> Course Overview</h6>
+          <p>{{ subject.name }} covers prescribed term-work, continuous laboratory assignments, and project deliverables as per SPPU 2019 guidelines.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="card p-5 text-center border-0 shadow-sm rounded-4">
+      <i class="fas fa-search fa-3x text-muted mb-3"></i>
+      <h5 class="fw-bold text-dark">No syllabus subjects found</h5>
+      <p class="text-muted">Try clearing your search query or selecting a different category filter.</p>
+      <a href="?semester={{ syllabus.semester }}" class="btn btn-outline-primary btn-sm rounded-pill px-4 mx-auto">Reset Filters</a>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+<script>
+  let currentCategory = "{{ syllabus.filters.category|default:'all' }}";
+  let currentSemester = "{{ syllabus.semester|default:'VII' }}";
+  let searchTimeout = null;
+  let allExpanded = false;
+
+  function setSyllabusCategory(category) {
+    currentCategory = category;
+    applySyllabusFilter();
+  }
+
+  function applySyllabusFilterDebounced() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      applySyllabusFilter();
+    }, 300);
+  }
+
+  function applySyllabusFilter() {
+    const search = document.getElementById('sylSearchInput').value;
+    const url = new URL(window.location.href);
+    url.searchParams.set('semester', currentSemester);
+    url.searchParams.set('category', currentCategory);
+    url.searchParams.set('search', search);
+    window.location.href = url.toString();
+  }
+
+  function toggleCard(cardId) {
+    const card = document.getElementById(cardId);
+    if (card) {
+      card.classList.toggle('open');
+    }
+  }
+
+  function toggleAllCards() {
+    const cards = document.querySelectorAll('.syl-subject-card');
+    const toggleIcon = document.getElementById('expandToggleIcon');
+    const toggleText = document.getElementById('expandToggleText');
+    
+    allExpanded = !allExpanded;
+    cards.forEach(c => {
+      if (allExpanded) {
+        c.classList.add('open');
+      } else {
+        c.classList.remove('open');
+      }
+    });
+
+    if (allExpanded) {
+      toggleIcon.className = 'fas fa-compress-alt';
+      toggleText.textContent = 'Collapse All';
+    } else {
+      toggleIcon.className = 'fas fa-expand-alt';
+      toggleText.textContent = 'Expand All';
+    }
+  }
+</script>
+{% endblock content %}

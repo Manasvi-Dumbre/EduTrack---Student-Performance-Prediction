@@ -145,5 +145,7 @@ urlpatterns = [
          name='student_assignments'),
     path("student/assignments/upload/<int:assignment_id>/", student_views.upload_assignment_submission,
          name='upload_assignment_submission'),
-
+    path("student/timetable/", student_views.student_timetable, name='student_timetable'),
+    path("room_availability/", views.room_availability, name='room_availability'),
+    path("syllabus/", views.syllabus_view, name='syllabus'),
 ]

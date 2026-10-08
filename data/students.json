@@ -27,11 +27,11 @@
     "predicted_percentage_range": "88% - 93%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "STQA",
+      "ML",
       "DAA",
       "OOMD",
       "BT",
-      "ML"
+      "STQA"
     ]
   },
   {
@@ -62,12 +62,11 @@
     "predicted_percentage_range": "92% - 97%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -98,12 +97,11 @@
     "predicted_percentage_range": "76% - 81%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -134,12 +132,11 @@
     "predicted_percentage_range": "89% - 94%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -170,12 +167,11 @@
     "predicted_percentage_range": "58% - 64%",
     "risk_level": "High Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -206,12 +202,11 @@
     "predicted_percentage_range": "80% - 85%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -242,12 +237,11 @@
     "predicted_percentage_range": "83% - 87%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -278,12 +272,11 @@
     "predicted_percentage_range": "49% - 55%",
     "risk_level": "High Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -314,12 +307,11 @@
     "predicted_percentage_range": "60% - 66%",
     "risk_level": "High Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -350,12 +342,11 @@
     "predicted_percentage_range": "54% - 60%",
     "risk_level": "High Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -386,12 +377,11 @@
     "predicted_percentage_range": "80% - 85%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -422,12 +412,11 @@
     "predicted_percentage_range": "80% - 85%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -458,12 +447,11 @@
     "predicted_percentage_range": "80% - 85%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -494,12 +482,11 @@
     "predicted_percentage_range": "80% - 85%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -530,12 +517,11 @@
     "predicted_percentage_range": "78% - 83%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   },
   {
@@ -566,12 +552,11 @@
     "predicted_percentage_range": "80% - 85%",
     "risk_level": "Low Risk",
     "assigned_subjects": [
-      "SUB-101",
-      "SUB-102",
-      "SUB-103",
-      "SUB-104",
-      "SUB-105",
-      "SUB-106"
+      "ML",
+      "DAA",
+      "OOMD",
+      "BT",
+      "STQA"
     ]
   }
 ]

@@ -1,5 +1,45 @@
 [
   {
+    "id": 9,
+    "title": "New Slot Booking Request: Room 101",
+    "message": "staff one has requested Room 101 on 2026-10-20 (03:00 PM - 04:00 PM) for 'Workshop'.",
+    "category": "Booking Request",
+    "created_at": "Just now",
+    "badge_class": "badge-warning"
+  },
+  {
+    "id": 8,
+    "title": "New Slot Booking Request: Room 101",
+    "message": "staff one has requested Room 101 on 2026-10-20 (03:00 PM - 04:00 PM) for 'Workshop'.",
+    "category": "Booking Request",
+    "created_at": "Just now",
+    "badge_class": "badge-warning"
+  },
+  {
+    "id": 7,
+    "title": "New Slot Booking Request: Room 101",
+    "message": "staff one has requested Room 101 on 2026-10-20 (03:00 PM - 04:00 PM) for 'Workshop'.",
+    "category": "Booking Request",
+    "created_at": "Just now",
+    "badge_class": "badge-warning"
+  },
+  {
+    "id": 6,
+    "title": "New Slot Booking Request: Room 101",
+    "message": "staff one has requested Room 101 on 2026-10-15 (04:00 PM - 05:00 PM) for 'Guest Lecture'.",
+    "category": "Booking Request",
+    "created_at": "Just now",
+    "badge_class": "badge-warning"
+  },
+  {
+    "id": 5,
+    "title": "New Slot Booking Request: Room 101",
+    "message": "staff one has requested Room 101 on 2026-10-15 (04:00 PM - 05:00 PM) for 'Guest Lecture'.",
+    "category": "Booking Request",
+    "created_at": "Just now",
+    "badge_class": "badge-warning"
+  },
+  {
     "id": 1,
     "student_id": "STU-001",
     "type": "Achievement",

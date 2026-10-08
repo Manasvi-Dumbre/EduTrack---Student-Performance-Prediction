@@ -214,5 +214,13 @@
     "role": "Student",
     "status": "Active",
     "student_id": "STU-011"
+  },
+  {
+    "id": 26,
+    "email": "rupali123@gmail.com",
+    "name": "Rupali Adhau",
+    "user_type": "2",
+    "role": "Teacher",
+    "status": "Active"
   }
 ]

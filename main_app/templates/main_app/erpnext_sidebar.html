@@ -43,6 +43,22 @@
         </div>
 
         <h6 class="nav-section-title">Academic Management</h6>
+
+        <div class="nav-item">
+            {% url 'room_availability' as room_availability %}
+            <a href="{{ room_availability }}" class="nav-link {% if room_availability == request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-door-open"></i>
+                <span class="nav-text">Room & Resource Availability</span>
+            </a>
+        </div>
+
+        <div class="nav-item">
+            {% url 'syllabus' as syllabus %}
+            <a href="{{ syllabus }}" class="nav-link {% if syllabus == request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-book-open"></i>
+                <span class="nav-text">Syllabus</span>
+            </a>
+        </div>
         
         <div class="nav-item has-submenu {% if 'course' in request.path %}open{% endif %}">
             <a href="#" class="nav-link">
@@ -227,6 +243,22 @@
         </div>
 
         <h6 class="nav-section-title">Academic Management</h6>
+
+        <div class="nav-item">
+            {% url 'room_availability' as room_availability %}
+            <a href="{{ room_availability }}" class="nav-link {% if room_availability == request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-door-open"></i>
+                <span class="nav-text">Room & Resource Availability</span>
+            </a>
+        </div>
+
+        <div class="nav-item">
+            {% url 'syllabus' as syllabus %}
+            <a href="{{ syllabus }}" class="nav-link {% if syllabus == request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-book-open"></i>
+                <span class="nav-text">Syllabus</span>
+            </a>
+        </div>
         
         <div class="nav-item">
             {% url 'staff_add_result' as staff_add_result %}
@@ -307,14 +339,22 @@
                 <span>Dashboard</span>
             </a>
             
-            <a href="#" class="student-nav-item">
+            {% url 'syllabus' as syllabus %}
+            <a href="{{ syllabus }}" class="student-nav-item {% if syllabus == request.path %}active{% endif %}">
                 <i class="fas fa-book-open"></i>
                 <span>Syllabus</span>
             </a>
 
-            <a href="#" class="student-nav-item">
+            {% url 'student_timetable' as student_timetable %}
+            <a href="{{ student_timetable }}" class="student-nav-item {% if student_timetable == request.path %}active{% endif %}">
                 <i class="far fa-calendar-alt"></i>
                 <span>Timetable</span>
+            </a>
+
+            {% url 'room_availability' as room_availability %}
+            <a href="{{ room_availability }}" class="student-nav-item {% if room_availability == request.path %}active{% endif %}">
+                <i class="fas fa-door-open"></i>
+                <span>Room & Resource Availability</span>
             </a>
 
             {% url 'student_assignments' as student_assignments %}

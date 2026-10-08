@@ -12,12 +12,11 @@
       {"month": "Mar", "total_sessions": 28, "present": 25, "absent": 3, "percentage": 89.3}
     ],
     "subject_attendance": [
-      {"subject_code": "SUB-101", "subject_name": "AI & Neural Networks", "total_classes": 48, "attended": 45, "absent": 3, "percentage": 93.8, "status": "Good"},
-      {"subject_code": "SUB-102", "subject_name": "DBMS", "total_classes": 44, "attended": 41, "absent": 3, "percentage": 93.2, "status": "Good"},
-      {"subject_code": "SUB-103", "subject_name": "Computer Networks", "total_classes": 42, "attended": 37, "absent": 5, "percentage": 88.1, "status": "Good"},
-      {"subject_code": "SUB-104", "subject_name": "Data Warehousing", "total_classes": 40, "attended": 38, "absent": 2, "percentage": 95.0, "status": "Excellent"},
-      {"subject_code": "SUB-105", "subject_name": "Machine Learning", "total_classes": 50, "attended": 46, "absent": 4, "percentage": 92.0, "status": "Good"},
-      {"subject_code": "SUB-106", "subject_name": "Business Communication", "total_classes": 32, "attended": 28, "absent": 4, "percentage": 87.5, "status": "Good"}
+      {"subject_code": "ML", "subject_name": "Machine Learning", "total_classes": 48, "attended": 45, "absent": 3, "percentage": 93.8, "status": "Good"},
+      {"subject_code": "DAA", "subject_name": "Design & Analysis of Algorithms", "total_classes": 44, "attended": 41, "absent": 3, "percentage": 93.2, "status": "Good"},
+      {"subject_code": "OOMD", "subject_name": "Object Oriented Modelling & Design", "total_classes": 42, "attended": 40, "absent": 2, "percentage": 95.2, "status": "Excellent"},
+      {"subject_code": "BT", "subject_name": "Blockchain Technology", "total_classes": 40, "attended": 35, "absent": 5, "percentage": 87.5, "status": "Good"},
+      {"subject_code": "STQA", "subject_name": "Software Testing & Quality Assurance", "total_classes": 46, "attended": 42, "absent": 4, "percentage": 91.3, "status": "Good"}
     ]
   }
 ]

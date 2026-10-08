@@ -2,79 +2,66 @@
   {
     "id": 1,
     "student_id": "STU-001",
-    "subject_code": "SUB-101",
-    "subject_name": "Artificial Intelligence & Neural Networks",
-    "title": "Assignment 1: Implementation of Backpropagation Algorithm in Python",
+    "subject_code": "ML",
+    "subject_name": "Machine Learning",
+    "title": "Assignment 1: Implementation of Gradient Descent in Python",
     "due_date": "2026-01-20",
     "submitted_date": "2026-01-18",
     "status": "Submitted & Graded",
     "max_score": 100,
     "obtained_score": 95,
-    "feedback": "Clean implementation with vectorization; excellent visualization of loss curve."
+    "feedback": "Clean implementation with vectorization; excellent loss curve visualization."
   },
   {
     "id": 2,
     "student_id": "STU-001",
-    "subject_code": "SUB-102",
-    "subject_name": "Database Management & Big Data Systems",
-    "title": "Assignment 2: Complex SQL Query Optimization & Indexing",
+    "subject_code": "DAA",
+    "subject_name": "Design & Analysis of Algorithms",
+    "title": "Assignment 2: Dynamic Programming vs Greedy Approach",
     "due_date": "2026-02-05",
     "submitted_date": "2026-02-04",
     "status": "Submitted & Graded",
     "max_score": 100,
     "obtained_score": 92,
-    "feedback": "Proper EXPLAIN ANALYZE breakdown; good explanation of B-Tree vs Hash index."
+    "feedback": "Proper asymptotic complexity breakdown and execution time analysis."
   },
   {
     "id": 3,
     "student_id": "STU-001",
-    "subject_code": "SUB-103",
-    "subject_name": "Computer Networks & Cloud Security",
-    "title": "Assignment 3: TCP Flow and Congestion Control Simulation",
+    "subject_code": "OOMD",
+    "subject_name": "Object Oriented Modelling & Design",
+    "title": "Assignment 3: Class & Sequence Diagrams for E-Commerce",
     "due_date": "2026-02-20",
     "submitted_date": "2026-02-19",
     "status": "Submitted & Graded",
     "max_score": 100,
-    "obtained_score": 88,
-    "feedback": "Well documented packet graphs; include fast retransmit cases next time."
+    "obtained_score": 98,
+    "feedback": "Flawless UML design patterns and class relations."
   },
   {
     "id": 4,
     "student_id": "STU-001",
-    "subject_code": "SUB-104",
-    "subject_name": "Data Warehousing & Data Mining",
-    "title": "Assignment 4: Association Rule Mining using FP-Growth Algorithm",
+    "subject_code": "BT",
+    "subject_name": "Blockchain Technology",
+    "title": "Assignment 4: Smart Contract Deployment on Ethereum Testnet",
     "due_date": "2026-03-02",
     "submitted_date": "2026-03-01",
     "status": "Submitted & Graded",
     "max_score": 100,
-    "obtained_score": 98,
-    "feedback": "Flawless comparison between Apriori and FP-Growth performance on large datasets."
+    "obtained_score": 88,
+    "feedback": "Well-documented Solidity code and gas optimization analysis."
   },
   {
     "id": 5,
     "student_id": "STU-001",
-    "subject_code": "SUB-105",
-    "subject_name": "Machine Learning & Statistical Modeling",
-    "title": "Mini Project: Student Performance Risk Classification using Random Forest",
+    "subject_code": "STQA",
+    "subject_name": "Software Testing & Quality Assurance",
+    "title": "Assignment 5: Automated Testing with Selenium and PyTest",
     "due_date": "2026-03-15",
     "submitted_date": "2026-03-14",
     "status": "Submitted & Graded",
     "max_score": 100,
-    "obtained_score": 94,
-    "feedback": "Comprehensive EDA, cross-validation metrics, and feature importance analysis."
-  },
-  {
-    "id": 6,
-    "student_id": "STU-001",
-    "subject_code": "SUB-106",
-    "subject_name": "Business Communication & Ethics",
-    "title": "Assignment 5: Case Study Analysis on AI Ethics and Data Privacy",
-    "due_date": "2026-03-25",
-    "submitted_date": "2026-03-24",
-    "status": "Submitted & Graded",
-    "max_score": 100,
     "obtained_score": 90,
-    "feedback": "Thoughtful ethical framework and well-structured argument."
+    "feedback": "Comprehensive unit tests and assertion coverage."
   }
 ]

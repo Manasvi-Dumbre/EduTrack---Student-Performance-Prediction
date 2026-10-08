@@ -1,4 +1,5 @@
 import json
+import os
 import math
 from datetime import datetime
 
@@ -401,3 +402,22 @@ def upload_assignment_submission(request, assignment_id):
 
     return redirect('student_assignments')
 
+
+def student_timetable(request):
+    """Render the class timetable page for students, loading teacher data from JSON."""
+    teachers = []
+    try:
+        teachers_json_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'data', 'teachers.json'
+        )
+        with open(teachers_json_path, 'r', encoding='utf-8') as f:
+            teachers = json.load(f)
+    except Exception:
+        pass
+
+    context = {
+        'page_title': 'Class Timetable',
+        'teachers': teachers,
+    }
+    return render(request, 'student_template/student_timetable.html', context)
